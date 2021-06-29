@@ -1,0 +1,26 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "Cs 467 - Capstone - Bonds, Do, Duell",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jennresado/CS467_Capstone.git"
+  },
+  "author": "Kylee Bonds, Jennifer Do, Jessica Duell",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jennresado/CS467_Capstone/issues"
+  },
+  "homepage": "https://github.com/jennresado/CS467_Capstone#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "express-handlebars": "^5.3.2",
+    "node.js": "0.0.1-security"
+  },
+  "devDependencies": {}
+}
