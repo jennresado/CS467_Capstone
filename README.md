@@ -1,2 +1,2 @@
-CS 467 - Capstone - Bonds, Do, Duell
-CS 467 - Capstone - Bonds, Do, Duell
+# CS467_Capstone
+Dating App for Animal Adoption
