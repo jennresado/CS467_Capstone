@@ -15,10 +15,10 @@ exports.up = function (knex) {
         tbl.string('disposition', 256).notNullable();
         tbl.string('availability', 256).notNullable();
         tbl.date('date_created').notNullable();
-        tbl.text('desciprtion').notNullable();
+        tbl.text('description').notNullable();
         tbl.text('news_item').notNullable();
         tbl.binary('pic').notNullable();
-    }).createTable('userAnimals', tbl => {
+    }).createTable('user_animals', tbl => {
         tbl.increments('user_animal_id');
         tbl.integer('user_id').unsigned().references('users.user_id').onDelete("CASCADE").onUpdate('CASCADE');
         tbl.integer('animal_id').unsigned().references('animals.animal_id').onDelete('CASCADE').onUpdate('CASCADE');
