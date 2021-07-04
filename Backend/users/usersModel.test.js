@@ -97,10 +97,10 @@ describe("usersModel", () => {
     //can use knex.raw but it is global and deprecated
     await db.raw("TRUNCATE TABLE animals RESTART IDENTITY CASCADE");
     await db.raw("TRUNCATE TABLE users RESTART IDENTITY CASCADE");
+    await db.raw("TRUNCATE TABLE user_animals RESTART IDENTITY CASCADE");
   });
 
-  //adds users to the database
-  describe("addUser", () => {
+  describe("addUser(user)", () => {
     it("adds a user to an empty db", async () => {
       let userList = getTestUsers();
       let dbTestUsers = getExpectedTestUsers();
@@ -128,6 +128,48 @@ describe("usersModel", () => {
 
       expect(users).toHaveLength(4);
       expect(users).toEqual(dbTestUsers);
+    });
+  });
+
+  describe("editUser(user_id, user)", () => {
+    it("edits a user in a db with 1 entry", async () => {
+      let users = getTestUsers();
+      await db("users").insert(users[0]);
+      const dbTestUsers = getExpectedTestUsers();
+
+      const count = await Users.editUser(1, {
+        email: "somethingElse@gmail.com",
+      });
+
+      let expectedUser1 = dbTestUsers[0];
+      expectedUser1.email = "somethingElse@gmail.com";
+      const user = await db("users");
+
+      expect(count).toBe(1);
+      expect(user).toEqual([expectedUser1]);
+    });
+
+    it("edits a user in a db with more than 1 entry", async () => {
+      let users = getTestUsers();
+      await db("users").insert(users[0]);
+      await db("users").insert(users[1]);
+      await db("users").insert(users[2]);
+      await db("users").insert(users[3]);
+
+      const count = await Users.editUser(3, {
+        email: "somethingElse@gmail.com",
+      });
+
+      let expectedUsers = getExpectedTestUsers();
+      //change the email to the edited one we supplied
+      expectedUsers[2].email = "somethingElse@gmail.com";
+      //change the email to the original email that was changed in previous test
+      expectedUsers[0].email = "something@gmail.com";
+
+      const dbusers = await db("users");
+
+      expect(count).toBe(1);
+      expect(dbusers).toEqual(expect.arrayContaining(expectedUsers));
     });
   });
 });
