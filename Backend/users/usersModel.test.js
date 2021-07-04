@@ -172,4 +172,117 @@ describe("usersModel", () => {
       expect(dbusers).toEqual(expect.arrayContaining(expectedUsers));
     });
   });
+
+  describe("getUserBy(filterName, filterValue)", () => {
+    it("gets a list of users in a populated database by their user_id", async () => {
+      let users = getTestUsers();
+      let expectedUsers = getExpectedTestUsers();
+
+      for (let i = 0; i < users.length; i++) {
+        await db("users").insert(users[i]);
+      }
+
+      let dbUsers = await db("users");
+      expect(dbUsers.length).toBe(4);
+      expect(dbUsers).toEqual(expectedUsers);
+
+      let user1 = await Users.getUserBy("user_id", 1);
+      expect(user1).toEqual([expectedUsers[0]]);
+    });
+
+    it("returns empty array when trying to get user that's not in the database user their userid", async () => {
+      let users = getTestUsers();
+
+      for (let i = 0; i < users.length - 1; i++) {
+        await db("users").insert(users[i]);
+      }
+      let dbUsers = await db("users");
+      expect(dbUsers.length).toBe(3);
+
+      let user4 = await Users.getUserBy("user_id", 4);
+      expect(user4).toEqual([]);
+    });
+
+    it("gets a list of users in a populated database by their username", async () => {
+      let users = getTestUsers();
+      let expectedUsers = getExpectedTestUsers();
+
+      for (let i = 0; i < users.length; i++) {
+        await db("users").insert(users[i]);
+      }
+
+      let dbUsers = await db("users");
+      expect(dbUsers.length).toBe(4);
+      expect(dbUsers).toEqual(expectedUsers);
+
+      let user1 = await Users.getUserBy("username", "wolf");
+      expect(user1).toEqual([expectedUsers[0]]);
+    });
+
+    it("returns an empty array when trying to get user that's not in the database using their username", async () => {
+      let users = getTestUsers();
+
+      for (let i = 0; i < users.length - 1; i++) {
+        await db("users").insert(users[i]);
+      }
+      let dbUsers = await db("users");
+      expect(dbUsers.length).toBe(3);
+
+      let user4 = await Users.getUserBy("username", "frodo");
+      expect(user4).toEqual([]);
+    });
+  });
+
+  describe("deleteUser(user_id)", () => {
+    it("deletes single user from database holding only 1 user", async () => {
+      let users = getTestUsers();
+
+      await db("users").insert(users[0]);
+      let dbUsers = await db("users");
+      expect(dbUsers.length).toBe(1);
+
+      const count = await Users.deleteUser(1);
+      dbUsers = await db("users");
+
+      expect(count).toBe(1);
+      expect(dbUsers).toEqual([]);
+    });
+
+    it("deletes single user from populated database", async () => {
+      let users = getTestUsers();
+      let expectedUsers = getExpectedTestUsers();
+      expectedUsers.shift();
+
+      for (let i = 0; i < users.length; i++) {
+        await db("users").insert(users[i]);
+      }
+
+      let dbUsers = await db("users");
+      expect(dbUsers.length).toBe(4);
+
+      const count = await Users.deleteUser(1);
+      dbUsers = await db("users");
+
+      expect(count).toBe(1);
+      expect(dbUsers).toEqual(expectedUsers);
+    });
+
+    it("returns 0 when trying to delete a user that does not exist from populated database", async () => {
+      let users = getTestUsers();
+      let expectedUsers = getExpectedTestUsers();
+
+      for (let i = 0; i < users.length; i++) {
+        await db("users").insert(users[i]);
+      }
+
+      let dbUsers = await db("users");
+      expect(dbUsers.length).toBe(4);
+
+      const count = await Users.deleteUser(5);
+      dbUsers = await db("users");
+
+      expect(count).toBe(0);
+      expect(dbUsers).toEqual(expectedUsers);
+    });
+  });
 });
