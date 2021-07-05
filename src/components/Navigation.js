@@ -6,7 +6,7 @@ import { Navbar, Nav } from 'react-bootstrap'
  const Navigation = () => {
      return (
          <div className='navBrand'> 
-            <Navbar 
+            <Navbar collapseOnSelect expand= 'sm'
                 bg='white' 
                 variant='light'
                 fixed='top'>

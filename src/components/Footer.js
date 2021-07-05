@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 const Footer = () => {
     return (
         <div>
-            <Navbar                 
+            <Navbar collapseOnSelect expand= 'sm'             
                 bg='white' 
                 variant='light'
                 fixed='bottom'>
