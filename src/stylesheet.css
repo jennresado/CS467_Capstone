@@ -1,0 +1,5 @@
+.navContent {
+    /*for the Navigation Bar to not overlap the page content*/
+    margin-top: 60px;
+    padding: 12px;
+}
