@@ -6,7 +6,7 @@
   "scripts": {
     "test": "cross-env DB_ENV=testing jest --watch --runInBand",
     "start": "node index.js",
-    "dev_start": "nodemon index.js"
+    "server": "nodemon index.js"
   },
   "author": "Jessica Duell",
   "license": "ISC",
