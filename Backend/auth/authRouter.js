@@ -7,19 +7,6 @@ const { signToken, validLogin } = require("./authHelpers");
 router.post("/register", validateUser, (req, res) => {
   const user = req.body;
 
-  if (!user.admin) {
-    res.status(400).json({
-      messsage: "Request object missing one or more required attributes",
-    });
-  } else {
-    if (typeof user.admin !== "boolean") {
-      res.status(400).json({
-        messsage:
-          "The request object attributes have one or more of the wrong type",
-      });
-    }
-  }
-
   const rounds = parseInt(process.env.BCRYPT_ROUNDS) || 12;
   const hash = bcryptjs.hashSync(user.password, rounds);
   user.password = hash;
@@ -31,7 +18,7 @@ router.post("/register", validateUser, (req, res) => {
     })
     .catch((err) => {
       res.status(500).json({
-        error: e.messsage,
+        error: err.messsage,
         errorMessage: "Couldn't add the user to the database",
         stack: "Auth router line 36",
       });
@@ -40,9 +27,9 @@ router.post("/register", validateUser, (req, res) => {
 
 router.post("/login", validLogin, (req, res) => {
   const { username, password } = req.body;
-
   Users.getUserBy("username", username)
-    .then((user) => {
+    .then((userArr) => {
+      const user = userArr[0];
       if (user && bcryptjs.compareSync(password, user.password)) {
         const token = signToken(user);
         res.status(200).json({ message: "Welcome", token });

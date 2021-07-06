@@ -17,7 +17,7 @@ router.get("/", (req, res) => {
     });
 });
 
-router.put("/", helpers.validateUser, (req, res) => {
+router.put("/", helpers.validateUserEdit, (req, res) => {
   const username = req.jwt.username;
   const changes = req.body;
 
