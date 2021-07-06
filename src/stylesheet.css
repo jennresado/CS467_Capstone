@@ -12,11 +12,32 @@ a {
     text-decoration: none;
 }
 
-.landingPage {
+.generalFormat {
     text-align: center;
     padding: 1rem;
 }
 
 .carousel {
     margin: 1.5rem 0;
+}
+
+.imgCredit {
+    font-size: .75rem;
+}
+
+.loginForm {
+    padding: 3rem 3rem 2rem 3rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+}
+
+.loginImg {
+    padding: 0;
+    margin-bottom: 1rem;
+}
+
+.loginForm > div {
+    margin-bottom: 1rem;
 }

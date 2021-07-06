@@ -1,16 +1,24 @@
 import { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import Landing from './components/Landing'
+import Login from './components/Login'
 
 function App() {
   return (
     <Router>
       <div className='container'>
         {/* Navigation Menu */}
-        {/* Landing Page */}
-        <Landing />
+        <Route 
+            path='/' exact render={(props) => (
+                <Landing />
+            )}
+        />
         {/* Sign Up Page */}
-        {/* Login Page */}
+        <Route 
+            path='/login' render={(props) => (
+                <Login />
+            )}
+        />
         {/* Dashboard Page */}
         {/* Profile Settings Page */}
         {/* Add Animal Page */}
