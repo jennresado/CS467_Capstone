@@ -61,7 +61,8 @@ router.put("/", helpers.validateUserEdit, (req, res) => {
 router.delete("/", (req, res) => {
   const username = req.jwt.username;
 
-  Users.getUserBy("username", username).then((user) => {
+  Users.getUserBy("username", username).then((userArr) => {
+    const user = userArr[0];
     Users.deleteUser(user.user_id)
       .then((delUser) => {
         res.status(200).json({ message: `${delUser} deleted successfully` });

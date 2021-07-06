@@ -20,7 +20,7 @@ router.post("/register", validateUser, (req, res) => {
       res.status(500).json({
         error: err.messsage,
         errorMessage: "Couldn't add the user to the database",
-        stack: "Auth router line 36",
+        stack: "Auth router line 23",
       });
     });
 });
