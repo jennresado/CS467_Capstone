@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const bcryptjs = require("bcryptjs");
-const Users = require("../users/usersModel");
-const { validateUser } = require("../users/userHelpers");
+const Users = require("../bring-me-home-backend/users/usersModel");
+const { validateUser } = require("../bring-me-home-backend/users/userHelpers");
 const { signToken, validLogin } = require("./authHelpers");
 
 router.post("/register", validateUser, (req, res) => {
