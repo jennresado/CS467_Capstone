@@ -16,15 +16,15 @@ import { useLocation } from 'react-router-dom'
                 fixed='top'>
                 <Navbar.Toggle />
                 <Navbar.Collapse className='justify-content-end'>
-                {location.pathname === '/UserProfile' && <Nav.Link href="#Dashboard">Dashboard</Nav.Link> }
-                {location.pathname === '/UserProfile' && <Nav.Link href="#Animal">Animal</Nav.Link> }
+                {location.pathname === '/UserProfile' && <Nav.Link href="/Dashboard">Dashboard</Nav.Link> }
+                {location.pathname === '/UserProfile' && <Nav.Link href="/Animal">Animal</Nav.Link> }
                 {location.pathname === '/UserProfile' && <Nav.Link href="/UserProfile">Profile</Nav.Link> }
-                {location.pathname === '/' && <Nav.Link href="#Login">Login</Nav.Link> }
-                {location.pathname === '/Landing' && <Nav.Link href="#Login">Login</Nav.Link> }
-                {location.pathname === '/Contact' && <Nav.Link href="#Login">Login</Nav.Link> }
-                {location.pathname === '/SignUp' && <Nav.Link href="#Login">Login</Nav.Link> }
+                {location.pathname === '/' && <Nav.Link href="/Login">Login</Nav.Link> }
+                {location.pathname === '/Landing' && <Nav.Link href="/Login">Login</Nav.Link> }
+                {location.pathname === '/Contact' && <Nav.Link href="/Login">Login</Nav.Link> }
+                {location.pathname === '/SignUp' && <Nav.Link href="/Login">Login</Nav.Link> }
                 
-                {location.pathname === '/UserProfile' && <Nav.Link href="#Logout">Logout</Nav.Link> }
+                {location.pathname === '/UserProfile' && <Nav.Link href="/Logout">Logout</Nav.Link> }
                 {location.pathname === '/Landing' && <Nav.Link href="/SignUp">Sign Up</Nav.Link> }
                 {location.pathname === '/Contact' && <Nav.Link href="/SignUp">Sign Up</Nav.Link> }
                 {location.pathname === '/' && <Nav.Link href="/SignUp">Sign Up</Nav.Link> }
