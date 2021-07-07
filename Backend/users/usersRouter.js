@@ -22,7 +22,8 @@ router.put("/", helpers.validateUserEdit, (req, res) => {
   const changes = req.body;
 
   Users.getUserBy("username", username)
-    .then((user) => {
+    .then((userArr) => {
+      const user = userArr[0];
       if (user) {
         if (changes.admin) {
           if (!user.admin) {
