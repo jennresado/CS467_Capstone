@@ -17,15 +17,13 @@ const Footer = () => {
                 <Navbar.Collapse className='justify-content-center'>
                 {location.pathname === '/UserProfile' && <Nav.Link href="/Dashboard">Dashboard</Nav.Link> }
                 {location.pathname === '/Dashboard' && <Nav.Link href="/Dashboard">Home</Nav.Link> }
-                {location.pathname === '/Landing' && <Nav.Link href="/Landing">Home</Nav.Link> }
-                {location.pathname === '/About' && <Nav.Link href="/Landing">Home</Nav.Link> }
-                {location.pathname === '/SignUp' && <Nav.Link href="/Landing">Home</Nav.Link> }
-                {location.pathname === '/Contact' && <Nav.Link href="/Landing">Home</Nav.Link> }
-                {location.pathname === '/' && <Nav.Link href="/Landing">Home</Nav.Link> }
+                {location.pathname === '/' && <Nav.Link href="/">Home</Nav.Link> }
+                {location.pathname === '/About' && <Nav.Link href="/">Home</Nav.Link> }
+                {location.pathname === '/SignUp' && <Nav.Link href="/">Home</Nav.Link> }
+                {location.pathname === '/Contact' && <Nav.Link href="/">Home</Nav.Link> }
                 <Nav.Link href="/About">About</Nav.Link>
                 <Nav.Link href="/Contact">Contact</Nav.Link>
                 {location.pathname === '/' && <Nav.Link href="/Login">Login</Nav.Link> }
-                {location.pathname === '/Landing' && <Nav.Link href="/Login">Login</Nav.Link> }
                 {location.pathname === '/SignUp' && <Nav.Link href="/Login">Login</Nav.Link> }
                 {location.pathname === '/Contact' && <Nav.Link href="/Login">Login</Nav.Link> }
                 {location.pathname === '/UserProfile' && <Nav.Link href="/UserProfile">Profile</Nav.Link> }
