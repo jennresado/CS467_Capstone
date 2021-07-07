@@ -7,13 +7,12 @@ function validateUser(req, res, next) {
   let user = req.body;
 
   if (
-    (user.username &&
-      user.password &&
-      user.first_name &&
-      user.last_name &&
-      user.email &&
-      user.admin) ||
-    !user.admin
+    user.username &&
+    user.password &&
+    user.first_name &&
+    user.last_name &&
+    user.email &&
+    (user.admin || !user.admin)
   ) {
     if (typeof user.username !== "string") {
       return res.status(400).json({
