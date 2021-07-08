@@ -7,6 +7,7 @@ import Footer from './components/Footer';
 import Contact from './components/Contact';
 import UserProfile from './components/UserProfile';
 import SignUp from './components/SignUp';
+import About from './components/About'
 
 function App() {
   return (
@@ -40,6 +41,9 @@ function App() {
         <Route path= '/UserProfile' component={Footer}/>
         {/* Add Animal Page */}
         {/* About Page */}
+        <Route path= '/About' component={About}/>
+        <Route path= '/About' component={Navigation}/>
+        <Route path= '/About' component={Footer}/>
         {/* Contact Us Page */}
         <Route path= '/Contact' component={Contact}/>
         <Route path= '/Contact' component={Navigation}/>
