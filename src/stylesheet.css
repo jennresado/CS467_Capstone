@@ -41,3 +41,7 @@ a {
 .loginForm > div {
     margin-bottom: 1rem;
 }
+
+.loginError {
+    color: red;
+}
