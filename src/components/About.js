@@ -7,18 +7,51 @@ const About = () => {
         <div className='aboutPage'>
             <div className='row justify-content-center'>
                 <div className='col-xl-8'>
-                    <div className='row aboutImg'>
+                    <div className='row'>
                         <h1>About Bring Me Home</h1>
                     </div>
                     <div className='row'>
-                        <img className='img-fluid' src={aboutImg1}></img>
+                        <img className='img-fluid spreadImgs' src={aboutImg1}></img>
                     </div>
                     <div className='row'>
                         <p>
-                            Each year, it's estimated that more than one million adoptable dogs and cats are euthanized in the United States because too many pets come into shelters and too few people consider adoption when looking for a pet.
+                            Bring Me Home goal is to help you find a new best friend and save a life.
                         </p>
+                        <h4>Tops reasons to adopt a pet</h4> 
+                        <ol>
+                            <li>
+                                Because you'll save a life.
+                            </li>
+                            <li>
+                                Because you'll get a great animal.
+                            </li>
+                            <li>
+                                Because it'll cost you less.
+                            </li>
+                            <li>
+                                Because of the bragging rights.
+                            </li>
+                            <li>
+                                Because it's one way to fight puppy mills.
+                            </li>
+                            <li>
+                                Because your home will thank you.
+                            </li>
+                            <li>
+                                Because all pets are good for your health, but adoptees offer an extra boost.
+                            </li>
+                            <li>
+                                Because adoption helps more than just one animal.
+                            </li>
+                            <li>
+                                Because Bring Me Home makes it easy.
+                            </li>
+                            <li>
+                                Because you'll change a homeless animal's whole world.
+                            </li>
+                        </ol>
                         <p>
-                            Adopt a pet, save a life, and get a new best friend.
+                            Article by <a href="https://www.humanesociety.org/resources/top-reasons-adopt-pet">Humane Society</a>
                         </p>
                         <p>
                             <FaCameraRetro></FaCameraRetro> by 
