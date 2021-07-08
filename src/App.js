@@ -10,6 +10,32 @@ import SignUp from './components/SignUp';
 import About from './components/About'
 
 function App() {
+    const [cookies, setCookie, removeCookie] = useCookies(['user'])
+    // removeCookie('user') //when a user logs out
+
+    // Login User
+    const loginUser = async (loginInfo) => {
+        const res = await fetch(
+            `https://bring-me-home-backend.herokuapp.com/auth/login`,
+            {
+                method: 'POST',
+                headers: {'Content-type': 'application/json'},
+                body: JSON.stringify(loginInfo)
+            }
+        )
+        
+        const data = await res.json()
+        
+        if ("token" in data) {
+            // Create cookie
+            setCookie(
+                'user', 
+                {'username': loginInfo.username, 'token': data.token}, 
+                {path: '/'}
+            )
+        }
+    }
+
     return (
         <Router>
         <div className='container'>
@@ -25,7 +51,7 @@ function App() {
 
             {/* Sign Up Page */}
             <Route 
-                path= '/SignUp' 
+                path= '/signup' 
                 render={(props) => (
                     <SignUp />
                 )
@@ -44,7 +70,7 @@ function App() {
 
             {/* Dashboard Page */}
             <Route 
-                path= '/Dashboard' 
+                path= '/dashboard' 
                 render={(props) => (
                     <Dashboard />
                 )
@@ -52,7 +78,7 @@ function App() {
 
             {/* Profile Settings Page */}
             <Route 
-                path= '/UserProfile' 
+                path= '/userprofile' 
                 render={(props) => (
                     <UserProfile />
                 )
@@ -68,7 +94,7 @@ function App() {
             
             {/* About Page */}
             <Route 
-                path= '/About' 
+                path= '/about' 
                 render={(props) => (
                     <About />
                 )
@@ -76,7 +102,7 @@ function App() {
 
             {/* Contact Us Page */}
             <Route 
-                path= '/Contact' 
+                path= '/contact' 
                 render={(props) => (
                     <Contact />
                 )
