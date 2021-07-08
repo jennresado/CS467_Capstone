@@ -8,8 +8,6 @@ import Dashboard from './components/Dashboard'
 function App() {
     const [cookies, setCookie] = useCookies(['user'])
 
-
-
     // Login User
     const loginUser = async (loginInfo) => {
         const res = await fetch(
@@ -24,15 +22,8 @@ function App() {
         const data = await res.json()
         
         if ("token" in data) {
-            console.log(data)
-            setCookie('username', loginInfo.username, {path: '/'})
-            console.log(cookies.username)
-            // history.push('/dashboard')
-            // setUsername(loginInfo.username)
-            // setToken(data.token)
-            // console.log(token)
-            // handleCookie()
-            // console.log(cookies.token) 
+            // Create cookie
+            setCookie('user', {'username': loginInfo.username, 'token': data.token}, {path: '/'})
         }
     }
 
@@ -51,6 +42,7 @@ function App() {
                 render={(props) => (
                     <Login 
                         onLogin={loginUser} 
+                        cookies={cookies}
                     />
                 )}
             />
