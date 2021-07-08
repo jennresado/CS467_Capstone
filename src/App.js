@@ -33,7 +33,7 @@ function App() {
             setCookie(
                 'user', 
                 {'username': loginInfo.username, 'token': data.token}, 
-                {path: '/', expires: 0}
+                {path: '/'}
             )
         }
     }
@@ -53,7 +53,7 @@ function App() {
 
             {/* Sign Up Page */}
             <Route 
-                path= '/SignUp' 
+                path= '/signup' 
                 render={(props) => (
                     <SignUp />
                 )
@@ -72,7 +72,7 @@ function App() {
 
             {/* Dashboard Page */}
             <Route 
-                path= '/Dashboard' 
+                path= '/dashboard' 
                 render={(props) => (
                     <Dashboard />
                 )
@@ -80,7 +80,7 @@ function App() {
 
             {/* Profile Settings Page */}
             <Route 
-                path= '/UserProfile' 
+                path= '/userprofile' 
                 render={(props) => (
                     <UserProfile />
                 )
@@ -96,7 +96,7 @@ function App() {
             
             {/* About Page */}
             <Route 
-                path= '/About' 
+                path= '/about' 
                 render={(props) => (
                     <About />
                 )
@@ -104,7 +104,7 @@ function App() {
 
             {/* Contact Us Page */}
             <Route 
-                path= '/Contact' 
+                path= '/contact' 
                 render={(props) => (
                     <Contact />
                 )

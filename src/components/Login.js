@@ -24,7 +24,7 @@ const Login = ({ onLogin, cookies }) => {
             setUsername('')
             setPassword('')
         } else {
-            history.push('/dashboard')
+            history.push('/Dashboard')
         }
     }
 
@@ -59,6 +59,7 @@ const Login = ({ onLogin, cookies }) => {
                             <div className='d-grid gap-2 mx-auto'>
                                 <button className='btn btn-primary' type='submit'>Login</button>
                             </div>
+                            <Link to="/SignUp">Sign Up</Link>
                         </form>
                     </div>
                     <div className='row'>
