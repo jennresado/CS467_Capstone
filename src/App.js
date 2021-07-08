@@ -9,6 +9,7 @@ import Footer from './components/Footer';
 import Contact from './components/Contact';
 import UserProfile from './components/UserProfile';
 import SignUp from './components/SignUp';
+import About from './components/About'
 
 function App() {
     const [cookies, setCookie, removeCookie] = useCookies(['user'])
@@ -119,7 +120,7 @@ function App() {
             }/> */}
             
             {/* About Page */}
-            {/* <Route 
+            <Route 
                 path= '/About' 
                 render={(props) => (
                     <>
@@ -129,7 +130,7 @@ function App() {
                     </>
 
                 )
-            }/> */}
+            }/>
 
             {/* Contact Us Page */}
             <Route 
