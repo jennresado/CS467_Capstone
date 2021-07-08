@@ -7,7 +7,7 @@ import Dashboard from './components/Dashboard'
 
 function App() {
     const [cookies, setCookie, removeCookie] = useCookies(['user'])
-    // removeCookie('user') when a user logs out
+    // removeCookie('user') //when a user logs out
 
     // Login User
     const loginUser = async (loginInfo) => {
@@ -24,7 +24,11 @@ function App() {
         
         if ("token" in data) {
             // Create cookie
-            setCookie('user', {'username': loginInfo.username, 'token': data.token}, {path: '/'})
+            setCookie(
+                'user', 
+                {'username': loginInfo.username, 'token': data.token}, 
+                {path: '/', expires: 0}
+            )
         }
     }
 
