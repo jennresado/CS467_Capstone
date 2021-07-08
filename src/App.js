@@ -41,14 +41,13 @@ function App() {
     return (
         <Router>
         <div className='container'>
+            {/* Navigation Bar */}
+            <Navigation />
+            
             {/* Landing Page */}
             <Route 
                 path='/' exact render={(props) => (
-                    <>
-                    <Navigation />
                     <Landing />
-                    
-                    </>
                 )}
             />
 
@@ -56,12 +55,7 @@ function App() {
             <Route 
                 path= '/SignUp' 
                 render={(props) => (
-                    <>
-                        <Navigation />
-                        <SignUp />
-                        <Footer />
-                    </>
-
+                    <SignUp />
                 )
             }/>
 
@@ -69,14 +63,10 @@ function App() {
             <Route 
                 path='/login' 
                 render={(props) => (
-                    <>
-                        <Navigation />
-                        <Login 
-                            onLogin={loginUser} 
-                            cookies={cookies}
-                        />
-                        <Footer />
-                    </>
+                    <Login 
+                        onLogin={loginUser} 
+                        cookies={cookies}
+                    />
                 )}
             />
 
@@ -84,12 +74,7 @@ function App() {
             <Route 
                 path= '/Dashboard' 
                 render={(props) => (
-                    <>
-                        <Navigation />
-                        <Dashboard />
-                        <Footer />
-                    </>
-
+                    <Dashboard />
                 )
             }/>
 
@@ -97,12 +82,7 @@ function App() {
             <Route 
                 path= '/UserProfile' 
                 render={(props) => (
-                    <>
-                        <Navigation />
-                        <UserProfile />
-                        <Footer />
-                    </>
-
+                    <UserProfile />
                 )
             }/>
 
@@ -110,12 +90,7 @@ function App() {
             {/* <Route 
                 path= '/Animal' 
                 render={(props) => (
-                    <>
-                        <Navigation />
-                        <Animal />
-                        <Footer />
-                    </>
-
+                    <Animal />
                 )
             }/> */}
             
@@ -123,12 +98,7 @@ function App() {
             <Route 
                 path= '/About' 
                 render={(props) => (
-                    <>
-                        <Navigation />
-                        <About />
-                        <Footer />
-                    </>
-
+                    <About />
                 )
             }/>
 
@@ -136,15 +106,12 @@ function App() {
             <Route 
                 path= '/Contact' 
                 render={(props) => (
-                    <>
-                        <Navigation />
-                        <Contact />
-                        <Footer />
-                    </>
-
+                    <Contact />
                 )
             }/>
 
+            {/* Footer */}
+            <Footer />
         </div>
         </Router>
     );
