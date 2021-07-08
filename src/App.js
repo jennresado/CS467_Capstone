@@ -4,6 +4,11 @@ import { BrowserRouter as Router, Route, useHistory } from 'react-router-dom'
 import Landing from './components/Landing'
 import Login from './components/Login'
 import Dashboard from './components/Dashboard'
+import Navigation from './components/Navigation'
+import Footer from './components/Footer';
+import Contact from './components/Contact';
+import UserProfile from './components/UserProfile';
+import SignUp from './components/SignUp';
 
 function App() {
     const [cookies, setCookie, removeCookie] = useCookies(['user'])
@@ -35,26 +40,110 @@ function App() {
     return (
         <Router>
         <div className='container'>
-            {/* Navigation Menu */}
+            {/* Landing Page */}
             <Route 
                 path='/' exact render={(props) => (
+                    <>
+                    <Navigation />
                     <Landing />
+                    
+                    </>
                 )}
             />
+
             {/* Sign Up Page */}
+            <Route 
+                path= '/SignUp' 
+                render={(props) => (
+                    <>
+                        <Navigation />
+                        <SignUp />
+                        <Footer />
+                    </>
+
+                )
+            }/>
+
+            {/* Login Page */}
             <Route 
                 path='/login' 
                 render={(props) => (
-                    <Login 
-                        onLogin={loginUser} 
-                        cookies={cookies}
-                    />
+                    <>
+                        <Navigation />
+                        <Login 
+                            onLogin={loginUser} 
+                            cookies={cookies}
+                        />
+                        <Footer />
+                    </>
                 )}
             />
+
             {/* Dashboard Page */}
-            <Route path='/dashboard' component={Dashboard} />
+            <Route 
+                path= '/Dashboard' 
+                render={(props) => (
+                    <>
+                        <Navigation />
+                        <Dashboard />
+                        <Footer />
+                    </>
+
+                )
+            }/>
+
             {/* Profile Settings Page */}
+            <Route 
+                path= '/UserProfile' 
+                render={(props) => (
+                    <>
+                        <Navigation />
+                        <UserProfile />
+                        <Footer />
+                    </>
+
+                )
+            }/>
+
             {/* Add Animal Page */}
+            {/* <Route 
+                path= '/Animal' 
+                render={(props) => (
+                    <>
+                        <Navigation />
+                        <Animal />
+                        <Footer />
+                    </>
+
+                )
+            }/> */}
+            
+            {/* About Page */}
+            {/* <Route 
+                path= '/About' 
+                render={(props) => (
+                    <>
+                        <Navigation />
+                        <About />
+                        <Footer />
+                    </>
+
+                )
+            }/> */}
+
+            {/* Contact Us Page */}
+            <Route 
+                path= '/Contact' 
+                render={(props) => (
+                    <>
+                        <Navigation />
+                        <Contact />
+                        <Footer />
+                    </>
+
+                )
+            }/>
+
         </div>
         </Router>
     );

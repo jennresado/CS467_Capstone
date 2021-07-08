@@ -13,8 +13,10 @@ a {
 }
 
 .generalFormat {
+    margin-top: 60px;  /*for the Navigation Bar to not overlap the page content*/
     text-align: center;
     padding: 1rem;
+    margin-bottom: 60px; /*for the  Bottom Navigation Bar to not cut off the page content*/
 }
 
 .carousel {
@@ -44,4 +46,24 @@ a {
 
 .loginError {
     color: red;
+}
+.contactPage {
+    margin-top: 60px;  /*for the Navigation Bar to not overlap the page content*/
+    text-align: center;
+    padding: 1rem;
+    margin-bottom: 60px; /*for the  Bottom Navigation Bar to not cut off the page content*/
+}
+
+.userProfilePage {
+    margin-top: 60px;  /*for the Navigation Bar to not overlap the page content*/
+    text-align: center;
+    padding: 1rem;
+    margin-bottom: 60px; /*for the  Bottom Navigation Bar to not cut off the page content*/
+}
+
+.signUpPage {
+    margin-top: 60px;  /*for the Navigation Bar to not overlap the page content*/
+    text-align: center;
+    padding: 1rem;
+    margin-bottom: 60px; /*for the  Bottom Navigation Bar to not cut off the page content*/
 }
