@@ -13,7 +13,7 @@ const Landing = () => {
                         <h1>Bring Me Home</h1>
                     </div>
                     <div className='row'>
-                        <div id="carouselExampleSlidesOnly" className="carousel slide" data-bs-ride="carousel">
+                        <div id="carouselExampleSlidesOnly" className="carousel slide spreadImgs" data-bs-ride="carousel">
                             <div className="carousel-inner">
                                 <div className="carousel-item active">
                                     <img src={landingImg1} className="d-block w-100" alt="Two dogs running side by side"></img>
