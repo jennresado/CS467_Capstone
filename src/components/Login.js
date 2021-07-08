@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom'
-import { useState } from 'react'
+import { useState, useHistory } from 'react'
 import { FaCameraRetro } from 'react-icons/fa'
 import loginImg1 from '../assets/login_1.jpg'
 
-const Login = ({ onLogin }) => {
+const Login = ({ onLogin, cookies }) => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState(false)
@@ -15,13 +15,9 @@ const Login = ({ onLogin }) => {
             return
         }
 
-        onLogin({ username, password }).then(data => {
-            
-        }).catch(err => {
-            setUsername('')
-            setPassword('')
-            setError(true)
-        })
+        onLogin({ username, password })
+
+        // if ()
     }
 
     return (
@@ -32,12 +28,15 @@ const Login = ({ onLogin }) => {
                         <h1>Login</h1>
                     </div>
                     <div className='row'>
-                        <form className='loginForm'>
+                        <form className='loginForm' onSubmit={onSubmit}>
+                            {error && <p className='loginError'>Incorrect username/password.</p>}
                             <div>
                             <input 
                                     type='text'
                                     placeholder='username'
                                     className='form-control'
+                                    value={username}
+                                    onChange={(e) => setUsername(e.target.value)}
                             />
                             </div>
                             <div>
@@ -45,6 +44,8 @@ const Login = ({ onLogin }) => {
                                     type='text'
                                     placeholder='password'
                                     className='form-control'
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
                             />
                             </div>
                             <div className='d-grid gap-2 mx-auto'>
