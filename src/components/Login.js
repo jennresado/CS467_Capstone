@@ -1,8 +1,29 @@
 import { Link } from 'react-router-dom'
+import { useState } from 'react'
 import { FaCameraRetro } from 'react-icons/fa'
 import loginImg1 from '../assets/login_1.jpg'
 
-const Login = () => {
+const Login = ({ onLogin }) => {
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
+    const [error, setError] = useState(false)
+
+    const onSubmit = (e) => {
+        e.preventDefault()
+
+        if(!username && !password) {
+            return
+        }
+
+        onLogin({ username, password }).then(data => {
+            
+        }).catch(err => {
+            setUsername('')
+            setPassword('')
+            setError(true)
+        })
+    }
+
     return (
         <div className='generalFormat'>
             <div className='row justify-content-center'>
