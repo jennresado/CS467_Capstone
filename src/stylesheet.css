@@ -19,12 +19,20 @@ a {
     margin-bottom: 60px; /*for the  Bottom Navigation Bar to not cut off the page content*/
 }
 
-.carousel {
-    margin: 1.5rem 0;
+.aboutPage {
+    margin-top: 60px;  /*for the Navigation Bar to not overlap the page content*/
+    text-align: center;
+    padding: 1rem;
+    margin-bottom: 60px; /*for the  Bottom Navigation Bar to not cut off the page content*/
 }
 
-.aboutImg {
-    margin: 1.5rem 0;
+ol {
+    text-align: left!important;
+    padding-left: 2rem!important;
+}
+
+.spreadImgs {
+    margin: 1.5rem 0!important;
 }
 
 .contactPage {
