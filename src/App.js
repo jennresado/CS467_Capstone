@@ -6,7 +6,8 @@ import Login from './components/Login'
 import Dashboard from './components/Dashboard'
 
 function App() {
-    const [cookies, setCookie] = useCookies(['user'])
+    const [cookies, setCookie, removeCookie] = useCookies(['user'])
+    // removeCookie('user') when a user logs out
 
     // Login User
     const loginUser = async (loginInfo) => {

@@ -1,9 +1,10 @@
-import { Link } from 'react-router-dom'
-import { useState, useHistory } from 'react'
+import { Link, Redirect, useHistory } from 'react-router-dom'
+import { useState } from 'react'
 import { FaCameraRetro } from 'react-icons/fa'
 import loginImg1 from '../assets/login_1.jpg'
 
 const Login = ({ onLogin, cookies }) => {
+    let history = useHistory()
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState(false)
@@ -18,8 +19,12 @@ const Login = ({ onLogin, cookies }) => {
         onLogin({ username, password })
 
         console.log(cookies.user)
-        if (!"token" in cookies.user) {
+        if (!cookies.user) {
             setError(true)
+            setUsername('')
+            setPassword('')
+        } else {
+            history.push('/dashboard')
         }
     }
 
