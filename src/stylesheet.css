@@ -9,7 +9,7 @@ h1 {
 }
 
 a {
-    text-decoration: none;
+    text-decoration: none!important;
 }
 
 .landingPage {
@@ -20,6 +20,10 @@ a {
 }
 
 .carousel {
+    margin: 1.5rem 0;
+}
+
+.aboutImg {
     margin: 1.5rem 0;
 }
 

@@ -22,9 +22,10 @@ import { useLocation } from 'react-router-dom'
                 {location.pathname === '/' && <Nav.Link href="/Login">Login</Nav.Link> }
                 {location.pathname === '/Contact' && <Nav.Link href="/Login">Login</Nav.Link> }
                 {location.pathname === '/SignUp' && <Nav.Link href="/Login">Login</Nav.Link> }
-                
+                {location.pathname === '/about' && <Nav.Link href="/Login">Login</Nav.Link> }
                 {location.pathname === '/UserProfile' && <Nav.Link href="/Logout">Logout</Nav.Link> }
                 {location.pathname === '/Contact' && <Nav.Link href="/SignUp">Sign Up</Nav.Link> }
+                {location.pathname === '/about' && <Nav.Link href="/SignUp">Sign Up</Nav.Link> }
                 {location.pathname === '/' && <Nav.Link href="/SignUp">Sign Up</Nav.Link> }
                 {location.pathname === '/SignUp' && <Nav.Link href="/SignUp">Sign Up</Nav.Link> }
                 </Navbar.Collapse>
