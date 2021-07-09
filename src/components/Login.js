@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { FaCameraRetro } from 'react-icons/fa'
 import loginImg1 from '../assets/login_1.jpg'
 
-const Login = ({ onLogin, cookies }) => {
+const Login = ({ onLogin }) => {
     let history = useHistory()
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
@@ -17,15 +17,13 @@ const Login = ({ onLogin, cookies }) => {
         }
 
         onLogin({ username, password })
-
-        console.log(cookies.user)
-        if (!cookies.user) {
-            setError(true)
-            setUsername('')
-            setPassword('')
-        } else {
-            history.push('/dashboard')
-        }
+            .then(() => {
+                history.push('/dashboard')
+            }).catch((err) => {
+                setError(true)
+                setUsername('')
+                setPassword('')
+            })     
     }
 
     return (
