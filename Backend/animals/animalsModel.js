@@ -26,26 +26,6 @@ async function getAnimalBy(filterName, filterValue) {
   switch (filterName) {
     case "animal_id":
       return db("animals").where({ animal_id: filterValue });
-    case "type":
-      return db("animals").where({ type: filterValue });
-    case "breed":
-      return db("animal_breeds")
-        .join("breeds", "breeds.breed_id", "animal_breeds.breed_id")
-        .where({ animal_id: filterValue });
-    case "disposition":
-      return db("animal_dispositions")
-        .join(
-          "dispositions",
-          "animal_dispositions.disposition_id",
-          "dispositions.disposition_id",
-        )
-        .where({ animal_id: filterValue });
-    case "availability":
-      return db("animal_availability").join(
-        "availability",
-        "availability.id",
-        "animal_availability.availability.id",
-      );
     case "date":
       return db("animals").where({ date_created: filterValue });
   }
