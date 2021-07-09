@@ -15,24 +15,24 @@ const Footer = () => {
                 fixed='bottom'>
                 <Navbar.Toggle />
                 <Navbar.Collapse className='justify-content-center'>
-                {location.pathname === '/UserProfile' && <Nav.Link href="/Dashboard">Dashboard</Nav.Link> }
-                {location.pathname === '/Dashboard' && <Nav.Link href="/Dashboard">Home</Nav.Link> }
+                {location.pathname === '/userprofile' && <Nav.Link href="/dashboard">Dashboard</Nav.Link> }
+                {location.pathname === '/dashboard' && <Nav.Link href="/dashboard">Home</Nav.Link> }
                 {location.pathname === '/' && <Nav.Link href="/">Home</Nav.Link> }
-                {location.pathname === '/About' && <Nav.Link href="/">Home</Nav.Link> }
-                {location.pathname === '/SignUp' && <Nav.Link href="/">Home</Nav.Link> }
-                {location.pathname === '/Contact' && <Nav.Link href="/">Home</Nav.Link> }
-                <Nav.Link href="/About">About</Nav.Link>
-                <Nav.Link href="/Contact">Contact</Nav.Link>
-                {location.pathname === '/' && <Nav.Link href="/Login">Login</Nav.Link> }
-                {location.pathname === '/SignUp' && <Nav.Link href="/Login">Login</Nav.Link> }
-                {location.pathname === '/Contact' && <Nav.Link href="/Login">Login</Nav.Link> }
-                {location.pathname === '/UserProfile' && <Nav.Link href="/UserProfile">Profile</Nav.Link> }
-                {location.pathname === '/UserProfile' && <Nav.Link href="/Animal">Animal</Nav.Link> }
-                {location.pathname === '/Landing' && <Nav.Link href="/SignUp">Sign Up</Nav.Link> }
-                {location.pathname === '/Contact' && <Nav.Link href="/SignUp">Sign Up</Nav.Link> }
-                {location.pathname === '/SignUp' && <Nav.Link href="/SignUp">Sign Up</Nav.Link> }
-                {location.pathname === '/' && <Nav.Link href="/SignUp">Sign Up</Nav.Link> }
-                {location.pathname === '/UserProfile' && <Nav.Link href="/SignUp">Sign Up</Nav.Link> }
+                {location.pathname === '/about' && <Nav.Link href="/">Home</Nav.Link> }
+                {location.pathname === '/signup' && <Nav.Link href="/">Home</Nav.Link> }
+                {location.pathname === '/contact' && <Nav.Link href="/">Home</Nav.Link> }
+                <Nav.Link href="/about">About</Nav.Link>
+                <Nav.Link href="/contact">Contact</Nav.Link>
+                {location.pathname === '/' && <Nav.Link href="/login">Login</Nav.Link> }
+                {location.pathname === '/signup' && <Nav.Link href="/login">Login</Nav.Link> }
+                {location.pathname === '/contact' && <Nav.Link href="/login">Login</Nav.Link> }
+                {location.pathname === '/userprofile' && <Nav.Link href="/userprofile">Profile</Nav.Link> }
+                {location.pathname === '/userprofile' && <Nav.Link href="/animal">Animal</Nav.Link> }
+                {location.pathname === '/landing' && <Nav.Link href="/signup">Sign Up</Nav.Link> }
+                {location.pathname === '/contact' && <Nav.Link href="/signup">Sign Up</Nav.Link> }
+                {location.pathname === '/signup' && <Nav.Link href="/signup">Sign Up</Nav.Link> }
+                {location.pathname === '/' && <Nav.Link href="/signup">Sign Up</Nav.Link> }
+                {location.pathname === '/userprofile' && <Nav.Link href="/signup">Sign Up</Nav.Link> }
                 </Navbar.Collapse>
             </Navbar>
         </div>

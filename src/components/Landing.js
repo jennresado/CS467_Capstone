@@ -6,7 +6,7 @@ import landingImg3 from '../assets/landing_3.jpg'
 
 const Landing = () => {
     return (
-        <div className='landingPage'>
+        <div className='generalFormat'>
             <div className='row justify-content-center'>
                 <div className='col-xl-8'>
                     <div className='row'>
@@ -34,14 +34,14 @@ const Landing = () => {
                         <p>
                             Adopt a pet, save a life, and get a new best friend.
                         </p>
-                        <p>
+                        <p className='imgCredit'>
                             <FaCameraRetro></FaCameraRetro> by 
                             <a href="https://unsplash.com/@alvannee?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"> Alvan Nee </a>, 
                             <a href="https://unsplash.com/@houcong?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"> Cong H</a>,
                             <a href="https://unsplash.com/@bonniekdesign?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"> Bonnie Kittle</a> on 
                             <a href="https://unsplash.com/s/photos/pets?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"> Unsplash</a>
                         </p>
-                        </div>
+                    </div>
                 </div>
             </div>
         </div>
