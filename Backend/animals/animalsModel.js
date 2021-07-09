@@ -41,7 +41,11 @@ async function getAnimalBy(filterName, filterValue) {
         )
         .where({ animal_id: filterValue });
     case "availability":
-      return db("animals").where({ availability: filterValue });
+      return db("animal_availability").join(
+        "availability",
+        "availability.id",
+        "animal_availability.availability.id",
+      );
     case "date":
       return db("animals").where({ date_created: filterValue });
   }
