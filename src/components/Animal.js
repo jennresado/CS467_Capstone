@@ -35,72 +35,74 @@ const Animal = () => {
                         <h1>Animal Profile</h1>
                     </div>
                     <div className='row'>
-                        <form className='animalForm' onSubmit={onSubmit}>
-                            <div>
-                            <input 
-                                    type='text'
-                                    placeholder='Type'
-                                    className='form-control'
-                                    // value={type}
-                                    // onChange={(e) => setType(e.target.value)}
-                            />
-                            </div>
-                            <div>
-                                <input 
-                                    type='text'
-                                    placeholder='Breed'
-                                    className='form-control'
-                                    // value={breed}
-                                    // onChange={(e) => setBreed(e.target.value)}
-                            />
-                            </div>
-                            <div>
+                        <form>
                             <div className="input-group mb-3">
-                                <div className="input-group-text">
-                                    <input className="form-check-input mt-0" type="checkbox" value="Good with other animals" aria-label="Checkbox for following text input" />
+                                <select className="form-select" id="id">
+                                    <option>Animal Id</option>
+                                    {/* autofill based on data pulled from db */}
+                                </select>
+                            </div>
+                            <div className="input-group mb-3">
+                                <select className="form-select" id="type">
+                                    <option>Type</option>
+                                    <option value="dog">dog</option>
+                                    <option value="cat">cat</option>
+                                    <option value="other">other</option>
+                                </select>
+                            </div>
+                            <div className="input-group mb-3">
+                                <select className="form-select" id="breed">
+                                    <option>Breed</option>
+                                    <option value="chihuahua">chihuahua</option>
+                                    <option value="labrador">labrador</option>
+                                    <option value="siberian husky">siberian husky</option>
+                                </select>
+                            </div>
+                            <label for="disposition">Disposition</label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-text">
+                                    <input class="form-check-input mt-0" type="checkbox" value="" aria-label="Checkbox for following text input" />
                                 </div>
+                                <input type="text" class="form-control" value="Good with other animals" aria-label="Text input with checkbox" />
                             </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-text">
+                                    <input class="form-check-input mt-0" type="checkbox" value="" aria-label="Checkbox for following text input" />
+                                </div>
+                                <input type="text" class="form-control" value="Good with children" aria-label="Text input with checkbox" />
                             </div>
-                            <div>
-                                <input 
-                                    type='text'
-                                    placeholder='Picture'
-                                    className='form-control'
-                                    // value={picture}
-                                    // onChange={(e) => setPicture(e.target.value)}
-                            />
+                            <div class="input-group mb-3">
+                                <div class="input-group-text">
+                                    <input class="form-check-input mt-0" type="checkbox" value="" aria-label="Checkbox for following text input" />
+                                </div>
+                                <input type="text" class="form-control" value="Animal must be leashed at all times" aria-label="Text input with checkbox" />
                             </div>
-                            <div>
-                                <input 
-                                    type='text'
-                                    placeholder='Availability'
-                                    className='form-control'
-                                    // value={availability}
-                                    // onChange={(e) => setAvailability(e.target.value)}
-                            />
+                            <div class="input-group mb-3">
+                                <label>Picture</label>
+                                <input type="file" class="form-control" id="inputGroupFile02" />
+                                <label class="input-group-text" for="inputGroupFile02">Upload</label>
                             </div>
-                            <div>
-                                <input 
-                                    type='text'
-                                    placeholder='News item'
-                                    className='form-control'
-                                    // value={breed}
-                                    // onChange={(e) => setBreed(e.target.value)}
-                            />
+                            <div className="input-group mb-3">
+                                <select className="form-select" id="availability">
+                                    <option>Availability</option>
+                                    <option value="not available">not available</option>
+                                    <option value="available">available</option>
+                                    <option value="pending">pending</option>
+                                    <option value="adopted">adopted</option>
+                                </select>
                             </div>
-                            <div>
-                                <input 
-                                    type='text'
-                                    placeholder='Description'
-                                    className='form-control'
-                                    // value={description}
-                                    // onChange={(e) => setDescription(e.target.value)}
-                            />
-                            </div>
-                            <div className='row'>
-                                <button className='btn btn-primary' type='submit'>Save</button>
-                                <button className='btn btn-primary' type='submit'>Cancel</button>
-                                <button className='btn btn-primary' type='submit'>Delete Profile</button>
+                            <input type='text' placeholder='News item' className='form-control'/>
+                            <input type='text' placeholder='Description' className='form-control'/>
+                            <div className="row">
+                                <div className="col">
+                                    <button className='btn btn-primary' type='submit'>Save</button>
+                                </div>
+                                <div className="col">
+                                    <button className='btn btn-primary' type='submit'>Cancel</button>
+                                </div>
+                                <div className="col">
+                                    <button className='btn btn-primary' type='submit'>Delete</button>
+                                </div>
                             </div>
                         </form>
                     </div>
