@@ -11,7 +11,6 @@ import About from './components/About'
 
 function App() {
     const [cookies, setCookie, removeCookie] = useCookies(['user'])
-    // removeCookie('user') //when a user logs out
 
     // Login User
     const loginUser = async (loginInfo) => {
@@ -30,17 +29,25 @@ function App() {
             // Create cookie
             setCookie(
                 'user', 
-                {'username': loginInfo.username, 'token': data.token}, 
+                {'username': loginInfo.username, 'token': data.token, 'loggedIn': true}, 
                 {path: '/'}
             )
         }
+    }
+
+    // Logout User
+    const logoutUser = async () => {
+        removeCookie('user')
+        alert("user removed")
     }
 
     return (
         <Router>
         <div className='container'>
             {/* Navigation Bar */}
-            <Navigation />
+            <Navigation 
+                onLogout={logoutUser}
+            />
             
             {/* Landing Page */}
             <Route 
