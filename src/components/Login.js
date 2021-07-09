@@ -1,4 +1,4 @@
-import { Link, Redirect, useHistory } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { useState } from 'react'
 import { FaCameraRetro } from 'react-icons/fa'
 import loginImg1 from '../assets/login_1.jpg'
@@ -24,7 +24,7 @@ const Login = ({ onLogin, cookies }) => {
             setUsername('')
             setPassword('')
         } else {
-            history.push('/Dashboard')
+            history.push('/dashboard')
         }
     }
 

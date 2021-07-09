@@ -1,8 +1,8 @@
-import { Link, Redirect, useHistory } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 const Dashboard = () => {
     return (
-        <div>
+        <div className='generalFormat'>
             <h1>Dashboard</h1>
         </div>
     )

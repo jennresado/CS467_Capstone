@@ -6,8 +6,9 @@ import { useLocation } from 'react-router-dom'
 
  //Landing page does not show Dashboard Nav Link 
 
- const Navigation = () => {
+ const Navigation = ({ onLogout }) => {
     const location = useLocation()
+
     return (
          <div className='navBrand'> 
             <Navbar collapseOnSelect expand= 'sm'
@@ -24,13 +25,12 @@ import { useLocation } from 'react-router-dom'
                 {location.pathname === '/contact' && <Nav.Link href="/login">Login</Nav.Link> }
                 {location.pathname === '/signup' && <Nav.Link href="/login">Login</Nav.Link> }
                 {location.pathname === '/about' && <Nav.Link href="/login">Login</Nav.Link> }
-                {location.pathname === '/userprofile' && <Nav.Link href="/logout">Logout</Nav.Link> }
+                {location.pathname === '/dashboard' && <Nav.Link href="/" onClick={() => onLogout()}>Logout</Nav.Link>}
                 {location.pathname === '/login' && <Nav.Link href="/signUp">Sign Up</Nav.Link> }
                 {location.pathname === '/contact' && <Nav.Link href="/signup">Sign Up</Nav.Link> }
                 {location.pathname === '/about' && <Nav.Link href="/signup">Sign Up</Nav.Link> }
                 {location.pathname === '/' && <Nav.Link href="/signup">Sign Up</Nav.Link> }
                 {location.pathname === '/signup' && <Nav.Link href="/signup">Sign Up</Nav.Link> }
-                {location.pathname === '/dashboard' && <Nav.Link href="/dashboard">Logout</Nav.Link> }
                 </Navbar.Collapse>
             </Navbar>
             <div className='navContent'> </div>
