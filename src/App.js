@@ -22,8 +22,6 @@ function App() {
                 body: JSON.stringify(loginInfo)
             }
         )
-        
-        console.log(cookies)
 
         if (res.ok) {
             const data = await res.json()
