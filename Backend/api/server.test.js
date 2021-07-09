@@ -10,6 +10,10 @@ describe("server", () => {
     await db.raw("TRUNCATE TABLE animals RESTART IDENTITY CASCADE");
     await db.raw("TRUNCATE TABLE users RESTART IDENTITY CASCADE");
     await db.raw("TRUNCATE TABLE user_animals RESTART IDENTITY CASCADE");
+    await db.raw("TRUNCATE TABLE dispositions RESTART IDENTITY CASCADE");
+    await db.raw("TRUNCATE TABLE animal_dispositions RESTART IDENTITY CASCADE");
+    await db.raw("TRUNCATE TABLE breeds RESTART IDENTITY CASCADE");
+    await db.raw("TRUNCATE TABLE animnal_breeds RESTART IDENTITY CASCADE");
   });
 
   describe("GET /", () => {

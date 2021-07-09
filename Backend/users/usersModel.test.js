@@ -83,13 +83,6 @@ function getExpectedTestUsers() {
   ];
 }
 
-//async forEach method
-async function asyncForEach(array, cb) {
-  for (let i = 0; i < array.length; i++) {
-    await cb(array[i], i, array);
-  }
-}
-
 describe("usersModel", () => {
   //wipes all tables in database clean so each test starts with empty tables
   beforeEach(async () => {
@@ -98,6 +91,10 @@ describe("usersModel", () => {
     await db.raw("TRUNCATE TABLE animals RESTART IDENTITY CASCADE");
     await db.raw("TRUNCATE TABLE users RESTART IDENTITY CASCADE");
     await db.raw("TRUNCATE TABLE user_animals RESTART IDENTITY CASCADE");
+    await db.raw("TRUNCATE TABLE dispositions RESTART IDENTITY CASCADE");
+    await db.raw("TRUNCATE TABLE animal_dispositions RESTART IDENTITY CASCADE");
+    await db.raw("TRUNCATE TABLE breeds RESTART IDENTITY CASCADE");
+    await db.raw("TRUNCATE TABLE animnal_breeds RESTART IDENTITY CASCADE");
   });
 
   describe("addUser(user)", () => {
