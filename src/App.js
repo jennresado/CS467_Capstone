@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useCookies } from 'react-cookie';
-import { BrowserRouter as Router, Route, useHistory } from 'react-router-dom'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 import Landing from './components/Landing'
 import Login from './components/Login'
 import Dashboard from './components/Dashboard'
@@ -25,21 +25,25 @@ function App() {
             }
         )
         
-        const data = await res.json()
+        console.log(cookies)
+
+        if (res.ok) {
+            const data = await res.json()
         
-        if ("token" in data) {
             // Create cookie
             setCookie(
                 'user', 
-                {'username': loginInfo.username, 'token': data.token, 'loggedIn': true}, 
+                {'username': loginInfo.username, 'token': data.token}, 
                 {path: '/'}
             )
-        }
+        } else {
+            throw new Error('Invalid login')
+        }  
     }
 
     // Logout User
     const logoutUser = async () => {
-        removeCookie('user')
+        removeCookie('user', {'path': '/'})
         alert("user removed")
     }
 
@@ -72,7 +76,6 @@ function App() {
                 render={(props) => (
                     <Login 
                         onLogin={loginUser} 
-                        cookies={cookies}
                     />
                 )}
             />
