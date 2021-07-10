@@ -12,6 +12,16 @@ a {
     text-decoration: none!important;
 }
 
+ol {
+    text-align: left!important;
+    padding-left: 2rem!important;
+}
+
+legend {
+    font-size: 1.1rem!important;
+    text-align: left!important;
+}
+
 .generalFormat {
     margin-top: 60px;  /*for the Navigation Bar to not overlap the page content*/
     text-align: center;
@@ -26,11 +36,6 @@ a {
     margin-bottom: 60px; /*for the  Bottom Navigation Bar to not cut off the page content*/
 }
 
-ol {
-    text-align: left!important;
-    padding-left: 2rem!important;
-}
-
 .spreadImgs {
     margin: 1.5rem 0!important;
 }
@@ -39,12 +44,16 @@ ol {
     font-size: .75rem;
 }
 
-.loginForm {
+.loginForm, .animalForm {
     padding: 3rem 3rem 2rem 3rem;
     margin-top: 1.5rem;
     margin-bottom: 1.5rem;
     border: 1px solid lightgrey;
     border-radius: 5px;
+}
+
+.animalForm {
+    margin-top: 1.5rem;
 }
 
 .loginImg {
@@ -78,4 +87,8 @@ ol {
     text-align: center;
     padding: 1rem;
     margin-bottom: 60px; /*for the  Bottom Navigation Bar to not cut off the page content*/
+}
+
+#animalDiv {
+    margin-top: 1.5rem;
 }
