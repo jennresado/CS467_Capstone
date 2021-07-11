@@ -22,6 +22,18 @@ const Animal = () => {
     const onSubmit = (e) => {
         e.preventDefault()
 
+        const body = {
+            "id": id,
+            "type": type,
+            "breed": breed,
+            "disposition": disposition,
+            "picture": picture,
+            "availability": availability,
+            "newsItem": newsItem,
+            "description": description
+        }
+
+        console.log(body)
         // if(!username && !password) {
         //     return
         // }
@@ -157,7 +169,7 @@ const Animal = () => {
                             <input type='text' placeholder='Description' className='form-control input-group mb-3' onChange={(e) => {setDescription(e.target.value)}}/>
                             <div className="row">
                                 <div className="col d-grid gap-2 mx-auto">
-                                    <button className='btn btn-primary' type='submit'>Save</button>
+                                    <button className='btn btn-primary' type='submit' onClick={onSubmit}>Save</button>
                                 </div>
                                 <div className="col d-grid gap-2 mx-auto">
                                     <button className='btn btn-secondary' type='submit' onClick={onCancel}>Cancel</button>
