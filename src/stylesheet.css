@@ -22,6 +22,10 @@ legend {
     text-align: left!important;
 }
 
+option {
+    text-transform: capitalize;
+}
+
 .generalFormat {
     margin-top: 60px;  /*for the Navigation Bar to not overlap the page content*/
     text-align: center;
