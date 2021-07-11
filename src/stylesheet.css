@@ -72,6 +72,11 @@ option {
 .loginError {
     color: red;
 }
+
+.disclaimer {
+    margin-top: 1rem;
+    margin-bottom: 0!important;
+}
 .contactPage {
     margin-top: 60px;  /*for the Navigation Bar to not overlap the page content*/
     text-align: center;
