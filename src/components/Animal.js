@@ -1,6 +1,8 @@
 import { Link, useHistory } from 'react-router-dom'
 import { useState } from 'react'
 import animals from '../assets/Animals'
+import 'image-to-base64'
+import imageToBase64 from 'image-to-base64'
 
 const Animal = () => {
     let history = useHistory()
@@ -19,21 +21,44 @@ const Animal = () => {
     // need to pass in animal id
     // upload image url
 
+    // Convert picture to base64
+    // const convertBase64 = (e) => {
+    //     const file = e.target.files[0]
+    //     const reader = new FileReader()
+    //     reader.onload = (e) => {
+    //         console.log(e.target.result)
+    //     }
+    //     reader.readAsDataURL(file)
+    // }
+
     const onSubmit = (e) => {
         e.preventDefault()
 
-        const body = {
-            "id": id,
-            "type": type,
-            "breed": breed,
-            "disposition": disposition,
-            "picture": picture,
-            "availability": availability,
-            "newsItem": newsItem,
-            "description": description
-        }
+        const reader = new FileReader()
+        const content = picture.result
+        reader.readAsDataURL(picture)
+        
+        // console.log(picture)
 
-        console.log(body)
+        // Convert picture to base64
+        imageToBase64(picture).then((res) => {
+            console.log(res)
+        }).catch((err) => {
+            console.log(err)
+        })
+
+        // const body = {
+        //     "id": id,
+        //     "type": type,
+        //     "breed": breed,
+        //     "disposition": disposition,
+        //     "picture": picture,
+        //     "availability": availability,
+        //     "newsItem": newsItem,
+        //     "description": description
+        // }
+
+        // console.log(body)
         // if(!username && !password) {
         //     return
         // }
@@ -149,6 +174,8 @@ const Animal = () => {
                                     type="file" 
                                     className="form-control" 
                                     id="inputGroupFile02"   
+                                    accept="image/*"
+                                    // onChange={(e) => {convertBase64(e)}}
                                     onChange = {(e) => {setPicture(e.target.files[0])}}
                                 />
                                 <label className="input-group-text" htmlFor="inputGroupFile02">Upload</label>
