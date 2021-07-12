@@ -43,7 +43,6 @@ function App() {
     // Logout User
     const logoutUser = async () => {
         removeCookie('user', {'path': '/'})
-        alert("user removed")
     }
 
     return (
