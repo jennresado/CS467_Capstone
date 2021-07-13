@@ -53,7 +53,6 @@ const Footer = () => {
                 {location.pathname === '/contact' && <Nav.Link href="/signup">Sign Up</Nav.Link> }
 
                 {location.pathname === '/userprofile' && <Nav.Link href="/userprofile">Profile</Nav.Link> }
-                {location.pathname === '/animal' && <Nav.Link href="/userprofile">Profile</Nav.Link> }
                 {location.pathname === '/userprofile' && <Nav.Link href="/animal">Animal</Nav.Link> }
                 {location.pathname === '/userprofile' && <Nav.Link href="/signup">Sign Up</Nav.Link> }
 

@@ -16,8 +16,19 @@ const Animal = () => {
     const [newsItem, setNewsItem] = useState('')
     const [description, setDescription] = useState('')
 
-    // need to pass in animal id
-    // upload image url
+    // Convert picture to base64
+    const convertToBase64 = (e) => {
+        const content = e.target.result;
+        console.log(content)
+        setPicture(content)
+    }
+
+    // Handle change file
+    const handleChangeFile = (file) => {
+        let reader = new FileReader()
+        reader.onloadend = convertToBase64
+        reader.readAsDataURL(file)
+    }
 
     const onSubmit = (e) => {
         e.preventDefault()
@@ -33,19 +44,7 @@ const Animal = () => {
             "description": description
         }
 
-        console.log(body)
-        // if(!username && !password) {
-        //     return
-        // }
-
-        // onLogin({ username, password })
-        //     .then(() => {
-        //         history.push('/dashboard')
-        //     }).catch((err) => {
-        //         setError(true)
-        //         setUsername('')
-        //         setPassword('')
-        //     })     
+        console.log(body)    
     }
 
     // on click cancel
@@ -149,7 +148,8 @@ const Animal = () => {
                                     type="file" 
                                     className="form-control" 
                                     id="inputGroupFile02"   
-                                    onChange = {(e) => {setPicture(e.target.files[0])}}
+                                    accept="image/*"
+                                    onChange={(e) => {handleChangeFile(e.target.files[0])}}
                                 />
                                 <label className="input-group-text" htmlFor="inputGroupFile02">Upload</label>
                             </div>
