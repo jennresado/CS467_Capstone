@@ -1,6 +1,9 @@
 const supertest = require("supertest");
 const server = require("./server");
 const db = require("../db/dbconfig");
+const fs = require('fs');
+const atob = require('atob')
+const {getTestAnimals, getExpectedTestAnimals, asyncForEach} = require('../animals/animalsModel.test')
 
 describe("server", () => {
   //wipes all tables in database clean so each test starts with empty tables
@@ -327,4 +330,53 @@ describe("server", () => {
       });
     });
   });
+
+  describe('AnimalsRouter', ()=>{
+    describe('GET /animals', ()=>{
+      it('gets an empty array when no animals are in database', async ()=>{
+        const res = await supertest(server).post("/auth/register").send({
+          username: "sam",
+          password: "pass",
+          first_name: "Sam",
+          last_name: "Gamgee",
+          email: "baggins@gmail.com",
+          admin: false,
+        });
+        const token = res.body.token;
+
+        const resA = await supertest(server).get('/animals').set('authorization', token);
+
+        expect(resA.body.animals).toHaveLength(0)
+        expect(resA.body.animals).toEqual([])
+      })
+
+      it('gets a  non-empty array when database is populated with animals', async ()=>{
+        const res = await supertest(server).post("/auth/register").send({
+          username: "sam",
+          password: "pass",
+          first_name: "Sam",
+          last_name: "Gamgee",
+          email: "baggins@gmail.com",
+          admin: false,
+        });
+        const token = res.body.token;
+
+        const testAnimals = await getTestAnimals();
+        await asyncForEach(testAnimals, async (animal) => {
+          await db('animals').insert(animal)
+        })
+
+        const expectedAnimals = await getExpectedTestAnimals();
+
+        const resA = await supertest(server).get('/animals').set('authorization', token);
+        let animals = resA.body.animals;
+
+        await asyncForEach(animals, async(animal) => {
+          animal.pic = atob(animal.pic);
+        })
+
+        expect(animals).toHaveLength(4)
+      })
+    })
+  })
 });
