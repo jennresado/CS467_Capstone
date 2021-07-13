@@ -43,7 +43,6 @@ function App() {
     // Logout User
     const logoutUser = async () => {
         removeCookie('user', {'path': '/'})
-        alert("user removed")
     }
 
     return (
@@ -72,6 +71,7 @@ function App() {
             {/* Login Page */}
             <Route 
                 path='/login' 
+                onClick={() =>{warmServer()}}
                 render={(props) => (
                     <Login 
                         onLogin={loginUser} 
