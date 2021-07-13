@@ -19,8 +19,14 @@ import { useLocation } from 'react-router-dom'
                 <Navbar.Collapse className='justify-content-end'>
                 {location.pathname === '/userprofile' && <Nav.Link href="/dashboard">Dashboard</Nav.Link> }
                 {location.pathname === '/userprofile' && <Nav.Link href="/animal">Animal</Nav.Link> }
+                {location.pathname === '/dashboard' && <Nav.Link href="/animal">Animal</Nav.Link> }
                 {location.pathname === '/userprofile' && <Nav.Link href="/userprofile">Profile</Nav.Link> }
                 {location.pathname === '/userprofile' && <Nav.Link href="/" onClick={() => onLogout()}>Logout</Nav.Link>}
+
+                {location.pathname === '/animal' && <Nav.Link href="/dashboard">Dashboard</Nav.Link> }
+                {location.pathname === '/animal' && <Nav.Link href="/animal">Animal</Nav.Link> }
+                {location.pathname === '/animal' && <Nav.Link href="/userprofile">Profile</Nav.Link> }
+                {location.pathname === '/animal' && <Nav.Link href="/" onClick={() => onLogout()}>Logout</Nav.Link>}
 
                 {location.pathname === '/dashboard' && <Nav.Link href="/dashboard">Dashboard</Nav.Link> }
                 {location.pathname === '/dashboard' && <Nav.Link href="/animal">Animal</Nav.Link> }

@@ -10,6 +10,7 @@ import Contact from './components/Contact';
 import UserProfile from './components/UserProfile';
 import SignUp from './components/SignUp';
 import About from './components/About'
+import Animal from './components/Animal'
 
 function App() {
     const [cookies, setCookie, removeCookie] = useCookies(['user'])
@@ -42,7 +43,6 @@ function App() {
     // Logout User
     const logoutUser = async () => {
         removeCookie('user', {'path': '/'})
-        alert("user removed")
     }
 
     return (
@@ -95,12 +95,12 @@ function App() {
             }/>
 
             {/* Add Animal Page */}
-            {/* <Route 
+            <Route 
                 path= '/Animal' 
                 render={(props) => (
                     <Animal />
                 )
-            }/> */}
+            }/>
             
             {/* About Page */}
             <Route 
