@@ -71,7 +71,6 @@ function App() {
             {/* Login Page */}
             <Route 
                 path='/login' 
-                onClick={() =>{warmServer()}}
                 render={(props) => (
                     <Login 
                         onLogin={loginUser} 
