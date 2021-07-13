@@ -17,25 +17,17 @@ const Footer = () => {
                 <Navbar.Collapse className='justify-content-center'>
 
                 {location.pathname === '/userprofile' && <Nav.Link href="/dashboard">Dashboard</Nav.Link> }
-<<<<<<< HEAD
-                {location.pathname === '/animal' && <Nav.Link href="/dashboard">Dashboard</Nav.Link> }
-=======
 
                 {location.pathname === '/dashboard' && <Nav.Link href="/dashboard">Dashboard</Nav.Link> }
->>>>>>> main
                 {location.pathname === '/dashboard' && <Nav.Link href="/dashboard">Home</Nav.Link> }
 
                 {location.pathname === '/animal' && <Nav.Link href="/dashboard">Dashboard</Nav.Link> }
                 {location.pathname === '/animal' && <Nav.Link href="/dashboard">Home</Nav.Link> }
 
                 {location.pathname === '/' && <Nav.Link href="/">Home</Nav.Link> }
-<<<<<<< HEAD
-                {location.pathname === '/animal' && <Nav.Link href="/">Home</Nav.Link> }
-=======
 
                 {location.pathname === '/login' && <Nav.Link href="/">Home</Nav.Link> }
                 
->>>>>>> main
                 {location.pathname === '/about' && <Nav.Link href="/">Home</Nav.Link> }
 
                 {location.pathname === '/signup' && <Nav.Link href="/">Home</Nav.Link> }
@@ -63,14 +55,6 @@ const Footer = () => {
                 {location.pathname === '/userprofile' && <Nav.Link href="/userprofile">Profile</Nav.Link> }
                 {location.pathname === '/animal' && <Nav.Link href="/userprofile">Profile</Nav.Link> }
                 {location.pathname === '/userprofile' && <Nav.Link href="/animal">Animal</Nav.Link> }
-<<<<<<< HEAD
-                {location.pathname === '/animal' && <Nav.Link href="/animal">Animal</Nav.Link> }
-                {location.pathname === '/landing' && <Nav.Link href="/signup">Sign Up</Nav.Link> }
-                {location.pathname === '/contact' && <Nav.Link href="/signup">Sign Up</Nav.Link> }
-                {location.pathname === '/signup' && <Nav.Link href="/signup">Sign Up</Nav.Link> }
-                {location.pathname === '/' && <Nav.Link href="/signup">Sign Up</Nav.Link> }
-=======
->>>>>>> main
                 {location.pathname === '/userprofile' && <Nav.Link href="/signup">Sign Up</Nav.Link> }
 
                 {location.pathname === '/dashboard' && <Nav.Link href="/userprofile">Profile</Nav.Link> }

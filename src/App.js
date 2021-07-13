@@ -32,7 +32,7 @@ function App() {
         }
 
         warmServer()
-    })
+    }, [])
 
     // Login User
     const loginUser = async (loginInfo) => {
