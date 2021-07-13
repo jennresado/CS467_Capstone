@@ -1,8 +1,6 @@
 import { Link, useHistory } from 'react-router-dom'
 import { useState } from 'react'
 import animals from '../assets/Animals'
-import 'image-to-base64'
-import imageToBase64 from 'image-to-base64'
 
 const Animal = () => {
     let history = useHistory()
@@ -18,59 +16,35 @@ const Animal = () => {
     const [newsItem, setNewsItem] = useState('')
     const [description, setDescription] = useState('')
 
-    // need to pass in animal id
-    // upload image url
-
     // Convert picture to base64
-    // const convertBase64 = (e) => {
-    //     const file = e.target.files[0]
-    //     const reader = new FileReader()
-    //     reader.onload = (e) => {
-    //         console.log(e.target.result)
-    //     }
-    //     reader.readAsDataURL(file)
-    // }
+    const convertToBase64 = (e) => {
+        const content = e.target.result;
+        console.log(content)
+        setPicture(content)
+    }
+
+    // Handle change file
+    const handleChangeFile = (file) => {
+        let reader = new FileReader()
+        reader.onloadend = convertToBase64
+        reader.readAsDataURL(file)
+    }
 
     const onSubmit = (e) => {
         e.preventDefault()
 
-        const reader = new FileReader()
-        const content = picture.result
-        reader.readAsDataURL(picture)
-        
-        // console.log(picture)
+        const body = {
+            "id": id,
+            "type": type,
+            "breed": breed,
+            "disposition": disposition,
+            "picture": picture,
+            "availability": availability,
+            "newsItem": newsItem,
+            "description": description
+        }
 
-        // Convert picture to base64
-        imageToBase64(picture).then((res) => {
-            console.log(res)
-        }).catch((err) => {
-            console.log(err)
-        })
-
-        // const body = {
-        //     "id": id,
-        //     "type": type,
-        //     "breed": breed,
-        //     "disposition": disposition,
-        //     "picture": picture,
-        //     "availability": availability,
-        //     "newsItem": newsItem,
-        //     "description": description
-        // }
-
-        // console.log(body)
-        // if(!username && !password) {
-        //     return
-        // }
-
-        // onLogin({ username, password })
-        //     .then(() => {
-        //         history.push('/dashboard')
-        //     }).catch((err) => {
-        //         setError(true)
-        //         setUsername('')
-        //         setPassword('')
-        //     })     
+        console.log(body)    
     }
 
     // on click cancel
@@ -175,8 +149,7 @@ const Animal = () => {
                                     className="form-control" 
                                     id="inputGroupFile02"   
                                     accept="image/*"
-                                    // onChange={(e) => {convertBase64(e)}}
-                                    onChange = {(e) => {setPicture(e.target.files[0])}}
+                                    onChange={(e) => {handleChangeFile(e.target.files[0])}}
                                 />
                                 <label className="input-group-text" htmlFor="inputGroupFile02">Upload</label>
                             </div>
