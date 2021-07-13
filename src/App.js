@@ -15,20 +15,24 @@ import Animal from './components/Animal'
 function App() {
     const [cookies, setCookie, removeCookie] = useCookies(['user'])
 
-    // Warm up backend server to decrease time
-    const warmServer = async () => {
-        const res = await fetch(
-            `https://bring-me-home-backend.herokuapp.com/`,
-            {
-                method: 'GET',
-                headers: {'Content-type': 'application/json'}
+    // Warm up backend server to decrease latency
+    useEffect(() => {
+        const warmServer = async () => {
+            const res = await fetch(
+                `https://bring-me-home-backend.herokuapp.com/`,
+                {
+                    method: 'GET',
+                    headers: {'Content-type': 'application/json'}
+                }
+            )
+    
+            if (res.ok) {
+                console.log('hello world')
             }
-        )
-
-        if (res.ok) {
-            console.log('hello world')
         }
-    }
+
+        warmServer()
+    })
 
     // Login User
     const loginUser = async (loginInfo) => {
