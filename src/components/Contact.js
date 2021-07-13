@@ -1,9 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
-
-import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-
+import { FaLocationArrow, FaPhoneAlt, FaCameraRetro } from 'react-icons/fa';
+import loginImg1 from '../assets/login_1.jpg'
+import contactImg1 from '../assets/contactUs.jpg'
 
 const Contact = () => {
     return (
@@ -12,30 +10,20 @@ const Contact = () => {
                 <div className='col-xl-8'>
                     <div className='row'>
                         <h1>Contact Us</h1>
+                        <br></br>
                         <p>Do you have any questions? Please let us know.
-                            <br></br>
-                            Our team will get back to you shortly.
                         </p>
-                        <Container>
-                            <Form>
-                                <Form.Group controlId="form.Name">
-                                    <Form.Label>Name:</Form.Label>
-                                    <Form.Control type="text" placeholder="Enter name" />
-                                </Form.Group>
-                                <br></br>
-                                <Form.Group controlId="form.Email">
-                                    <Form.Label>Email Address:</Form.Label>
-                                    <Form.Control type="email" placeholder="name@example.com" />
-                                </Form.Group>
-                                <br></br>
-                                <Form.Group controlId="form.Textarea">
-                                    <Form.Label>Comment:</Form.Label>
-                                    <Form.Control as="textarea" rows={3} />
-                                </Form.Group>
-                                <br></br>
-                                <Button variant="primary" type="Submit">Submit</Button>
-                            </Form>
-                        </Container>
+                         <text> < FaPhoneAlt /> (123) 456-7890 </text>
+                        <br></br>
+                         <text> <FaLocationArrow /> 321 Waggy Tails Drive | Corvallis, OR 97333  </text>
+                        <br></br> 
+                        <br></br> 
+                        <div className='row'>
+                            <img src={contactImg1} className='img-fluid rounded loginImg'></img>
+                            <p className='imgCredit'>
+                                <FaCameraRetro></FaCameraRetro> by <a href="https://unsplash.com/@camylla93?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Camylla Battani</a> on <a href="https://unsplash.com/s/photos/question?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
