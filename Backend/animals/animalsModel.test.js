@@ -1,7 +1,6 @@
 const db = require("../db/dbconfig");
 const Animals = require("./animalsModel");
 const constants = require("./testConstants");
-const fs = require('fs')
 const atob = require('atob')
 
 //sample animals to be used in tests
@@ -173,6 +172,32 @@ describe('animalsModel', ()=>{
       dbAnimal.pic = atob(dbAnimal.pic)
       
       expect(expectedAnimal).toEqual(dbAnimal)
+    })
+  })
+
+  describe('getAllAnimals()', ()=>{
+    it('gets a list of animals in a populated database', async ()=>{
+      let animals = await getTestAnimals();
+      let expectedAnimals = await getExpectedTestAnimals();
+
+      await asyncForEach(animals, async (animal) =>{
+        await db('animals').insert(animal)
+      })
+
+      let dbAnimals = await Animals.getAllAnimals();
+      expect(dbAnimals.length).toBe(4);
+
+      await asyncForEach(dbAnimals, async (animal) =>{
+        animal.pic = atob(animal.pic);
+      })
+
+      expect(dbAnimals).toEqual(expectedAnimals);
+
+    })
+
+    it('returns an empty array when trying to get an animal_id that is not in the database ', async ()=>{
+      let animal = await Animals.getAllAnimals()
+      expect(animal).toEqual([])
     })
   })
 

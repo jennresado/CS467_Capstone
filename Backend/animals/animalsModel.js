@@ -3,6 +3,7 @@ const db = require("../db/dbconfig");
 module.exports = {
   addAnimal,
   editAnimal,
+  getAllAnimals,
   getAnimalBy,
   deleteAnimal,
 };
@@ -18,6 +19,11 @@ function editAnimal(animal_id, animalEdits) {
     .where({ animal_id })
     .update(animalEdits)
     .then((count) => count);
+}
+
+//returns an array of all the animal objects in the database
+async function getAllAnimals(){
+  return db('animals');
 }
 
 //returns animal object corresponding the the given filter and filter value
