@@ -13,7 +13,7 @@ describe("server", () => {
     await db.raw("TRUNCATE TABLE dispositions RESTART IDENTITY CASCADE");
     await db.raw("TRUNCATE TABLE animal_dispositions RESTART IDENTITY CASCADE");
     await db.raw("TRUNCATE TABLE breeds RESTART IDENTITY CASCADE");
-    await db.raw("TRUNCATE TABLE animnal_breeds RESTART IDENTITY CASCADE");
+    await db.raw("TRUNCATE TABLE animal_breeds RESTART IDENTITY CASCADE");
   });
 
   describe("GET /", () => {
@@ -102,7 +102,7 @@ describe("server", () => {
         expect(res.status).toBe(201);
       });
 
-      it("returns token", async () => {
+      it("returns token and admin status", async () => {
         const res = await supertest(server).post("/auth/register").send({
           username: "sam",
           password: "pass",
@@ -113,6 +113,7 @@ describe("server", () => {
         });
 
         expect(res.body.token).not.toBeNull();
+        expect(res.body.admin).toBe(false)
       });
 
       it("returns 400 when user has no username", async () => {
@@ -129,7 +130,7 @@ describe("server", () => {
         });
 
         expect(res.body.error).toBe(
-          "The request object attributes have one or more of the wrong type",
+          "The request object is missing one or more required attributes",
         );
       });
 
@@ -147,7 +148,7 @@ describe("server", () => {
         });
 
         expect(res.body.error).toBe(
-          "The request object attributes have one or more of the wrong type",
+          "The request object is missing one or more required attributes",
         );
       });
 
@@ -161,7 +162,7 @@ describe("server", () => {
         const res = await supertest(server).post("/auth/register").send({});
 
         expect(res.body.error).toBe(
-          "The request object attributes have one or more of the wrong type",
+          "The request object is missing one or more required attributes",
         );
       });
     });
