@@ -23,20 +23,41 @@ import { useLocation } from 'react-router-dom'
                 {location.pathname === '/dashboard' && <Nav.Link href="/animal">Animal</Nav.Link> }
                 {location.pathname === '/animal' && <Nav.Link href="/animal">Animal</Nav.Link> }
                 {location.pathname === '/userprofile' && <Nav.Link href="/userprofile">Profile</Nav.Link> }
+<<<<<<< HEAD
                 {location.pathname === '/dashboard' && <Nav.Link href="/userprofile">Profile</Nav.Link> }
                 {location.pathname === '/animal' && <Nav.Link href="/userprofile">Profile</Nav.Link> }
+=======
+                {location.pathname === '/userprofile' && <Nav.Link href="/" onClick={() => onLogout()}>Logout</Nav.Link>}
+
+                {location.pathname === '/dashboard' && <Nav.Link href="/dashboard">Dashboard</Nav.Link> }
+                {location.pathname === '/dashboard' && <Nav.Link href="/animal">Animal</Nav.Link> }
+                {location.pathname === '/dashboard' && <Nav.Link href="/userprofile">Profile</Nav.Link> }
+                {location.pathname === '/dashboard' && <Nav.Link href="/" onClick={() => onLogout()}>Logout</Nav.Link>}
+
+>>>>>>> main
                 {location.pathname === '/' && <Nav.Link href="/login">Login</Nav.Link> }
+                {location.pathname === '/' && <Nav.Link href="/signup">Sign Up</Nav.Link> }
+
                 {location.pathname === '/login' && <Nav.Link href="/login">Login</Nav.Link> }
+                {location.pathname === '/login' && <Nav.Link href="/signup">Sign Up</Nav.Link> }
+
                 {location.pathname === '/contact' && <Nav.Link href="/login">Login</Nav.Link> }
+                {location.pathname === '/contact' && <Nav.Link href="/signup">Sign Up</Nav.Link> }
+
                 {location.pathname === '/signup' && <Nav.Link href="/login">Login</Nav.Link> }
+                {location.pathname === '/signup' && <Nav.Link href="/signup">Sign Up</Nav.Link> }
+                
                 {location.pathname === '/about' && <Nav.Link href="/login">Login</Nav.Link> }
+<<<<<<< HEAD
                 {location.pathname === '/dashboard' && <Nav.Link href="/" onClick={() => onLogout()}>Logout</Nav.Link>}
                 {location.pathname === '/animal' && <Nav.Link href="/" onClick={() => onLogout()}>Logout</Nav.Link>}
                 {location.pathname === '/login' && <Nav.Link href="/signUp">Sign Up</Nav.Link> }
                 {location.pathname === '/contact' && <Nav.Link href="/signup">Sign Up</Nav.Link> }
+=======
+>>>>>>> main
                 {location.pathname === '/about' && <Nav.Link href="/signup">Sign Up</Nav.Link> }
-                {location.pathname === '/' && <Nav.Link href="/signup">Sign Up</Nav.Link> }
-                {location.pathname === '/signup' && <Nav.Link href="/signup">Sign Up</Nav.Link> }
+                
+                
                 </Navbar.Collapse>
             </Navbar>
             <div className='navContent'> </div>
