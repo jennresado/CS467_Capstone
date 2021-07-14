@@ -69,4 +69,29 @@ router.post('/', helpers.validateAnimal, (req,res) =>{
     })
 })
 
+router.delete('/:animal_id', (req, res) => {
+    let animal_id = req.params.animal_id
+    Animals.getAnimalBy('animal_id', animal_id).then(animalArr => {
+        if(animalArr.length === 1){
+            Animals.deleteAnimal(animal_id).then(count => {
+                res.status(200).json({message: `${count} deleted successfully`})
+            }).catch(err => {
+                res.status(500).json({
+                    error: err.message,
+                    errorMessage: "Could not delete animal by their id",
+                    stack: 'Animal router line 82'
+                })
+            })
+        } else {
+            res.status(404).json({message: 'No animal with that id was found'})
+        }
+    }).catch (err => {
+        res.status(500).json({
+            error: err.message,
+            errorMessage: "Could not get animal by their id",
+            stack: 'Animal router line 92'
+        })
+    })
+})
+
 module.exports = router;
