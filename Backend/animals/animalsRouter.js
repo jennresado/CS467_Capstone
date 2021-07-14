@@ -15,7 +15,7 @@ router.get('/', (req, res) =>{
     })
 })
 
-router.put('/:animal_id', helpers.validateAnimal, (req, res) =>{
+router.put('/:animal_id', helpers.validateAnimalEdit, (req, res) =>{
     Animals.getAnimalBy('animal_id', req.params.animal_id).then(animalArr => {
         let animal = animalArr[0]
         if(animal){
