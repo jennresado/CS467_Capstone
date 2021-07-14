@@ -15,4 +15,32 @@ router.get('/', (req, res) =>{
     })
 })
 
+router.put('/:animal_id', helpers.validateAnimal, (req, res) =>{
+    Animals.getAnimalBy('animal_id', req.params.animal_id).then(animalArr => {
+        let animal = animalArr[0]
+        if(animal){
+            Animals.editAnimal(req.params.animal_id, req.body).then(count => {
+                res.status(200).json({message: `Edited ${count} animal(s) successfully`})
+            }).catch(err => {
+                res.status(500).json({
+                    error: err.message,
+                    errorMessage: "Could not edit animal in database",
+                    stack: "Animals Router line 28"
+                })
+            })
+        } else {
+            res.status(404).json({
+                message: "No animal with that id",
+                stack: 'Animals Router line 34'
+            })
+        }
+    }).catch(err => {
+        res.status(500).json({
+            error: err.message, 
+            errorMessage: "Could not retrieve animal from database",
+            stack: "Animals Router line 41"
+        })
+    })
+})
+
 module.exports = router;
