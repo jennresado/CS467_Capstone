@@ -34,6 +34,8 @@ async function getAnimalBy(filterName, filterValue) {
       return db("animals").where({ animal_id: filterValue });
     case "date":
       return db("animals").where({ date_created: filterValue });
+    default:
+      return []
   }
 }
 

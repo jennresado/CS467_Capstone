@@ -15,6 +15,20 @@ router.get('/', (req, res) =>{
     })
 })
 
+router.get('/:filter_name/:filter_value', (req, res) => {
+    let filter = req.params.filter_name;
+    let value = req.params.filter_value;
+    Animals.getAnimalBy(filter, value).then(animalArr => {
+        res.status(200).json({animalArr})
+    }).catch(err => {
+        res.status(500).json({
+            error: err.message,
+            errorMessage: 'Can get get the animal from the database',
+            stack: 'Animal router line 27'
+        })
+    })
+})
+
 router.put('/:animal_id', helpers.validateAnimalEdit, (req, res) =>{
     Animals.getAnimalBy('animal_id', req.params.animal_id).then(animalArr => {
         let animal = animalArr[0]
