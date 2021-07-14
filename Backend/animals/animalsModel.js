@@ -10,7 +10,7 @@ module.exports = {
 
 //adds an animal to the database
 function addAnimal(animal) {
-  return db("animals").insert(animal, "animal_id");
+  return db("animals").insert(animal, "animal_id").first();
 }
 
 //edits animal with the given id

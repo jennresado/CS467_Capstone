@@ -8,7 +8,7 @@ const auth = require("../auth/authMiddleware");
 const usersRouter = require("../users/usersRouter");
 const animalsRouter = require("../animals/animalsRouter");
 
-server.use(express.json());
+server.use(express.json({limit: '50mb'}));
 server.use(cors());
 
 server.use("/auth", authRouter);

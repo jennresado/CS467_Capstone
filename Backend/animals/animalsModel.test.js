@@ -35,7 +35,7 @@ async function getTestAnimals() {
     pic: pic1,
     date_created: "06-20-2018",
     description:
-      "A very good dog. Wonderful with children and other animals. Looking for his forever home.",
+    "A very good dog. Wonderful with children and other animals.",
     news_item: constants.news1,
   }
 
@@ -69,7 +69,7 @@ async function getExpectedTestAnimals() {
       pic: pic1,
       date_created: new Date('06-20-2018'),
       description:
-        "A very good dog. Wonderful with children and other animals. Looking for his forever home.",
+      "A very good dog. Wonderful with children and other animals.",
       news_item: constants.news1,
       animal_id: 4
     }

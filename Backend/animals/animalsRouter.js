@@ -43,4 +43,16 @@ router.put('/:animal_id', helpers.validateAnimalEdit, (req, res) =>{
     })
 })
 
+router.post('/', helpers.validateAnimal, (req,res) =>{
+    Animals.addAnimal(req.body).then(animal => {
+        res.status(201).json({animal})
+    }).catch(err => {
+        res.status(500).json({
+            error: err.message,
+            errorMessage: "Could not add adnimal to database",
+            stack: "Animals Router line 53"
+        })
+    })
+})
+
 module.exports = router;

@@ -12,7 +12,9 @@ function validateAnimal(req, res, next) {
         animal.pic
     ) {
         if (!animal.date || !(animal.date instanceof Date)) {
-            animal.date = new Date();
+            animal.date_created = new Date();
+            delete animal.date
+            req.body = animal;
         }
 
         if (
