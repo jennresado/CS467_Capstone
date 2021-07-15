@@ -48,7 +48,7 @@ option {
     font-size: .75rem;
 }
 
-.loginForm, .animalForm {
+.loginForm, .animalForm, .signupForm {
     padding: 3rem 3rem 2rem 3rem;
     margin-top: 1.5rem;
     margin-bottom: 1.5rem;
@@ -65,11 +65,11 @@ option {
     margin-bottom: 1rem;
 }
 
-.loginForm > div {
+.loginForm > div, .signupForm > div {
     margin-bottom: 1rem;
 }
 
-.loginError {
+.loginError, .signupError  {
     color: red;
 }
 
@@ -101,3 +101,4 @@ option {
 #animalDiv {
     margin-top: 1.5rem;
 }
+
