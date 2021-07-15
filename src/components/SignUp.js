@@ -16,6 +16,9 @@ const SignUp = ({ onSignup }) => {
 
     const onSubmit = (e) => {
         e.preventDefault()
+        // removes any previous error from screen when successful login to dashboard
+        setErrorInput(false)
+        setErrorUsername(false)
 
         // username taken 
         if (username == username) {
