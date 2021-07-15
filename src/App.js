@@ -2,8 +2,6 @@ import { useState, useEffect } from 'react'
 import { useCookies } from 'react-cookie';
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import Landing from './components/Landing'
-import Login from './components/Login'
-import Dashboard from './components/Dashboard'
 import Navigation from './components/Navigation'
 import Footer from './components/Footer';
 import Contact from './components/Contact';
@@ -62,6 +60,8 @@ function App() {
     // Logout User
     const logoutUser = async () => {
         removeCookie('user', {'path': '/'})
+        alert("user removed")
+
     }
 
     return (
@@ -114,11 +114,16 @@ function App() {
             }/>
 
             {/* Add Animal Page */}
+            {/* <Route 
+
             <Route 
+
                 path= '/Animal' 
                 render={(props) => (
                     <Animal />
                 )
+            }/> */}
+
             }/>
             
             {/* About Page */}

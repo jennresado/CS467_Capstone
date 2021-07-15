@@ -47,7 +47,7 @@ import { useLocation } from 'react-router-dom'
                 {location.pathname === '/about' && <Nav.Link href="/login">Login</Nav.Link> }
                 {location.pathname === '/about' && <Nav.Link href="/signup">Sign Up</Nav.Link> }
                 
-                
+              
                 </Navbar.Collapse>
             </Navbar>
             <div className='navContent'> </div>
