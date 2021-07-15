@@ -107,7 +107,9 @@ function App() {
             <Route 
                 path= '/signup' 
                 render={(props) => (
-                    <SignUp />
+                    <SignUp 
+                    onSignup={signUpUser}
+                    />
                 )
             }/>
 
