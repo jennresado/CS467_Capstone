@@ -57,8 +57,10 @@ const Login = ({ onLogin }) => {
                             <div className='d-grid gap-2 mx-auto'>
                                 <button className='btn btn-primary' type='submit'>Login</button>
                             </div>
-                            <Link to="/signup">Sign Up</Link>
+                            <Link to="/SignUp">Sign Up</Link>
+
                             <p className='disclaimer'>Disclaimer: Cookie is used to track logged in state and will be deleted once a user logs out.</p>
+
                         </form>
                     </div>
                     <div className='row'>

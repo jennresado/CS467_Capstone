@@ -53,12 +53,9 @@ function validateUser(req, res, next) {
         stack: "User helpers line 53",
       });
     }
-    if (typeof user.admin !== "boolean") {
-      return res.status(400).json({
-        messsage:
-          "The request object attributes have one or more of the wrong type",
-        stack: "User helpers line 60",
-      });
+
+    if (user.admin !== true && user.admin !== false) {
+      user.admin = false
     }
 
     next();

@@ -63,7 +63,6 @@ const Footer = () => {
                 {location.pathname === '/animal' && <Nav.Link href="/animal">Animal</Nav.Link> }
                 
                 
-                
                 </Navbar.Collapse>
             </Navbar>
         </div>
