@@ -1,6 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { FaLocationArrow, FaPhoneAlt, FaCameraRetro } from 'react-icons/fa';
-import loginImg1 from '../assets/login_1.jpg'
 import contactImg1 from '../assets/contactUs.jpg'
 
 const Contact = () => {
