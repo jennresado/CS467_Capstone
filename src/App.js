@@ -8,9 +8,29 @@ import Contact from './components/Contact';
 import UserProfile from './components/UserProfile';
 import SignUp from './components/SignUp';
 import About from './components/About'
+import Animal from './components/Animal'
 
 function App() {
     const [cookies, setCookie, removeCookie] = useCookies(['user'])
+
+    // Warm up backend server to decrease latency
+    useEffect(() => {
+        const warmServer = async () => {
+            const res = await fetch(
+                `https://bring-me-home-backend.herokuapp.com/`,
+                {
+                    method: 'GET',
+                    headers: {'Content-type': 'application/json'}
+                }
+            )
+    
+            if (res.ok) {
+                console.log('hello world')
+            }
+        }
+
+        warmServer()
+    }, [])
 
     // Login User
     const loginUser = async (loginInfo) => {
@@ -41,6 +61,7 @@ function App() {
     const logoutUser = async () => {
         removeCookie('user', {'path': '/'})
         alert("user removed")
+
     }
 
     return (
@@ -94,11 +115,16 @@ function App() {
 
             {/* Add Animal Page */}
             {/* <Route 
+
+            <Route 
+
                 path= '/Animal' 
                 render={(props) => (
                     <Animal />
                 )
             }/> */}
+
+            }/>
             
             {/* About Page */}
             <Route 

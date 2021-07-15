@@ -58,6 +58,9 @@ const Login = ({ onLogin }) => {
                                 <button className='btn btn-primary' type='submit'>Login</button>
                             </div>
                             <Link to="/SignUp">Sign Up</Link>
+
+                            <p className='disclaimer'>Disclaimer: Cookie is used to track logged in state and will be deleted once a user logs out.</p>
+
                         </form>
                     </div>
                     <div className='row'>

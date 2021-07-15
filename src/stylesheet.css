@@ -12,7 +12,23 @@ a {
     text-decoration: none!important;
 }
 
+
 .landingPage {
+ol {
+    text-align: left!important;
+    padding-left: 2rem!important;
+}
+
+legend {
+    font-size: 1.1rem!important;
+    text-align: left!important;
+}
+
+option {
+    text-transform: capitalize;
+}
+
+.generalFormat {
     margin-top: 60px;  /*for the Navigation Bar to not overlap the page content*/
     text-align: center;
     padding: 1rem;
@@ -26,15 +42,43 @@ a {
     margin-bottom: 60px; /*for the  Bottom Navigation Bar to not cut off the page content*/
 }
 
-ol {
-    text-align: left!important;
-    padding-left: 2rem!important;
-}
-
 .spreadImgs {
     margin: 1.5rem 0!important;
 }
 
+.imgCredit {
+    font-size: .75rem;
+}
+
+.loginForm, .animalForm {
+    padding: 3rem 3rem 2rem 3rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+}
+
+.animalForm {
+    margin-top: 1.5rem;
+}
+
+.loginImg {
+    padding: 0;
+    margin-bottom: 1rem;
+}
+
+.loginForm > div {
+    margin-bottom: 1rem;
+}
+
+.loginError {
+    color: red;
+}
+
+.disclaimer {
+    margin-top: 1rem;
+    margin-bottom: 0!important;
+}
 .contactPage {
     margin-top: 60px;  /*for the Navigation Bar to not overlap the page content*/
     text-align: center;
@@ -54,4 +98,8 @@ ol {
     text-align: center;
     padding: 1rem;
     margin-bottom: 60px; /*for the  Bottom Navigation Bar to not cut off the page content*/
+}
+
+#animalDiv {
+    margin-top: 1.5rem;
 }
