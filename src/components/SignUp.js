@@ -21,8 +21,7 @@ const SignUp = ({ onSignup }) => {
         setErrorUsername(false)
 
         // username taken 
-        if (username == username) {
-            console.log("Username isse")
+        if (username) {
             // removes any previous error from screen
             setErrorInput(false)
             setErrorUsername(true)
