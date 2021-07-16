@@ -100,7 +100,7 @@ describe('animalsModel', ()=>{
   });
 
   describe('addAnimal(animalObj)', ()=>{
-    it('adds an aniaml to an empty db', async ()=>{
+    it('adds an animal to an empty db', async ()=>{
       let animalList = await getTestAnimals();
       let dbTestAnimals = await getExpectedTestAnimals();
 
