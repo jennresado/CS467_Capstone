@@ -32,6 +32,7 @@ const SignUp = ({ onSignup }) => {
             // removes any previous error from screen
             setErrorUsername(false)
             setErrorInput(true)
+            return
         }
 
         onSignup({ first_name, last_name, email, username, password, admin })
