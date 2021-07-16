@@ -64,6 +64,30 @@ function App() {
 
     }
 
+    // Sign Up New User
+    const signUpUser = async (signUpInfo) => {
+        const res = await fetch(
+            `https://bring-me-home-backend.herokuapp.com/auth/register`,
+            {
+                method: 'POST',
+                headers: { 'Content-type': 'application/json' },
+                body: JSON.stringify(signUpInfo)
+            }
+        )
+        
+        if (res.ok) {
+            const data = await res.json()
+            // Create cookie
+            setCookie(
+                    'user',
+                    { 'username': signUpInfo.username, 'token': data.token },
+                    { path: '/' }
+            )
+        } else {
+            throw new Error('Invalid Registration')
+        }
+    }
+
     return (
         <Router>
         <div className='container'>
@@ -83,7 +107,9 @@ function App() {
             <Route 
                 path= '/signup' 
                 render={(props) => (
-                    <SignUp />
+                    <SignUp 
+                    onSignup={signUpUser}
+                    />
                 )
             }/>
 
