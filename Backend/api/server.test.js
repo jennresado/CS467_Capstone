@@ -911,7 +911,7 @@ describe("server", () => {
       })
     })
 
-    describe('DELETE /animal_id', ()=>{
+    describe('DELETE /animals/animal_id', ()=>{
       it('deletes animal from database', async ()=>{
         const res = await supertest(server).post("/auth/register").send({
           username: "sam",
