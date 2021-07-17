@@ -9,6 +9,8 @@ import UserProfile from './components/UserProfile';
 import SignUp from './components/SignUp';
 import About from './components/About'
 import Animal from './components/Animal'
+import Login from './components/Login'
+import Dashboard from './components/Dashboard'
 
 function App() {
     const [cookies, setCookie, removeCookie] = useCookies(['user'])
@@ -60,8 +62,6 @@ function App() {
     // Logout User
     const logoutUser = async () => {
         removeCookie('user', {'path': '/'})
-        alert("user removed")
-
     }
 
     // Sign Up New User
@@ -139,18 +139,14 @@ function App() {
                 )
             }/>
 
-            {/* Add Animal Page */}
-            {/* <Route 
-
+            {/* Animal Page */}
             <Route 
 
                 path= '/Animal' 
                 render={(props) => (
                     <Animal />
                 )
-            }/> */}
-
-            }/>
+            }/> 
             
             {/* About Page */}
             <Route 
