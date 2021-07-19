@@ -127,21 +127,6 @@ function App() {
             />
 
             {/* Dashboard Page */}
-            {/* {
-                Object.keys(cookies).length > 0 && Object.keys(cookies.user).length > 0 ?
-                <Route 
-                    path= '/dashboard' 
-                    render={(props) => (
-                        <Dashboard />
-                    )
-                }/> :
-                <Route 
-                    path='/' exact render={(props) => (
-                        <Landing />
-                    )}
-                />
-            } */}
-
             <Route 
                 path= '/dashboard' 
                 render={(props) => (
@@ -150,17 +135,6 @@ function App() {
             }/>
 
             {/* Profile Settings Page */}
-            {/* {
-                Object.keys(cookies).length > 0 && Object.keys(cookies.user).length > 0 ?
-                <Route 
-                    path= '/userprofile' 
-                    render={(props) => (
-                        <UserProfile />
-                    )
-                }/> :
-                <Redirect push to="/" />
-            } */}
-
             <Route 
                 path= '/userprofile' 
                 render={(props) => (
@@ -169,17 +143,6 @@ function App() {
             }/>
 
             {/* Animal Page */}
-            {/* {
-                Object.keys(cookies).length > 0 && Object.keys(cookies.user).length > 0 && cookies.users.admin ?
-                <Route 
-                    path= '/Animal' 
-                    render={(props) => (
-                        <Animal />
-                    )
-                }/> :
-                <Redirect push to="/" />
-            } */}
-
             <Route 
                 path= '/Animal' 
                 render={(props) => (
