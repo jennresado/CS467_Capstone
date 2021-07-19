@@ -1,4 +1,5 @@
 const db = require("../db/dbconfig");
+const Dispositions = require('../dispositions/dispositionsModel')
 
 module.exports = {
   addAnimal,
@@ -8,9 +9,23 @@ module.exports = {
   deleteAnimal,
 };
 
+async function asyncForEach(array, cb) {
+  for (let i = 0; i < array.length; i++) {
+    await cb(array[i], i, array);
+  }
+}
+
 //adds an animal to the database
 function addAnimal(animal) {
-  return db("animals").insert(animal, "animal_id").first();
+  let disposition = animal.disposition;
+  delete animal.disposition;
+  const id = await db("animals").insert(animal, "animal_id");
+
+  await asyncForEach(disposition, async (dis) => {
+    const dis_id = await Dispositions.getDispositionId(dis)
+    await Dispositions.addAnimalDisposition(id[0], dis_id)
+  })
+  return id;
 }
 
 //edits animal with the given id

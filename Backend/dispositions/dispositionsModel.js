@@ -5,6 +5,7 @@ module.exports = {
     addAnimalDisposition,
     editDisposition,
     getAnimalByDispositionId,
+    getAnimalDispositions,
     getDispositionId,
     deleteDisposition,
     deleteAnimalDiposition
@@ -30,9 +31,16 @@ function getAnimalByDispositionId(disposition_id) {
     return db('animals as a').join('animal_dispositions as ad', 'a.animal_id', 'ad.animal_id').join('dispositions as d', 'd.disposition_id', 'ad.disposition_id').where('d.disposition_id', disposition_id)
  }
 
+  //gets all the dispositions for a particular animal
+  function getAnimalDispositions(animal_id){
+    return db('dispositions as d').join('animal_dispositions as ad', 'd.disposition_id', 'ad.disposition_id').where('ad.animal_id', animal_id)
+ }
+
 //get a disposition and returns the id
 function getDispositionId(disposition) {
-    return db('dispositions').where({disposition}).select('disposition_id');
+    const res = await db('dispositions').where({disposition}).first();
+    const dis_id = res.disposition_id;
+    return dis_id;
  }
 
 //delete a disposition

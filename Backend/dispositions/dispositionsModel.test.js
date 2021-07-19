@@ -21,7 +21,6 @@ describe('dispositionsModel', ()=>{
     await db.raw("TRUNCATE TABLE animals RESTART IDENTITY CASCADE");
     await db.raw("TRUNCATE TABLE users RESTART IDENTITY CASCADE");
     await db.raw("TRUNCATE TABLE user_animals RESTART IDENTITY CASCADE");
-    await db.raw("TRUNCATE TABLE dispositions RESTART IDENTITY CASCADE");
     await db.raw("TRUNCATE TABLE animal_dispositions RESTART IDENTITY CASCADE");
     await db.raw("TRUNCATE TABLE breeds RESTART IDENTITY CASCADE");
     await db.raw("TRUNCATE TABLE animal_breeds RESTART IDENTITY CASCADE");
@@ -126,6 +125,39 @@ describe('dispositionsModel', ()=>{
 
             res = await Dispositions.getAnimalByDispositionId(3)
             expect(res.length).toBe(0);
+
+        })
+    })
+
+    describe.only('getAnimalDispositions(animal_id)', ()=>{
+        it('returns a list of dispositions that an animal has based on animal_id', async ()=>{
+            const disList = await getDispositions();
+            const animalList = await getTestAnimals();
+            await asyncForEach(disList, async (dispo) =>{
+                await db('dispositions').insert({disposition: dispo});
+            })
+            let index = 1
+            await asyncForEach(animalList, async (animal) =>{
+                await db('animals').insert(animal);
+                await db('animal_dispositions').insert({animal_id: index, disposition_id: 1})
+                index++;
+            })
+            await db('animal_dispositions').insert({animal_id: 1, disposition_id: 2})
+
+            let dispositions = await db('dispositions');
+            expect(dispositions.length).toBe(3);
+            let animals = await db('animals')
+            expect(animals.length).toBe(4)
+            let animal_dispositions = await db('animal_dispositions')
+            expect(animal_dispositions.length).toBe(5);
+
+            const res = await Dispositions.getAnimalDispositions(1)
+            expect(res.length).toBe(2);
+
+            res.forEach((obj, i) => {
+                expect(obj.disposition).toEqual(disList[i])
+            })
+            
 
         })
     })
