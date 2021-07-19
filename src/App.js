@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useCookies } from 'react-cookie';
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
 import Landing from './components/Landing'
 import Navigation from './components/Navigation'
 import Footer from './components/Footer';
@@ -57,7 +57,7 @@ function App() {
             )
             
             // Retrieve animals from db
-            getAnimals(data.token)
+            // getAnimals(data.token)
         } else {
             throw new Error('Invalid login')
         }  
@@ -92,6 +92,24 @@ function App() {
         }
     }
 
+    // Authenticate user for non-public pages
+    const requireAuth = () => {
+        if (!cookies.user) {
+            return false
+        }
+        return true
+    }
+
+    // Authenticate user for admin page
+    const requireAuthAdmin = () => {
+        if (!cookies.user) {
+            return false
+        } else if (!cookies.user.admin) {
+            return false
+        }
+        return true
+    }
+
     // Retrieve animals from db
     const getAnimals = async (token) => {
         const res = await fetch(
@@ -107,7 +125,7 @@ function App() {
 
         if (res.ok) {
             const data = await res.json()
-
+            
             setAnimals(data.animals)
         }
     }
@@ -152,7 +170,9 @@ function App() {
             <Route 
                 path= '/dashboard' 
                 render={(props) => (
-                    <Dashboard />
+                    requireAuth() ? 
+                    <Dashboard /> :
+                    <Redirect to='/' />
                 )
             }/>
 
@@ -168,9 +188,12 @@ function App() {
             <Route 
                 path= '/Animal' 
                 render={(props) => (
+                    requireAuthAdmin() ?
                     <Animal 
+                        cookies={cookies}
                         animalsDb={animals}
-                    />
+                    /> :
+                    <Redirect to='/' />
                 )
             }/>
 

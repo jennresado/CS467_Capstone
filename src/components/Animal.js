@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import animals from '../assets/Animals'
 
-const Animal = ({ animalsDb }) => {
+const Animal = ({ cookies, getAnimals }) => {
     let history = useHistory()
     let types = Object.keys(animals)
     let availabilities = ['Not Available', 'Available', 'Pending', 'Adopted']
@@ -15,10 +15,6 @@ const Animal = ({ animalsDb }) => {
     const [availability, setAvailability] = useState('')
     const [newsItem, setNewsItem] = useState('')
     const [description, setDescription] = useState('')
-
-    useEffect(() => {
-        console.log(animalsDb)
-    }, [])
 
     // Convert picture to base64
     const convertToBase64 = (e) => {
@@ -76,6 +72,7 @@ const Animal = ({ animalsDb }) => {
                                 <select 
                                     className="form-select" 
                                     id="id" 
+                                    onClick={() => {getAnimals(cookies.user.token)}}
                                     onChange={(e) => {setId(e.target[e.target.selectedIndex].value)}}
                                 >
                                     <option>Animal Id</option>
