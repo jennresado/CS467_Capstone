@@ -2,11 +2,10 @@ import { useState, useEffect } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import animals from '../assets/Animals'
 
-const Animal = ({ cookies }) => {
+const Animal = ({ animalsDb }) => {
     let history = useHistory()
     let types = Object.keys(animals)
     let availabilities = ['Not Available', 'Available', 'Pending', 'Adopted']
-    const [animalsDb, setAnimalsDb] = useState([])
     const [id, setId] = useState('')
     const [type, setType] = useState('')
     const [selectBreeds, setSelectBreeds] = useState([])
@@ -17,31 +16,8 @@ const Animal = ({ cookies }) => {
     const [newsItem, setNewsItem] = useState('')
     const [description, setDescription] = useState('')
 
-    // Retrieve animals from db
     useEffect(() => {
-        const getAnimalsDb = async () => {
-            const res = await fetch(
-                `https://bring-me-home-backend.herokuapp.com/dummy/animals`,
-                {
-                    method: 'GET',
-                    headers: {
-                        'Content-type': 'application/json',
-                        'Authorization': cookies.user.token
-                    }
-                }
-            )
-
-            if (res.ok) {
-                const data = await res.json()
-                
-                console.log(data)
-                setAnimalsDb([...animalsDb, data.animals])
-
-                console.log(animalsDb)
-            }
-        }
-
-        getAnimalsDb()
+        console.log(animalsDb)
     }, [])
 
     // Convert picture to base64

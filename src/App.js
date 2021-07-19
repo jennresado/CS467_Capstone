@@ -14,6 +14,7 @@ import Dashboard from './components/Dashboard'
 
 function App() {
     const [cookies, setCookie, removeCookie] = useCookies(['user'])
+    const [animals, setAnimals] = useState([])
 
     // Warm up backend server to decrease latency
     useEffect(() => {
@@ -54,6 +55,9 @@ function App() {
                 {'username': loginInfo.username, 'token': data.token, 'admin': data.admin}, 
                 {path: '/'}
             )
+            
+            // Retrieve animals from db
+            getAnimals(data.token)
         } else {
             throw new Error('Invalid login')
         }  
@@ -85,6 +89,26 @@ function App() {
             )
         } else {
             throw new Error('Invalid Registration')
+        }
+    }
+
+    // Retrieve animals from db
+    const getAnimals = async (token) => {
+        const res = await fetch(
+            `https://bring-me-home-backend.herokuapp.com/dummy/animals`,
+            {
+                method: 'GET',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Authorization': token
+                }
+            }
+        )
+
+        if (res.ok) {
+            const data = await res.json()
+
+            setAnimals(data.animals)
         }
     }
 
@@ -145,7 +169,7 @@ function App() {
                 path= '/Animal' 
                 render={(props) => (
                     <Animal 
-                        cookies={cookies}
+                        animalsDb={animals}
                     />
                 )
             }/>
