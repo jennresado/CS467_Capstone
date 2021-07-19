@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import animals from '../assets/Animals'
 
-const Animal = ({ cookies, getAnimals }) => {
+const Animal = ({ animalsDb }) => {
     let history = useHistory()
     let types = Object.keys(animals)
     let availabilities = ['Not Available', 'Available', 'Pending', 'Adopted']
@@ -72,7 +72,6 @@ const Animal = ({ cookies, getAnimals }) => {
                                 <select 
                                     className="form-select" 
                                     id="id" 
-                                    onClick={() => {getAnimals(cookies.user.token)}}
                                     onChange={(e) => {setId(e.target[e.target.selectedIndex].value)}}
                                 >
                                     <option>Animal Id</option>

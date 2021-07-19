@@ -35,6 +35,32 @@ function App() {
         warmServer()
     }, [])
 
+    // Retrieve animals from db
+    useEffect(() => {
+        const getAnimals = async () => {
+            const res = await fetch(
+                `https://bring-me-home-backend.herokuapp.com/dummy/animals`,
+                {
+                    method: 'GET',
+                    headers: {
+                        'Content-type': 'application/json',
+                        'Authorization': cookies.user.token
+                    }
+                }
+            )
+
+            if (res.ok) {
+                const data = await res.json()
+                
+                setAnimals(data.animals)
+            }
+        }
+
+        if (cookies.user) {
+            getAnimals()
+        }
+    }, [])
+
     // Login User
     const loginUser = async (loginInfo) => {
         const res = await fetch(
@@ -55,9 +81,6 @@ function App() {
                 {'username': loginInfo.username, 'token': data.token, 'admin': data.admin}, 
                 {path: '/'}
             )
-            
-            // Retrieve animals from db
-            // getAnimals(data.token)
         } else {
             throw new Error('Invalid login')
         }  
@@ -108,26 +131,6 @@ function App() {
             return false
         }
         return true
-    }
-
-    // Retrieve animals from db
-    const getAnimals = async (token) => {
-        const res = await fetch(
-            `https://bring-me-home-backend.herokuapp.com/dummy/animals`,
-            {
-                method: 'GET',
-                headers: {
-                    'Content-type': 'application/json',
-                    'Authorization': token
-                }
-            }
-        )
-
-        if (res.ok) {
-            const data = await res.json()
-            
-            setAnimals(data.animals)
-        }
     }
 
     return (
@@ -190,7 +193,6 @@ function App() {
                 render={(props) => (
                     requireAuthAdmin() ?
                     <Animal 
-                        cookies={cookies}
                         animalsDb={animals}
                     /> :
                     <Redirect to='/' />
