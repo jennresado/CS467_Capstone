@@ -51,9 +51,11 @@ function App() {
             // Create cookie
             setCookie(
                 'user', 
-                {'username': loginInfo.username, 'token': data.token}, 
+                {'username': loginInfo.username, 'token': data.token, 'admin': data.admin}, 
                 {path: '/'}
             )
+            console.log(data)
+            console.log(cookies.user)
         } else {
             throw new Error('Invalid login')
         }  
@@ -94,6 +96,7 @@ function App() {
             {/* Navigation Bar */}
             <Navigation 
                 onLogout={logoutUser}
+                cookies={cookies}
             />
             
             {/* Landing Page */}
@@ -124,6 +127,21 @@ function App() {
             />
 
             {/* Dashboard Page */}
+            {/* {
+                Object.keys(cookies).length > 0 && Object.keys(cookies.user).length > 0 ?
+                <Route 
+                    path= '/dashboard' 
+                    render={(props) => (
+                        <Dashboard />
+                    )
+                }/> :
+                <Route 
+                    path='/' exact render={(props) => (
+                        <Landing />
+                    )}
+                />
+            } */}
+
             <Route 
                 path= '/dashboard' 
                 render={(props) => (
@@ -132,6 +150,17 @@ function App() {
             }/>
 
             {/* Profile Settings Page */}
+            {/* {
+                Object.keys(cookies).length > 0 && Object.keys(cookies.user).length > 0 ?
+                <Route 
+                    path= '/userprofile' 
+                    render={(props) => (
+                        <UserProfile />
+                    )
+                }/> :
+                <Redirect push to="/" />
+            } */}
+
             <Route 
                 path= '/userprofile' 
                 render={(props) => (
@@ -140,14 +169,24 @@ function App() {
             }/>
 
             {/* Animal Page */}
-            <Route 
+            {/* {
+                Object.keys(cookies).length > 0 && Object.keys(cookies.user).length > 0 && cookies.users.admin ?
+                <Route 
+                    path= '/Animal' 
+                    render={(props) => (
+                        <Animal />
+                    )
+                }/> :
+                <Redirect push to="/" />
+            } */}
 
+            <Route 
                 path= '/Animal' 
                 render={(props) => (
                     <Animal />
                 )
-            }/> 
-            
+            }/>
+
             {/* About Page */}
             <Route 
                 path= '/about' 
@@ -165,7 +204,9 @@ function App() {
             }/>
 
             {/* Footer */}
-            <Footer />
+            <Footer 
+                cookies={cookies}
+            />
         </div>
         </Router>
     );
