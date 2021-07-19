@@ -38,23 +38,43 @@ function editAnimal(animal_id, animalEdits) {
 
 //returns an array of all the animal objects in the database
 async function getAllAnimals(){
-  return db('animals');
+  const db_a = await db('animals');
+  await asyncForEach(db_a, async (animal) => {
+    let a_dis = await Dispositions.getAnimalDispositions(animal.animal_id)
+    animal.disposition = []
+    a_dis.forEach(dis => {
+      animal.disposition.push(dis.disposition)
+    })
+  })
+  return db_a
 }
 
 //returns animal object corresponding the the given filter and filter value
 // filterValue is animal_id for cases animal_id, breed and disposition
 async function getAnimalBy(filterName, filterValue) {
+  let db_a = []
   switch (filterName) {
     case "animal_id":
-      return db("animals").where({ animal_id: filterValue });
+      db_a = await db("animals").where({ animal_id: filterValue });
+      break;
     case "date":
-      return db("animals").where({ date_created: filterValue });
-    default:
-      return []
+      db_a = await db("animals").where({ date_created: filterValue });
+      break;
+    case "disposition_id":
+      return Dispositions.getAnimalByDispositionId(1)
   }
+  
+  await asyncForEach(db_a, async (animal) => {
+    let a_dis = await Dispositions.getAnimalDispositions(animal.animal_id)
+    animal.disposition = []
+    a_dis.forEach(dis => {
+      animal.disposition.push(dis.disposition)
+    })
+  })
 }
 
 //removes aniaml with given id from database
-function deleteAnimal(animal_id) {
+async function deleteAnimal(animal_id) {
+  await Dispositions.deleteAnimalDiposition(animal_id)
   return db("animals").del().where({ animal_id });
 }

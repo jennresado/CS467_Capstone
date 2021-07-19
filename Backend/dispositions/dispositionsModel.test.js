@@ -162,6 +162,39 @@ describe('dispositionsModel', ()=>{
         })
     })
 
+    describe('getAnimalDispositions(animal_id)', ()=>{
+        it('returns a list of dispositions that an animal has based on animal_id', async ()=>{
+            const disList = await getDispositions();
+            const animalList = await getTestAnimals();
+            await asyncForEach(disList, async (dispo) =>{
+                await db('dispositions').insert({disposition: dispo});
+            })
+            let index = 1
+            await asyncForEach(animalList, async (animal) =>{
+                await db('animals').insert(animal);
+                await db('animal_dispositions').insert({animal_id: index, disposition_id: 1})
+                index++;
+            })
+            await db('animal_dispositions').insert({animal_id: 1, disposition_id: 2})
+
+            let dispositions = await db('dispositions');
+            expect(dispositions.length).toBe(3);
+            let animals = await db('animals')
+            expect(animals.length).toBe(4)
+            let animal_dispositions = await db('animal_dispositions')
+            expect(animal_dispositions.length).toBe(5);
+
+            const res = await Dispositions.getAnimalDispositions(1)
+            expect(res.length).toBe(2);
+
+            res.forEach((obj, i) => {
+                expect(obj.disposition).toEqual(disList[i])
+            })
+            
+
+        })
+    })
+
     describe('getDispositionId(disposition)', ()=>{
         it('returns the id of a particular diposition string', async ()=>{
             const disList = await getDispositions();
@@ -243,7 +276,7 @@ describe('dispositionsModel', ()=>{
         })
 
         it('returns 0 when trying to remove a disposition not on an animal', async ()=>{
-            const count = await Dispositions.deleteAnimalDiposition(1, 1);
+            const count = await Dispositions.deleteAnimalDiposition(1);
             expect(count).toBe(0);
         })
     })
