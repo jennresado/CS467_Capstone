@@ -54,8 +54,6 @@ function App() {
                 {'username': loginInfo.username, 'token': data.token, 'admin': data.admin}, 
                 {path: '/'}
             )
-            console.log(data)
-            console.log(cookies.user)
         } else {
             throw new Error('Invalid login')
         }  
@@ -146,7 +144,9 @@ function App() {
             <Route 
                 path= '/Animal' 
                 render={(props) => (
-                    <Animal />
+                    <Animal 
+                        cookies={cookies}
+                    />
                 )
             }/>
 

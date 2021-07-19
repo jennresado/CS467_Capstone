@@ -2,12 +2,12 @@ import { useState, useEffect } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import animals from '../assets/Animals'
 
-const Animal = () => {
+const Animal = ({ cookies }) => {
     let history = useHistory()
     let types = Object.keys(animals)
     let availabilities = ['Not Available', 'Available', 'Pending', 'Adopted']
-    const [id, setId] = useState('')
     const [animalsDb, setAnimalsDb] = useState([])
+    const [id, setId] = useState('')
     const [type, setType] = useState('')
     const [selectBreeds, setSelectBreeds] = useState([])
     const [breed, setBreed] = useState('')
@@ -24,14 +24,20 @@ const Animal = () => {
                 `https://bring-me-home-backend.herokuapp.com/dummy/animals`,
                 {
                     method: 'GET',
-                    headers: {'Content-type': 'application/json'}
+                    headers: {
+                        'Content-type': 'application/json',
+                        'Authorization': cookies.user.token
+                    }
                 }
             )
 
             if (res.ok) {
                 const data = await res.json()
-
+                
                 console.log(data)
+                setAnimalsDb([...animalsDb, data.animals])
+
+                console.log(animalsDb)
             }
         }
 
@@ -94,10 +100,12 @@ const Animal = () => {
                                 <select 
                                     className="form-select" 
                                     id="id" 
-                                    onChange={(e) => {setId(e.target.value)}}
+                                    onChange={(e) => {setId(e.target[e.target.selectedIndex].value)}}
                                 >
                                     <option>Animal Id</option>
-                                    {/* autofill based on data pulled from db */}
+                                    {animalsDb.map((e, key) => {
+                                        return <option key={key} value={e.animal_id}>{e.animal_id}</option>
+                                    })}
                                 </select>
                             </div>
                             <div className="input-group mb-3">
