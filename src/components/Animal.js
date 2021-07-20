@@ -6,6 +6,7 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
     let history = useHistory()
     let types = Object.keys(animals)
     let availabilities = ['Not Available', 'Available', 'Pending', 'Adopted']
+    let imageBase64 = 'data:image/png;base64,'
     const [id, setId] = useState('')
     const [idAnimal, setIdAnimal] = useState({})
     const [type, setType] = useState('')
@@ -16,6 +17,17 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
     const [availability, setAvailability] = useState('')
     const [newsItem, setNewsItem] = useState('')
     const [description, setDescription] = useState('')
+    const objectMapping = {
+        "id": id,
+        "type": type,
+        "selectBreeds": selectBreeds,
+        "breed": breed,
+        "disposition": disposition,
+        "pic": picture,
+        "availability": availability,
+        "news_item": newsItem,
+        "description": description
+    }
 
     // Clear form 
     const clearForm = () => {
@@ -50,13 +62,6 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
             console.log(animalsDb[i])
             if (animalsDb[i].animal_id == id) {
                 setIdAnimal(animalsDb[i])
-                setType(animalsDb[i].type)
-                setBreed(animalsDb[i].breed)
-                setDisposition(animalsDb[i].disposition)
-                setPicture(animalsDb[i])
-                setAvailability(animalsDb[i].availability)
-                setNewsItem(animalsDb[i].news_item)
-                setDescription(animalsDb[i].description)
             }
         }
     }
@@ -86,8 +91,7 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
     // Convert picture to base64
     const convertToBase64 = (e) => {
         const content = e.target.result;
-        console.log(content)
-        setPicture(content)
+        setPicture(content.split("base64,")[1])
     }
 
     // Handle change file
@@ -100,6 +104,8 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
     // On click submit
     const onSubmit = (e) => {
         e.preventDefault()
+        
+        let body = {}
 
         if (!type && !breed && !disposition && 
                 !picture &&!availability && 
@@ -107,20 +113,16 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
             return
         }
 
-        const body = {
-            "type": type,
-            "breed": breed,
-            "disposition": disposition,
-            "picture": picture,
-            "availability": availability,
-            "newsItem": newsItem,
-            "description": description
-        }
-
         // Update if id
         if (id) {
-            body["animal_id"] = id
-
+            for (const key in idAnimal) {
+                if (objectMapping[key]) {
+                    body[key] = objectMapping[key]
+                } else {
+                    body[key] = idAnimal[key]
+                }
+            }
+            
             console.log(body)
 
             // onUpdateAnimal(body)
@@ -132,6 +134,16 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
 
         // Add if new animal
         } else {
+            body = {
+                "type": type,
+                "breed": breed,
+                "disposition": disposition,
+                "picture": picture,
+                "availability": availability,
+                "newsItem": newsItem,
+                "description": description
+            }
+
             console.log(body)
 
             // onAddAnimal(body)
@@ -194,14 +206,17 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
                                         <p><strong>Id</strong>: {idAnimal.animal_id}</p>
                                         
                                         <p><strong>Type</strong>: {idAnimal.type}</p>
-                                        <p><strong>Breed</strong>: {idAnimal.breed}</p>
+                                        <p>
+                                            <strong>Breed</strong>: 
+                                            {idAnimal.breeds.map((e, key) => {return <li key={key}>{e}</li>})}
+                                        </p>
                                         <p>
                                             <strong>Disposition</strong>:
                                             {idAnimal.disposition.map((e, key) => {return <li key={key}>{e}</li> })}
                                         </p>
                                         <p> 
                                             <strong>Picture</strong>:
-                                            <img className="card-image" src={idAnimal.picture}></img>
+                                            <img className="card-image" src={imageBase64 + idAnimal.pic}></img>
                                         </p>
                                         <p><strong>Availability</strong>: {idAnimal.availability}</p>
                                         <p><strong>News Item</strong>: {idAnimal.news_item}</p>
@@ -225,12 +240,12 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
                             {
                                 selectBreeds.length > 0 &&
                                 <div className="input-group mb-3">
+                                    
                                     <select 
                                         className="form-select" 
                                         id="breed" 
                                         value={breed}
                                         multiple
-                                        onClick={() => {setSelectBreeds(animals[type])}}
                                         onChange={(e) => {setBreed(e.target[e.target.selectedIndex].value)}}
                                     >
                                         <option>Breed</option>
@@ -262,7 +277,6 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
                                             value="Good with children" 
                                             aria-label="Checkbox for following text input" 
                                             onChange={(e) => {handleChangeDisposition(e.target.checked, e.target.value)}}
-                                            // onChange={(e) => {setDisposition([...disposition, e.target.value])}}
                                         />
                                     </div>
                                     <input type="text" className="form-control" value="Good with children" aria-label="Text input with checkbox" readOnly/>
@@ -275,7 +289,6 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
                                             value="Animal must be leashed at all times" 
                                             aria-label="Checkbox for following text input" 
                                             onChange={(e) => {handleChangeDisposition(e.target.checked, e.target.value)}}
-                                            // onChange={(e) => {setDisposition([...disposition, e.target.value])}}
                                         />
                                     </div>
                                     <input type="text" className="form-control" value="Animal must be leashed at all times" aria-label="Text input with checkbox" readOnly/>
