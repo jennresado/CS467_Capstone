@@ -321,10 +321,6 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
                                 />
                                 <label className="input-group-text" htmlFor="inputGroupFile02">Upload</label>
                             </div>
-                            {
-                                picture && 
-                                <img className="card-img-top rounded mb-3" src={imageBase64 + picture}></img>
-                            }
                             <div className="input-group mb-3">
                                 <select 
                                     className="form-select" 
