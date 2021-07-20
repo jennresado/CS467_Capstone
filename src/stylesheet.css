@@ -20,13 +20,6 @@ option {
     text-transform: capitalize;
 }
 
-.landingPage {
-    margin-top: 60px;  /*for the Navigation Bar to not overlap the page content*/
-    text-align: center;
-    padding: 1rem;
-    margin-bottom: 60px; /*for the  Bottom Navigation Bar to not cut off the page content*/
-}
-
 ol {
     text-align: left!important;
     padding-left: 2rem!important;
@@ -37,14 +30,7 @@ legend {
     text-align: left!important;
 }
 
-.generalFormat {
-    margin-top: 60px;  /*for the Navigation Bar to not overlap the page content*/
-    text-align: center;
-    padding: 1rem;
-    margin-bottom: 60px; /*for the  Bottom Navigation Bar to not cut off the page content*/
-}
-
-.aboutPage {
+.generalFormat, .landingPage, .aboutPage, .contactPage, .userProfilePage, .signUpPage {
     margin-top: 60px;  /*for the Navigation Bar to not overlap the page content*/
     text-align: center;
     padding: 1rem;
@@ -122,26 +108,6 @@ legend {
 .disclaimer {
     margin-top: 1rem;
     margin-bottom: 0!important;
-}
-.contactPage {
-    margin-top: 60px;  /*for the Navigation Bar to not overlap the page content*/
-    text-align: center;
-    padding: 1rem;
-    margin-bottom: 60px; /*for the  Bottom Navigation Bar to not cut off the page content*/
-}
-
-.userProfilePage {
-    margin-top: 60px;  /*for the Navigation Bar to not overlap the page content*/
-    text-align: center;
-    padding: 1rem;
-    margin-bottom: 60px; /*for the  Bottom Navigation Bar to not cut off the page content*/
-}
-
-.signUpPage {
-    margin-top: 60px;  /*for the Navigation Bar to not overlap the page content*/
-    text-align: center;
-    padding: 1rem;
-    margin-bottom: 60px; /*for the  Bottom Navigation Bar to not cut off the page content*/
 }
 
 #animalDiv {
