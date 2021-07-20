@@ -227,7 +227,9 @@ function App() {
                 path= '/dashboard' 
                 render={(props) => (
                     requireAuth() ? 
-                    <Dashboard /> :
+                    <Dashboard 
+                        animalsDb={animals}
+                    /> :
                     <Redirect to='/' />
                 )
             }/>
