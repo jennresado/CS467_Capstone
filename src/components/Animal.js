@@ -1,21 +1,12 @@
 import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import animals from '../assets/Animals'
+import dispositions from '../assets/Dispositions'
+import availabilities from '../assets/Availabilities'
 
 const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
     let history = useHistory()
     let types = Object.keys(animals)
-    let dispositions = [
-        'Good with other animals', 
-        'Good with children', 
-        'Animal must be leased at all times'
-    ]
-    let availabilities = [
-        'Not Available', 
-        'Available', 
-        'Pending', 
-        'Adopted'
-    ]
     let imageBase64 = 'data:image/png;base64,'
     const [error, setError] = useState(false)
     const [id, setId] = useState('')
@@ -48,6 +39,7 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
             checkboxes[i].checked = false;
         }
 
+        setError(false)
         setType('')
         setSelectBreeds([])
         setBreed([])
@@ -70,7 +62,6 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
         }
         
         for (let i = 0; i < animalsDb.length; i++) {
-            console.log(animalsDb[i])
             if (animalsDb[i].animal_id == id) {
                 setIdAnimal(animalsDb[i])
             }
@@ -131,12 +122,17 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
 
         // Update if id
         if (id) {
-            if (!breed) {
+            if (breed.length === 0) {
+                setError(true)
                 return
             }
 
             for (const key in idAnimal) {
-                if (objectMapping[key]) {
+                if (key === 'breed' || key === 'disposition') {
+                    if (objectMapping[key].length > 0) {
+                        body[key] = objectMapping[key]
+                    }
+                } else if (objectMapping[key]) {
                     body[key] = objectMapping[key]
                 } else {
                     body[key] = idAnimal[key]
@@ -154,11 +150,12 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
 
         // Add if new animal
         } else {
-            if (!type && !breed && !disposition && 
+            if (!type && 
+                    breed.length === 0 && disposition.length === 0 && 
                     !picture &&!availability && 
                     !newsItem && !description) {
                 setError(true)
-            return
+                return
             }
 
             body = {
@@ -212,6 +209,10 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
                     </div>
                     <div className='row' id='animalDiv'>
                         <form className='animalForm'>
+                            <p>
+                                To update or delete an existing animal, select the animal's id.
+                            </p>
+                            {error && <p className="animalError">Invalid or missing field(s).</p>}
                             <div className="input-group mb-3">
                                 <select 
                                     className="form-select" 
