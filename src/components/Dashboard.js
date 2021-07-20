@@ -9,6 +9,7 @@ const Dashboard = ({ animalsDb }) => {
         <div className='generalFormat'>
             <h1>Dashboard</h1>
             {/* Search and filter */}
+            
             {/* Tiles */}
             <div className="container">
                 {animalsDb.length === 0 && <VscLoading className="loadingIcon"></VscLoading>}
