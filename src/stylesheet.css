@@ -53,6 +53,12 @@ legend {
     border-radius: 5px;
 }
 
+.loadingIcon {
+    margin-top: 5rem!important;
+    width: 5rem;
+    height: 5rem;
+}
+
 .card-img-top {
     object-fit: none;
     object-position: center;

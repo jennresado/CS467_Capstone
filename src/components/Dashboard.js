@@ -1,5 +1,6 @@
 import { Link, useHistory } from 'react-router-dom'
 import { useState, useEffect } from 'react'
+import { VscLoading } from 'react-icons/vsc'
 
 const Dashboard = ({ animalsDb }) => {
     let imageBase64 = 'data:image/png;base64,'
@@ -10,9 +11,10 @@ const Dashboard = ({ animalsDb }) => {
             {/* Search and filter */}
             {/* Tiles */}
             <div className="container">
+                {animalsDb.length === 0 && <VscLoading className="loadingIcon"></VscLoading>}
                 <div className="row row-cols-md-2 row-cols-lg-4">
                     {animalsDb.map((e, key) => {
-                        return <div>
+                        return <div key={key}>
                             <div className="card mb-3">
                                 <div className="card-body">
                                     <img className="card-img-top rounded mb-3" src={imageBase64 + e.pic}></img>
@@ -31,7 +33,7 @@ const Dashboard = ({ animalsDb }) => {
                                         {/* <p><strong>News Item</strong>: {e.news_item}</p> */}
                                         <p><strong>Description</strong>: {e.description}</p>
                                     </div>
-                                    <Link to="/contact" class="btn btn-primary d-grid">Adopt</Link>
+                                    <Link to="/contact" className="btn btn-primary d-grid">Adopt</Link>
                                 </div>
                             </div>
                         </div>
