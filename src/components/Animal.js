@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { useState } from 'react'
+import { useHistory } from 'react-router-dom'
+import { RiDeleteBin2Line } from 'react-icons/ri'
 import animals from '../assets/Animals'
 
 const Animal = ({ animalsDb }) => {
@@ -15,6 +16,38 @@ const Animal = ({ animalsDb }) => {
     const [availability, setAvailability] = useState('')
     const [newsItem, setNewsItem] = useState('')
     const [description, setDescription] = useState('')
+
+    // Prepopulate existing animal profile
+    const changeExisting = (id) => {
+        if (id === 'Animal Id') {
+            setId('')
+        } else {
+            setId(id)
+        }
+        
+        for (let i = 0; i < animalsDb.length; i++) {
+            if (animalsDb[i].animal_id == id) {
+                console.log(animalsDb[i])
+                setType(animalsDb[i].type)
+                // setBreed(animalsDb[i].breed)
+                // for testing with dummy api
+                setBreed("Collie")
+                setDisposition(animalsDb[i].disposition)
+                // setPicture(animalsDb[i])
+                setAvailability(animalsDb[i].availability)
+                setNewsItem(animalsDb[i].news_item)
+                // setDescription(animalsDb[i].description)
+                // for testing with dummy api
+                setDescription("Friendly and cute!")
+            }
+        }
+    }
+
+    // Handle type change 
+    const handleChangeType = (type) => {
+        setType(type)
+        setBreed('')
+    }
 
     // Convert picture to base64
     const convertToBase64 = (e) => {
@@ -33,8 +66,13 @@ const Animal = ({ animalsDb }) => {
     const onSubmit = (e) => {
         e.preventDefault()
 
+        if (!type && !breed && !disposition && 
+                !picture &&!availability && 
+                !newsItem && !description) {
+            return
+        }
+
         const body = {
-            "id": id,
             "type": type,
             "breed": breed,
             "disposition": disposition,
@@ -43,6 +81,16 @@ const Animal = ({ animalsDb }) => {
             "newsItem": newsItem,
             "description": description
         }
+
+        // Update if id
+        if (id) {
+            body["id"] = id
+
+        // Add if new animal
+        } else {
+
+        }
+        
 
         console.log(body)    
     }
@@ -57,6 +105,7 @@ const Animal = ({ animalsDb }) => {
     // on click delete
     const onDelete = (e) => {
         e.preventDefault()
+        
     }
     
     return (
@@ -72,7 +121,7 @@ const Animal = ({ animalsDb }) => {
                                 <select 
                                     className="form-select" 
                                     id="id" 
-                                    onChange={(e) => {setId(e.target[e.target.selectedIndex].value)}}
+                                    onChange={(e) => {changeExisting(e.target[e.target.selectedIndex].value)}}
                                 >
                                     <option>Animal Id</option>
                                     {animalsDb.map((e, key) => {
@@ -80,11 +129,35 @@ const Animal = ({ animalsDb }) => {
                                     })}
                                 </select>
                             </div>
+                            {
+                                id &&
+                                <div className="card mb-3">
+                                    <div className="card-body">
+                                        <h5 className="card-title">Updating</h5>
+                                        <p><strong>Instructions</strong>: Input(s) below will overwrite the corresponding field(s). Leave inputs blank if no changes are to be made to certain fields.</p>
+                                        <p><strong>Id</strong>: {id}</p>
+                                        
+                                        <p><strong>Type</strong>: {type}</p>
+                                        <p><strong>Breed</strong>: {breed}</p>
+                                        <p>
+                                            <strong>Disposition</strong>:
+                                            {disposition.map((e, key) => {return <li key={key}>{e}</li> })}
+                                        </p>
+                                        <p> 
+                                            <strong>Picture</strong>:
+                                            <img className="card-image" src={picture}></img>
+                                        </p>
+                                        <p><strong>Availability</strong>: {availability}</p>
+                                        <p><strong>News Item</strong>: {newsItem}</p>
+                                        <p><strong>Description</strong>: {description}</p>
+                                    </div>
+                                </div>
+                            }
                             <div className="input-group mb-3">
                                 <select 
                                     className="form-select" 
                                     id="type" 
-                                    onChange={(e) => {setType(e.target[e.target.selectedIndex].value)}}
+                                    onChange={(e) => {handleChangeType(e.target[e.target.selectedIndex].value)}}
                                 >
                                     <option>Type</option>
                                     {types.map((e, key) => {
@@ -167,18 +240,21 @@ const Animal = ({ animalsDb }) => {
                                     })}
                                 </select>
                             </div>
-                            <input type='text' placeholder='News item' className='form-control input-group mb-3' onChange={(e) => {setNewsItem(e.target.value)}}/>
-                            <input type='text' placeholder='Description' className='form-control input-group mb-3' onChange={(e) => {setDescription(e.target.value)}}/>
+                            <input type='text' placeholder="News Item" className='form-control input-group mb-3' onChange={(e) => {setNewsItem(e.target.value)}}/>
+                            <input type='text' placeholder="Description" className='form-control input-group mb-3' onChange={(e) => {setDescription(e.target.value)}}/>
                             <div className="row">
                                 <div className="col d-grid gap-2 mx-auto">
-                                    <button className='btn btn-primary' type='submit' onClick={onSubmit}>Save</button>
+                                    <button className='btn btn-primary' type='submit' onClick={onSubmit}>{id ? "Update" : "Add"}</button>
                                 </div>
                                 <div className="col d-grid gap-2 mx-auto">
                                     <button className='btn btn-secondary' type='submit' onClick={onCancel}>Cancel</button>
                                 </div>
-                                <div className="col d-grid gap-2 mx-auto">
-                                    <button className='btn btn-danger' type='submit' onClick={onDelete}>Delete</button>
-                                </div>
+                                {
+                                    id &&
+                                    <div className="col d-grid gap-2 mx-auto">
+                                        <button className='btn btn-danger' type='submit' onClick={onDelete}>Delete</button>
+                                    </div>
+                                }
                             </div>
                         </form>
                     </div>

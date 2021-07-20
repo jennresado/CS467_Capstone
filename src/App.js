@@ -133,6 +133,59 @@ function App() {
         return true
     }
 
+    // Add new animal
+    const onAddAnimal = async (body) => {
+        const res = await fetch(
+            `https://bring-me-home-backend.herokuapp.com//dummy/animals/`,
+            {
+                method: 'POST',
+                headers: { 'Content-type': 'application/json' },
+                body: JSON.stringify(body)
+            }
+        )
+
+        if (res.ok) {
+            console.log("Animal added")
+        } else {
+            throw new Error('Cannot add animal')
+        }
+    }
+
+    // Update existing animal
+    const onUpdateAnimal = async (body) => {
+        const res = await fetch(
+            `https://bring-me-home-backend.herokuapp.com//dummy/animals/` + body.animal_id,
+            {
+                method: 'PUT',
+                headers: { 'Content-type': 'application/json' },
+                body: JSON.stringify(body)
+            }
+        )
+
+        if (res.ok) {
+            console.log("Animal updated")
+        } else {
+            throw new Error('Cannot update animal')
+        }
+    }
+
+    // Delete existing animal
+    const onDeleteAnimal = async (body) => {
+        const res = await fetch (
+            `https://bring-me-home-backend.herokuapp.com//dummy/animals/` + body.animal_id,
+            {
+                method: 'DELETE',
+                headers: { 'Content-type': 'application/json' }
+            }
+        )
+
+        if (res.ok) {
+            console.log("Animal deleted")
+        } else {
+            throw new Error('Cannot delete animal')
+        }
+    }
+
     return (
         <Router>
         <div className='container'>
