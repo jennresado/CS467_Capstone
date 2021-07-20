@@ -1,13 +1,13 @@
 import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import { RiDeleteBin2Line } from 'react-icons/ri'
 import animals from '../assets/Animals'
 
-const Animal = ({ animalsDb }) => {
+const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
     let history = useHistory()
     let types = Object.keys(animals)
     let availabilities = ['Not Available', 'Available', 'Pending', 'Adopted']
     const [id, setId] = useState('')
+    const [idAnimal, setIdAnimal] = useState({})
     const [type, setType] = useState('')
     const [selectBreeds, setSelectBreeds] = useState([])
     const [breed, setBreed] = useState('')
@@ -17,8 +17,28 @@ const Animal = ({ animalsDb }) => {
     const [newsItem, setNewsItem] = useState('')
     const [description, setDescription] = useState('')
 
+    // Clear form 
+    const clearForm = () => {
+        let checkboxes = document.getElementsByClassName("form-check-input")
+
+        for (let i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].checked = false;
+        }
+
+        setType('')
+        setSelectBreeds([])
+        setBreed('')
+        setDisposition([])
+        setPicture('')
+        setAvailability('')
+        setNewsItem('')
+        setDescription('')
+    }
+
     // Prepopulate existing animal profile
-    const changeExisting = (id) => {
+    const handleChangeId = (id) => {
+        clearForm()
+        
         if (id === 'Animal Id') {
             setId('')
         } else {
@@ -27,7 +47,7 @@ const Animal = ({ animalsDb }) => {
         
         for (let i = 0; i < animalsDb.length; i++) {
             if (animalsDb[i].animal_id == id) {
-                console.log(animalsDb[i])
+                setIdAnimal(animalsDb[i])
                 setType(animalsDb[i].type)
                 // setBreed(animalsDb[i].breed)
                 // for testing with dummy api
@@ -49,10 +69,20 @@ const Animal = ({ animalsDb }) => {
         setBreed('')
     }
 
+    // Handle disposition change
+    const handleChangeDisposition = (checked, value) => {
+        // Add disposition
+        if (checked) {
+            setDisposition([...disposition, value])
+        // Remove disposition
+        } else {
+            setDisposition(disposition.filter((d) => d !== value))
+        }
+    }
+
     // Convert picture to base64
     const convertToBase64 = (e) => {
         const content = e.target.result;
-        console.log(content)
         setPicture(content)
     }
 
@@ -63,6 +93,7 @@ const Animal = ({ animalsDb }) => {
         reader.readAsDataURL(file)
     }
 
+    // On click submit
     const onSubmit = (e) => {
         e.preventDefault()
 
@@ -84,28 +115,49 @@ const Animal = ({ animalsDb }) => {
 
         // Update if id
         if (id) {
-            body["id"] = id
+            body["animal_id"] = id
+
+            console.log(body)
+
+            // onUpdateAnimal(body)
+            // .then(() => {
+            //     history.push('/dashboard')
+            // }).catch((err) => {
+            //     console.log(err)
+            // })
 
         // Add if new animal
         } else {
+            console.log(body)
 
-        }
-        
-
-        console.log(body)    
+            // onAddAnimal(body)
+            // .then(() => {
+            //     history.push('/dashboard')
+            // }).catch((err) => {
+            //     console.log(err)
+            // })
+        }  
     }
 
-    // on click cancel
+    // On click cancel
     const onCancel = (e) => {
         e.preventDefault()
 
         history.push('/dashboard')
     }
 
-    // on click delete
+    // On click delete
     const onDelete = (e) => {
         e.preventDefault()
-        
+
+        console.log(id)
+
+        // onDeleteAnimal(id)
+        // .then(() => {
+        //     history.push('/dashboard')
+        // }).catch((err) => {
+        //     console.log(err)
+        // })
     }
     
     return (
@@ -121,7 +173,7 @@ const Animal = ({ animalsDb }) => {
                                 <select 
                                     className="form-select" 
                                     id="id" 
-                                    onChange={(e) => {changeExisting(e.target[e.target.selectedIndex].value)}}
+                                    onChange={(e) => {handleChangeId(e.target[e.target.selectedIndex].value)}}
                                 >
                                     <option>Animal Id</option>
                                     {animalsDb.map((e, key) => {
@@ -133,23 +185,23 @@ const Animal = ({ animalsDb }) => {
                                 id &&
                                 <div className="card mb-3">
                                     <div className="card-body">
-                                        <h5 className="card-title">Updating</h5>
-                                        <p><strong>Instructions</strong>: Input(s) below will overwrite the corresponding field(s). Leave inputs blank if no changes are to be made to certain fields.</p>
-                                        <p><strong>Id</strong>: {id}</p>
+                                        <h5 className="card-title">Making Changes To</h5>
+                                        <p><strong>Instructions</strong>: When updating, input(s) below will overwrite the corresponding field(s). Leave inputs blank if no changes are to be made to certain fields.</p>
+                                        <p><strong>Id</strong>: {idAnimal.animal_id}</p>
                                         
-                                        <p><strong>Type</strong>: {type}</p>
-                                        <p><strong>Breed</strong>: {breed}</p>
+                                        <p><strong>Type</strong>: {idAnimal.type}</p>
+                                        <p><strong>Breed</strong>: {idAnimal.breed}</p>
                                         <p>
                                             <strong>Disposition</strong>:
-                                            {disposition.map((e, key) => {return <li key={key}>{e}</li> })}
+                                            {idAnimal.disposition.map((e, key) => {return <li key={key}>{e}</li> })}
                                         </p>
                                         <p> 
                                             <strong>Picture</strong>:
-                                            <img className="card-image" src={picture}></img>
+                                            <img className="card-image" src={idAnimal.picture}></img>
                                         </p>
-                                        <p><strong>Availability</strong>: {availability}</p>
-                                        <p><strong>News Item</strong>: {newsItem}</p>
-                                        <p><strong>Description</strong>: {description}</p>
+                                        <p><strong>Availability</strong>: {idAnimal.availability}</p>
+                                        <p><strong>News Item</strong>: {idAnimal.news_item}</p>
+                                        <p><strong>Description</strong>: {idAnimal.description}</p>
                                     </div>
                                 </div>
                             }
@@ -157,6 +209,7 @@ const Animal = ({ animalsDb }) => {
                                 <select 
                                     className="form-select" 
                                     id="type" 
+                                    value={type}
                                     onChange={(e) => {handleChangeType(e.target[e.target.selectedIndex].value)}}
                                 >
                                     <option>Type</option>
@@ -169,6 +222,7 @@ const Animal = ({ animalsDb }) => {
                                 <select 
                                     className="form-select" 
                                     id="breed" 
+                                    value={breed}
                                     onClick={() => {setSelectBreeds(animals[type])}}
                                     onChange={(e) => {setBreed(e.target[e.target.selectedIndex].value)}}
                                 >
@@ -187,7 +241,7 @@ const Animal = ({ animalsDb }) => {
                                             type="checkbox" 
                                             value="Good with other animals" 
                                             aria-label="Checkbox for following text input" 
-                                            onChange={(e) => {setDisposition([...disposition, e.target.value])}}
+                                            onChange={(e) => {handleChangeDisposition(e.target.checked, e.target.value)}}
                                         />
                                     </div>
                                     <input type="text" className="form-control" value="Good with other animals" aria-label="Text input with checkbox" readOnly/>
@@ -199,7 +253,8 @@ const Animal = ({ animalsDb }) => {
                                             type="checkbox" 
                                             value="Good with children" 
                                             aria-label="Checkbox for following text input" 
-                                            onChange={(e) => {setDisposition([...disposition, e.target.value])}}
+                                            onChange={(e) => {handleChangeDisposition(e.target.checked, e.target.value)}}
+                                            // onChange={(e) => {setDisposition([...disposition, e.target.value])}}
                                         />
                                     </div>
                                     <input type="text" className="form-control" value="Good with children" aria-label="Text input with checkbox" readOnly/>
@@ -211,7 +266,8 @@ const Animal = ({ animalsDb }) => {
                                             type="checkbox" 
                                             value="Animal must be leashed at all times" 
                                             aria-label="Checkbox for following text input" 
-                                            onChange={(e) => {setDisposition([...disposition, e.target.value])}}
+                                            onChange={(e) => {handleChangeDisposition(e.target.checked, e.target.value)}}
+                                            // onChange={(e) => {setDisposition([...disposition, e.target.value])}}
                                         />
                                     </div>
                                     <input type="text" className="form-control" value="Animal must be leashed at all times" aria-label="Text input with checkbox" readOnly/>
@@ -232,6 +288,7 @@ const Animal = ({ animalsDb }) => {
                                 <select 
                                     className="form-select" 
                                     id="availability" 
+                                    value={availability}
                                     onChange={(e) => {setAvailability(e.target[e.target.selectedIndex].value)}}
                                 >
                                     <option>Availability</option>

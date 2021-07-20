@@ -134,7 +134,7 @@ function App() {
     }
 
     // Add new animal
-    const onAddAnimal = async (body) => {
+    const addAnimal = async (body) => {
         const res = await fetch(
             `https://bring-me-home-backend.herokuapp.com//dummy/animals/`,
             {
@@ -152,7 +152,7 @@ function App() {
     }
 
     // Update existing animal
-    const onUpdateAnimal = async (body) => {
+    const updateAnimal = async (body) => {
         const res = await fetch(
             `https://bring-me-home-backend.herokuapp.com//dummy/animals/` + body.animal_id,
             {
@@ -170,9 +170,9 @@ function App() {
     }
 
     // Delete existing animal
-    const onDeleteAnimal = async (body) => {
+    const deleteAnimal = async (animal_id) => {
         const res = await fetch (
-            `https://bring-me-home-backend.herokuapp.com//dummy/animals/` + body.animal_id,
+            `https://bring-me-home-backend.herokuapp.com//dummy/animals/` + animal_id,
             {
                 method: 'DELETE',
                 headers: { 'Content-type': 'application/json' }
@@ -247,6 +247,9 @@ function App() {
                     requireAuthAdmin() ?
                     <Animal 
                         animalsDb={animals}
+                        onAddAnimal={addAnimal}
+                        onUpdateAnimal={updateAnimal}
+                        onDeleteAnimal={deleteAnimal}
                     /> :
                     <Redirect to='/' />
                 )
