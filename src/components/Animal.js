@@ -5,7 +5,17 @@ import animals from '../assets/Animals'
 const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
     let history = useHistory()
     let types = Object.keys(animals)
-    let availabilities = ['Not Available', 'Available', 'Pending', 'Adopted']
+    let dispositions = [
+        'Good with other animals', 
+        'Good with children', 
+        'Animal must be leased at all times'
+    ]
+    let availabilities = [
+        'Not Available', 
+        'Available', 
+        'Pending', 
+        'Adopted'
+    ]
     let imageBase64 = 'data:image/png;base64,'
     const [id, setId] = useState('')
     const [idAnimal, setIdAnimal] = useState({})
@@ -74,6 +84,17 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
         } else {
             setSelectBreeds(animals[type])
             setBreed([])
+        }
+    }
+
+    // Handle breed change
+    const handleChangeBreed = (checked, value) => {
+        // Add breed
+        if (checked) {
+            setBreed([...breed, value])
+        // Remove breed
+        } else {
+            setBreed(breed.filter((d) => d !== value))
         }
     }
 
@@ -239,23 +260,56 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
                             </div>
                             {
                                 selectBreeds.length > 0 &&
-                                <div className="input-group mb-3">
-                                    
-                                    <select 
-                                        className="form-select" 
-                                        id="breed" 
-                                        value={breed}
-                                        multiple
-                                        onChange={(e) => {setBreed(e.target[e.target.selectedIndex].value)}}
-                                    >
-                                        <option>Breed</option>
-                                        {selectBreeds.map((e, key) => {
-                                            return <option key={key} value={e}>{e}</option>
-                                        })}
-                                    </select>
-                                </div>
+                                <ul 
+                                    className="list-group mb-3" 
+                                >
+                                    <li className="list-group-item">Breed</li>
+                                    {selectBreeds.map((e, key) => {
+                                        return <li key={key} className="list-group-item">
+                                            <input 
+                                                className="form-check-input me-1" 
+                                                type="checkbox"
+                                                value={e}
+                                                key={key}
+                                                onChange={(e) => {handleChangeBreed(e.target.checked, e.target.value)}}
+                                            />
+                                            {e}
+                                        </li>
+                                    })}
+                                </ul>
+                                // <div className="input-group mb-3">
+                                //     <select 
+                                //         className="form-select" 
+                                //         id="breed" 
+                                //         value={breed}
+                                //         multiple
+                                //         onChange={(e) => {setBreed(e.target[e.target.selectedIndex].value)}}
+                                //     >
+                                //         <option>Breed</option>
+                                //         {selectBreeds.map((e, key) => {
+                                //             return <option key={key} value={e}>{e}</option>
+                                //         })}
+                                //     </select>
+                                // </div>
                             }
-                            <fieldset>
+                            <ul 
+                                className="list-group mb-3" 
+                            >
+                                <li className="list-group-item">Disposition</li>
+                                {dispositions.map((e, key) => {
+                                    return <li key={key} className="list-group-item">
+                                        <input 
+                                            className="form-check-input me-1" 
+                                            type="checkbox"
+                                            value={e}
+                                            key={key}
+                                            onChange={(e) => {handleChangeDisposition(e.target.checked, e.target.value)}}
+                                        />
+                                        {e}
+                                    </li>
+                                })}
+                            </ul>
+                            {/* <fieldset>
                                 <legend>Disposition</legend>
                                 <div className="input-group mb-1">
                                     <div className="input-group-text">
@@ -293,7 +347,7 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
                                     </div>
                                     <input type="text" className="form-control" value="Animal must be leashed at all times" aria-label="Text input with checkbox" readOnly/>
                                 </div>
-                            </fieldset>
+                            </fieldset> */}
                             <div className="input-group mb-3">
                                 <legend>Picture</legend>
                                 <input 

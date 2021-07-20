@@ -33,10 +33,6 @@ legend {
     text-align: left!important;
 }
 
-option {
-    text-transform: capitalize;
-}
-
 .generalFormat {
     margin-top: 60px;  /*for the Navigation Bar to not overlap the page content*/
     text-align: center;
@@ -69,6 +65,33 @@ option {
 
 .animalForm {
     margin-top: 1.5rem;
+}
+
+.list-group {
+    text-align: left!important;
+    border: 1px solid lightgrey;
+}
+
+.list-group:first-of-type {
+    max-height: 10rem;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    text-align: left!important;
+    border: 1px solid lightgrey;
+}
+
+.list-group-item {
+    border-right: none!important;
+    border-left: none!important;
+    text-transform: capitalize;
+}
+
+.list-group-item:first-of-type{
+    border-top: none!important;
+}
+
+.list-group-item:last-of-type{
+    border-bottom: none!important;
 }
 
 .card-body {
