@@ -16,22 +16,12 @@ const SignUp = ({ onSignup }) => {
 
     const onSubmit = (e) => {
         e.preventDefault()
-        // removes any previous error from screen when successful login to dashboard
-        setErrorInput(false)
-        setErrorUsername(false)
-
-        // username taken 
-        if (username) {
-            // removes any previous error from screen
-            setErrorInput(false)
-            setErrorUsername(true)
-        }
 
         // blank input
         if (username == '' || password == '' || first_name == '' || last_name == '' || email == '') {
-            // removes any previous error from screen
-            setErrorUsername(false)
             setErrorInput(true)
+            setTimeout(() => setErrorInput(false), 1000)
+            clearTimeout();
             return
         }
 
@@ -40,11 +30,15 @@ const SignUp = ({ onSignup }) => {
                 history.push('/dashboard')
             }
             ).catch((err) => {
-                setUsername('')
-                setPassword('')
-                setFirstName('')
-                setLastName('')
-                setEmail('')
+                setErrorUsername(true)
+                setTimeout(() => setErrorUsername(false), 1000)
+                setTimeout(() => setUsername(''), 1000)
+                setTimeout(() => setUsername(''), 1000)
+                setTimeout(() => setPassword(''), 1000)
+                setTimeout(() => setFirstName(''), 1000)
+                setTimeout(() => setLastName(''), 1000)
+                setTimeout(() => setEmail(''), 1000)
+                clearTimeout();
             }
             )
     }
