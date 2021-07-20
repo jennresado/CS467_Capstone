@@ -17,7 +17,7 @@ const Dashboard = ({ animalsDb }) => {
                                 <div className="card-body">
                                     <img className="card-img-top rounded mb-3" src={imageBase64 + e.pic}></img>
                                     <h5 className="card-title">{e.animal_id}</h5>
-                                    <div className="cardDetail">
+                                    <div className="cardDetail mb-3">
                                         <p><strong>Type</strong>: {e.type}</p>
                                         <p>
                                             <strong>Breed</strong>: 
@@ -31,6 +31,7 @@ const Dashboard = ({ animalsDb }) => {
                                         {/* <p><strong>News Item</strong>: {e.news_item}</p> */}
                                         <p><strong>Description</strong>: {e.description}</p>
                                     </div>
+                                    <Link to="/contact" class="btn btn-primary d-grid">Adopt</Link>
                                 </div>
                             </div>
                         </div>
