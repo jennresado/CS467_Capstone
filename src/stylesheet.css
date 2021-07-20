@@ -16,6 +16,10 @@ a {
     text-decoration: none!important;
 }
 
+option {
+    text-transform: capitalize;
+}
+
 .landingPage {
     margin-top: 60px;  /*for the Navigation Bar to not overlap the page content*/
     text-align: center;
@@ -72,7 +76,7 @@ legend {
     border: 1px solid lightgrey;
 }
 
-.list-group:first-of-type {
+.breed {
     max-height: 10rem;
     overflow: auto;
     -webkit-overflow-scrolling: touch;

@@ -17,6 +17,7 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
         'Adopted'
     ]
     let imageBase64 = 'data:image/png;base64,'
+    const [error, setError] = useState(false)
     const [id, setId] = useState('')
     const [idAnimal, setIdAnimal] = useState({})
     const [type, setType] = useState('')
@@ -128,14 +129,12 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
         
         let body = {}
 
-        if (!type && !breed && !disposition && 
-                !picture &&!availability && 
-                !newsItem && !description) {
-            return
-        }
-
         // Update if id
         if (id) {
+            if (!breed) {
+                return
+            }
+
             for (const key in idAnimal) {
                 if (objectMapping[key]) {
                     body[key] = objectMapping[key]
@@ -155,6 +154,13 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
 
         // Add if new animal
         } else {
+            if (!type && !breed && !disposition && 
+                    !picture &&!availability && 
+                    !newsItem && !description) {
+                setError(true)
+            return
+            }
+
             body = {
                 "type": type,
                 "breed": breed,
@@ -260,9 +266,7 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
                             </div>
                             {
                                 selectBreeds.length > 0 &&
-                                <ul 
-                                    className="list-group mb-3" 
-                                >
+                                <ul className="list-group mb-3 breed">
                                     <li className="list-group-item">Breed</li>
                                     {selectBreeds.map((e, key) => {
                                         return <li key={key} className="list-group-item">
@@ -292,9 +296,7 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
                                 //     </select>
                                 // </div>
                             }
-                            <ul 
-                                className="list-group mb-3" 
-                            >
+                            <ul className="list-group mb-3 disposition">
                                 <li className="list-group-item">Disposition</li>
                                 {dispositions.map((e, key) => {
                                     return <li key={key} className="list-group-item">
