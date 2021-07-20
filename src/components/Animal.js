@@ -9,6 +9,7 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
     let types = Object.keys(animals)
     let imageBase64 = 'data:image/png;base64,'
     const [error, setError] = useState(false)
+    const [breedError, setBreedError] = useState(false)
     const [id, setId] = useState('')
     const [idAnimal, setIdAnimal] = useState({})
     const [type, setType] = useState('')
@@ -23,7 +24,7 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
         "id": id,
         "type": type,
         "selectBreeds": selectBreeds,
-        "breed": breed,
+        "breeds": breed,
         "disposition": disposition,
         "pic": picture,
         "availability": availability,
@@ -81,6 +82,15 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
 
     // Handle breed change
     const handleChangeBreed = (checked, value) => {
+        // Max 3 breeds
+        if (breed.length == 3) {
+            let element = document.getElementById(value)
+
+            element.checked = false
+            setBreedError(true)
+
+            return
+        }
         // Add breed
         if (checked) {
             setBreed([...breed, value])
@@ -128,7 +138,7 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
             }
 
             for (const key in idAnimal) {
-                if (key === 'breed' || key === 'disposition') {
+                if (key === 'breeds' || key === 'disposition') {
                     if (objectMapping[key].length > 0) {
                         body[key] = objectMapping[key]
                     }
@@ -160,11 +170,11 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
 
             body = {
                 "type": type,
-                "breed": breed,
+                "breeds": breed,
                 "disposition": disposition,
-                "picture": picture,
+                "pic": picture,
                 "availability": availability,
-                "newsItem": newsItem,
+                "news_item": newsItem,
                 "description": description
             }
 
@@ -265,6 +275,7 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
                                     })}
                                 </select>
                             </div>
+                            {breedError && <p className="breedError">Maximum of 3 breeds allowed. If more than 3 breeds, consider "Mixed Breed" option.</p>}
                             {
                                 selectBreeds.length > 0 &&
                                 <ul className="list-group mb-3 breed">
@@ -276,26 +287,13 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
                                                 type="checkbox"
                                                 value={e}
                                                 key={key}
+                                                id={e}
                                                 onChange={(e) => {handleChangeBreed(e.target.checked, e.target.value)}}
                                             />
                                             {e}
                                         </li>
                                     })}
                                 </ul>
-                                // <div className="input-group mb-3">
-                                //     <select 
-                                //         className="form-select" 
-                                //         id="breed" 
-                                //         value={breed}
-                                //         multiple
-                                //         onChange={(e) => {setBreed(e.target[e.target.selectedIndex].value)}}
-                                //     >
-                                //         <option>Breed</option>
-                                //         {selectBreeds.map((e, key) => {
-                                //             return <option key={key} value={e}>{e}</option>
-                                //         })}
-                                //     </select>
-                                // </div>
                             }
                             <ul className="list-group mb-3 disposition">
                                 <li className="list-group-item">Disposition</li>
@@ -312,45 +310,6 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
                                     </li>
                                 })}
                             </ul>
-                            {/* <fieldset>
-                                <legend>Disposition</legend>
-                                <div className="input-group mb-1">
-                                    <div className="input-group-text">
-                                        <input 
-                                            className="form-check-input mt-0" 
-                                            type="checkbox" 
-                                            value="Good with other animals" 
-                                            aria-label="Checkbox for following text input" 
-                                            onChange={(e) => {handleChangeDisposition(e.target.checked, e.target.value)}}
-                                        />
-                                    </div>
-                                    <input type="text" className="form-control" value="Good with other animals" aria-label="Text input with checkbox" readOnly/>
-                                </div>
-                                <div className="input-group mb-1">
-                                    <div className="input-group-text">
-                                        <input 
-                                            className="form-check-input mt-0" 
-                                            type="checkbox" 
-                                            value="Good with children" 
-                                            aria-label="Checkbox for following text input" 
-                                            onChange={(e) => {handleChangeDisposition(e.target.checked, e.target.value)}}
-                                        />
-                                    </div>
-                                    <input type="text" className="form-control" value="Good with children" aria-label="Text input with checkbox" readOnly/>
-                                </div>
-                                <div className="input-group mb-3">
-                                    <div className="input-group-text">
-                                        <input 
-                                            className="form-check-input mt-0" 
-                                            type="checkbox" 
-                                            value="Animal must be leashed at all times" 
-                                            aria-label="Checkbox for following text input" 
-                                            onChange={(e) => {handleChangeDisposition(e.target.checked, e.target.value)}}
-                                        />
-                                    </div>
-                                    <input type="text" className="form-control" value="Animal must be leashed at all times" aria-label="Text input with checkbox" readOnly/>
-                                </div>
-                            </fieldset> */}
                             <div className="input-group mb-3">
                                 <legend>Picture</legend>
                                 <input 

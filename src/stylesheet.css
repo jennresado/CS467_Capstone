@@ -115,7 +115,7 @@ legend {
     margin-bottom: 1rem;
 }
 
-.loginError, .signupError, .animalError  {
+.loginError, .signupError, .animalError, .breedError  {
     color: red;
 }
 
