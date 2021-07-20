@@ -5,8 +5,11 @@ import { useLocation } from 'react-router-dom'
 // can change to <Nav.Item </Nav.Item> so the links are not 'blue'
 //Footer is same for Landing, Login & SignUp
 //User Profile Settings adds 'Dashboard', 'Profile' & 'Animal' 
-const Footer = () => {
+const Footer = ({ cookies }) => {
     const location = useLocation()
+    const loggedIn = Object.keys(cookies).length > 0 && Object.keys(cookies.user).length > 0 ? true : false 
+    const admin = loggedIn && cookies.user.admin ? true : false 
+    
     return (
         <div>
             <Navbar collapseOnSelect expand= 'sm'             
@@ -53,14 +56,14 @@ const Footer = () => {
                 {location.pathname === '/contact' && <Nav.Link href="/signup">Sign Up</Nav.Link> }
 
                 {location.pathname === '/userprofile' && <Nav.Link href="/userprofile">Profile</Nav.Link> }
-                {location.pathname === '/userprofile' && <Nav.Link href="/animal">Animal</Nav.Link> }
+                {location.pathname === '/userprofile' && admin && <Nav.Link href="/animal">Animal</Nav.Link> }
                 {location.pathname === '/userprofile' && <Nav.Link href="/signup">Sign Up</Nav.Link> }
 
                 {location.pathname === '/dashboard' && <Nav.Link href="/userprofile">Profile</Nav.Link> }
-                {location.pathname === '/dashboard' && <Nav.Link href="/animal">Animal</Nav.Link> }
+                {location.pathname === '/dashboard' && admin && <Nav.Link href="/animal">Animal</Nav.Link> }
 
                 {location.pathname === '/animal' && <Nav.Link href="/userprofile">Profile</Nav.Link> }
-                {location.pathname === '/animal' && <Nav.Link href="/animal">Animal</Nav.Link> }
+                {location.pathname === '/animal' && admin && <Nav.Link href="/animal">Animal</Nav.Link> }
                 
                 
                 </Navbar.Collapse>

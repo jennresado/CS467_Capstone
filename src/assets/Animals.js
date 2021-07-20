@@ -1,5 +1,5 @@
 const animals = {
-    "dogs": [
+    "dog": [
         "australian shepherd", 
         "beagle", 
         "border collie", 
@@ -17,6 +17,7 @@ const animals = {
         "great dane", 
         "labrador retriever", 
         "miniature schnauzer", 
+        "mixed breed",
         "pembroke welsh corgi", 
         "pomeranian", 
         "poodle", 
@@ -27,7 +28,7 @@ const animals = {
         "siberian husky", 
         "yorkshire terrier"
     ],
-    "cats": [
+    "cat": [
         "abyssinian", 
         "american shorthair", 
         "balinese cat", 
@@ -38,6 +39,7 @@ const animals = {
         "himalayan cat", 
         "himalayan cat", 
         "maine coon", 
+        "mixed breed",
         "munchkin cat", 
         "persian cat", 
         "ragdoll", 
@@ -48,7 +50,7 @@ const animals = {
         "sphynx cat", 
         "turkish angora"
     ],
-    "others": [
+    "other": [
         "chinchilla", 
         "ferret", 
         "fish", 

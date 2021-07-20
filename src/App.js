@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useCookies } from 'react-cookie';
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
 import Landing from './components/Landing'
 import Navigation from './components/Navigation'
 import Footer from './components/Footer';
@@ -14,6 +14,7 @@ import Dashboard from './components/Dashboard'
 
 function App() {
     const [cookies, setCookie, removeCookie] = useCookies(['user'])
+    const [animals, setAnimals] = useState([])
 
     // Warm up backend server to decrease latency
     useEffect(() => {
@@ -34,6 +35,32 @@ function App() {
         warmServer()
     }, [])
 
+    // Retrieve animals from db
+    useEffect(() => {
+        const getAnimals = async () => {
+            const res = await fetch(
+                `https://bring-me-home-backend.herokuapp.com/dummy/animals`,
+                {
+                    method: 'GET',
+                    headers: {
+                        'Content-type': 'application/json',
+                        'Authorization': cookies.user.token
+                    }
+                }
+            )
+
+            if (res.ok) {
+                const data = await res.json()
+                
+                setAnimals(data.animals)
+            }
+        }
+
+        if (cookies.user) {
+            getAnimals()
+        }
+    }, [])
+
     // Login User
     const loginUser = async (loginInfo) => {
         const res = await fetch(
@@ -51,7 +78,7 @@ function App() {
             // Create cookie
             setCookie(
                 'user', 
-                {'username': loginInfo.username, 'token': data.token}, 
+                {'username': loginInfo.username, 'token': data.token, 'admin': data.admin}, 
                 {path: '/'}
             )
         } else {
@@ -88,12 +115,84 @@ function App() {
         }
     }
 
+    // Authenticate user for non-public pages
+    const requireAuth = () => {
+        if (!cookies.user) {
+            return false
+        }
+        return true
+    }
+
+    // Authenticate user for admin page
+    const requireAuthAdmin = () => {
+        if (!cookies.user) {
+            return false
+        } else if (!cookies.user.admin) {
+            return false
+        }
+        return true
+    }
+
+    // Add new animal
+    const addAnimal = async (body) => {
+        const res = await fetch(
+            `https://bring-me-home-backend.herokuapp.com//dummy/animals/`,
+            {
+                method: 'POST',
+                headers: { 'Content-type': 'application/json' },
+                body: JSON.stringify(body)
+            }
+        )
+
+        if (res.ok) {
+            console.log("Animal added")
+        } else {
+            throw new Error('Cannot add animal')
+        }
+    }
+
+    // Update existing animal
+    const updateAnimal = async (body) => {
+        const res = await fetch(
+            `https://bring-me-home-backend.herokuapp.com//dummy/animals/` + body.animal_id,
+            {
+                method: 'PUT',
+                headers: { 'Content-type': 'application/json' },
+                body: JSON.stringify(body)
+            }
+        )
+
+        if (res.ok) {
+            console.log("Animal updated")
+        } else {
+            throw new Error('Cannot update animal')
+        }
+    }
+
+    // Delete existing animal
+    const deleteAnimal = async (animal_id) => {
+        const res = await fetch (
+            `https://bring-me-home-backend.herokuapp.com//dummy/animals/` + animal_id,
+            {
+                method: 'DELETE',
+                headers: { 'Content-type': 'application/json' }
+            }
+        )
+
+        if (res.ok) {
+            console.log("Animal deleted")
+        } else {
+            throw new Error('Cannot delete animal')
+        }
+    }
+
     return (
         <Router>
         <div className='container'>
             {/* Navigation Bar */}
             <Navigation 
                 onLogout={logoutUser}
+                cookies={cookies}
             />
             
             {/* Landing Page */}
@@ -127,7 +226,11 @@ function App() {
             <Route 
                 path= '/dashboard' 
                 render={(props) => (
-                    <Dashboard />
+                    requireAuth() ? 
+                    <Dashboard 
+                        animalsDb={animals}
+                    /> :
+                    <Redirect to='/' />
                 )
             }/>
 
@@ -141,13 +244,19 @@ function App() {
 
             {/* Animal Page */}
             <Route 
-
                 path= '/Animal' 
                 render={(props) => (
-                    <Animal />
+                    requireAuthAdmin() ?
+                    <Animal 
+                        animalsDb={animals}
+                        onAddAnimal={addAnimal}
+                        onUpdateAnimal={updateAnimal}
+                        onDeleteAnimal={deleteAnimal}
+                    /> :
+                    <Redirect to='/' />
                 )
-            }/> 
-            
+            }/>
+
             {/* About Page */}
             <Route 
                 path= '/about' 
@@ -165,7 +274,9 @@ function App() {
             }/>
 
             {/* Footer */}
-            <Footer />
+            <Footer 
+                cookies={cookies}
+            />
         </div>
         </Router>
     );
