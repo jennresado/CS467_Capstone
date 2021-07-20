@@ -1,5 +1,5 @@
 const animals = {
-    "dogs": [
+    "dog": [
         "australian shepherd", 
         "beagle", 
         "border collie", 
@@ -28,7 +28,7 @@ const animals = {
         "siberian husky", 
         "yorkshire terrier"
     ],
-    "cats": [
+    "cat": [
         "abyssinian", 
         "american shorthair", 
         "balinese cat", 
@@ -50,7 +50,7 @@ const animals = {
         "sphynx cat", 
         "turkish angora"
     ],
-    "others": [
+    "other": [
         "chinchilla", 
         "ferret", 
         "fish", 

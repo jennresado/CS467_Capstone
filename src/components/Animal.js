@@ -10,7 +10,7 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
     const [idAnimal, setIdAnimal] = useState({})
     const [type, setType] = useState('')
     const [selectBreeds, setSelectBreeds] = useState([])
-    const [breed, setBreed] = useState('')
+    const [breed, setBreed] = useState([])
     const [disposition, setDisposition] = useState([])
     const [picture, setPicture] = useState('')
     const [availability, setAvailability] = useState('')
@@ -27,7 +27,7 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
 
         setType('')
         setSelectBreeds([])
-        setBreed('')
+        setBreed([])
         setDisposition([])
         setPicture('')
         setAvailability('')
@@ -41,24 +41,22 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
         
         if (id === 'Animal Id') {
             setId('')
+            return
         } else {
             setId(id)
         }
         
         for (let i = 0; i < animalsDb.length; i++) {
+            console.log(animalsDb[i])
             if (animalsDb[i].animal_id == id) {
                 setIdAnimal(animalsDb[i])
                 setType(animalsDb[i].type)
-                // setBreed(animalsDb[i].breed)
-                // for testing with dummy api
-                setBreed("Collie")
+                setBreed(animalsDb[i].breed)
                 setDisposition(animalsDb[i].disposition)
-                // setPicture(animalsDb[i])
+                setPicture(animalsDb[i])
                 setAvailability(animalsDb[i].availability)
                 setNewsItem(animalsDb[i].news_item)
-                // setDescription(animalsDb[i].description)
-                // for testing with dummy api
-                setDescription("Friendly and cute!")
+                setDescription(animalsDb[i].description)
             }
         }
     }
@@ -66,7 +64,12 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
     // Handle type change 
     const handleChangeType = (type) => {
         setType(type)
-        setBreed('')
+        if (type === 'Type') {
+            setSelectBreeds([])
+        } else {
+            setSelectBreeds(animals[type])
+            setBreed([])
+        }
     }
 
     // Handle disposition change
@@ -83,6 +86,7 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
     // Convert picture to base64
     const convertToBase64 = (e) => {
         const content = e.target.result;
+        console.log(content)
         setPicture(content)
     }
 
@@ -218,20 +222,24 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
                                     })}
                                 </select>
                             </div>
-                            <div className="input-group mb-3">
-                                <select 
-                                    className="form-select" 
-                                    id="breed" 
-                                    value={breed}
-                                    onClick={() => {setSelectBreeds(animals[type])}}
-                                    onChange={(e) => {setBreed(e.target[e.target.selectedIndex].value)}}
-                                >
-                                    <option>Breed</option>
-                                    {selectBreeds.map((e, key) => {
-                                        return <option key={key} value={e}>{e}</option>
-                                    })}
-                                </select>
-                            </div>
+                            {
+                                selectBreeds.length > 0 &&
+                                <div className="input-group mb-3">
+                                    <select 
+                                        className="form-select" 
+                                        id="breed" 
+                                        value={breed}
+                                        multiple
+                                        onClick={() => {setSelectBreeds(animals[type])}}
+                                        onChange={(e) => {setBreed(e.target[e.target.selectedIndex].value)}}
+                                    >
+                                        <option>Breed</option>
+                                        {selectBreeds.map((e, key) => {
+                                            return <option key={key} value={e}>{e}</option>
+                                        })}
+                                    </select>
+                                </div>
+                            }
                             <fieldset>
                                 <legend>Disposition</legend>
                                 <div className="input-group mb-1">
