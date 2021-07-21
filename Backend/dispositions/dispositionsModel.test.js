@@ -42,7 +42,6 @@ async function getTestAnimals() {
     return [animal1, animal2, animal3, animal4]
   }
 
-
 //sample dispositions to be used in tests 
  async function getDispositions(){
     const disposition1 = "Good with children";
@@ -92,7 +91,6 @@ describe('dispositionsModel', ()=>{
         it('relates a disposition to an animal object', async()=>{
             const animalList = await getTestAnimals();
             const animal = animalList[0]
-            delete animal.disposition
             await db('animals').insert(animal);
 
             const animals = await db('animals');
@@ -134,7 +132,40 @@ describe('dispositionsModel', ()=>{
         })
     })
 
-    describe('getAnimalByDisposition(disposition_id)', ()=>{
+    describe('editAnimalDisposition(editObj)', ()=>{
+        it('changes the disposition of a particular animal', async()=>{
+            const animalList = await getTestAnimals();
+            const animal = animalList[0]
+            await db('animals').insert(animal);
+
+            const animals = await db('animals');
+            expect(animals.length).toBe(1);
+
+            await insertDispositions();
+            const dispositions = await db('dispositions');
+            expect(dispositions.length).toBe(3);
+
+            await db('animal_dispositions').insert({animal_id: 1, disposition_id: 1})
+            let animal_dis = await db('animal_dispositions');
+            expect(animal_dis.length).toBe(1);
+            
+            const editObj = {
+                animal_id: 1, 
+                disposition_id: 1,
+                disposition: 'Good with other animals'
+            }
+
+            const edit_id = await Dispositions.editAnimalDispositions(editObj)
+            expect(edit_id[0]).toBe(2);
+
+            animal_dis = await db('animal_dispositions');
+            expect(animal_dis.length).toBe(1);
+            expect(animal_dis[0].animal_id).toBe(1)
+            expect(animal_dis[0].disposition_id).toBe(2)
+        })
+    })
+
+    describe('getAnimalByDispositionId(disposition_id)', ()=>{
         it('returns a list of animals that have a diposition based on the disposition_id', async ()=>{
             await insertDispositions();
             const animalList = await getTestAnimals();
@@ -234,8 +265,8 @@ describe('dispositionsModel', ()=>{
         })
     })
 
-    describe('deleteAnimalDisposition(disposition_id, animal_id)', ()=>{
-        it('deletes a disposition from an animal object and returns the count of the number of animal objects affected', async ()=>{
+    describe('deleteAnimalDispositions(disposition_id, animal_id)', ()=>{
+        it('deletes all disposition from an animal object based on animal_id and returns the count of the number of animal objects affected', async ()=>{
             const animalList = await getTestAnimals();
             await insertDispositions();
             let index = 1
@@ -253,7 +284,7 @@ describe('dispositionsModel', ()=>{
             let animal_dispositions = await db('animal_dispositions')
             expect(animal_dispositions.length).toBe(5);
 
-            const count = await Dispositions.deleteAnimalDiposition(1)
+            const count = await Dispositions.deleteAnimalDipositions(1)
             animal_dispositions = await db('animal_dispositions')
             expect(animal_dispositions.length).toBe(3);
             animal_dispositions.forEach(ad => {
@@ -267,7 +298,7 @@ describe('dispositionsModel', ()=>{
         })
 
         it('returns 0 when trying to remove a disposition not on an animal in the database', async ()=>{
-            const count = await Dispositions.deleteAnimalDiposition(5);
+            const count = await Dispositions.deleteAnimalDipositions(5);
             expect(count).toBe(0);
         })
     })

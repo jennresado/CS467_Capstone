@@ -16,7 +16,7 @@ async function asyncForEach(array, cb) {
 }
 
 //adds an animal to the database
-function addAnimal(animal) {
+async function addAnimal(animal) {
   let disposition = animal.disposition;
   delete animal.disposition;
   const id = await db("animals").insert(animal, "animal_id");
@@ -50,7 +50,6 @@ async function getAllAnimals(){
 }
 
 //returns animal object corresponding the the given filter and filter value
-// filterValue is animal_id for cases animal_id, breed and disposition
 async function getAnimalBy(filterName, filterValue) {
   let db_a = []
   switch (filterName) {
@@ -71,10 +70,12 @@ async function getAnimalBy(filterName, filterValue) {
       animal.disposition.push(dis.disposition)
     })
   })
+
+  return db_a
 }
 
 //removes aniaml with given id from database
 async function deleteAnimal(animal_id) {
-  await Dispositions.deleteAnimalDiposition(animal_id)
+  await Dispositions.deleteAnimalDipositions(animal_id)
   return db("animals").del().where({ animal_id });
 }
