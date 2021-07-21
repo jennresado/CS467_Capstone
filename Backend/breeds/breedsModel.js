@@ -1,4 +1,3 @@
-const { NONAME } = require('dns');
 const db = require('../db/dbconfig');
 
 module.exports = {
