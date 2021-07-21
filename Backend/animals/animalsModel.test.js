@@ -16,7 +16,10 @@ async function getTestAnimals() {
     description:
       "A very good dog. Wonderful with children and other animals. Looking for his forever home.",
     news_item: constants.news1,
-    disposition: ['Good with other animals', 'Good with children']
+    disposition: ['Good with other animals', 'Good with children'],
+    // type: 'dog',
+    // breeds: ['collie'],
+    // availability: 'Available',
   };
 
   const animal2 = {
@@ -24,7 +27,10 @@ async function getTestAnimals() {
     date_created: "01-01-2020",
     description: "A very good cat. Wonderful with other animals. Watch when around children",
     news_item: constants.news1,
-    disposition: ['Good with other animals', 'Animal must be leashed at all times']
+    disposition: ['Good with other animals', 'Animal must be leashed at all times'],
+    // type: 'cat',
+    // breeds: ['calico', 'tabby'],
+    // availability: 'Pending',
   };
 
   const animal3 = {
@@ -32,7 +38,10 @@ async function getTestAnimals() {
     date_created: "01-01-2019",
     description: "A very good bird. Good around other birds only",
     news_item: constants.news1,
-    disposition: []
+    disposition: [],
+    // type: 'other',
+    // breeds: ['macaw'],
+    // availability: 'Not Available',
   }
 
   const animal4 = {
@@ -41,7 +50,10 @@ async function getTestAnimals() {
     description:
       "A very good dog. Wonderful with children and other animals.",
     news_item: constants.news1,
-    disposition: ['Good with other animals', 'Good with children', 'Animal must be leashed at all times']
+    disposition: ['Good with other animals', 'Good with children', 'Animal must be leashed at all times'],
+    // type: 'dog',
+    // breeds: ['collie', 'sheltie'],
+    // availability: 'Pending',
   }
 
   return [animal1, animal2, animal3, animal4]
