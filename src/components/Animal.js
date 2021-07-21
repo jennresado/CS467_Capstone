@@ -1,11 +1,15 @@
 import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import animals from '../assets/Animals'
+import dispositions from '../assets/Dispositions'
+import availabilities from '../assets/Availabilities'
 
 const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
     let history = useHistory()
     let types = Object.keys(animals)
-    let availabilities = ['Not Available', 'Available', 'Pending', 'Adopted']
+    let imageBase64 = 'data:image/png;base64,'
+    const [error, setError] = useState(false)
+    const [breedError, setBreedError] = useState(false)
     const [id, setId] = useState('')
     const [idAnimal, setIdAnimal] = useState({})
     const [type, setType] = useState('')
@@ -16,6 +20,17 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
     const [availability, setAvailability] = useState('')
     const [newsItem, setNewsItem] = useState('')
     const [description, setDescription] = useState('')
+    const objectMapping = {
+        "id": id,
+        "type": type,
+        "selectBreeds": selectBreeds,
+        "breeds": breed,
+        "disposition": disposition,
+        "pic": picture,
+        "availability": availability,
+        "news_item": newsItem,
+        "description": description
+    }
 
     // Clear form 
     const clearForm = () => {
@@ -25,6 +40,7 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
             checkboxes[i].checked = false;
         }
 
+        setError(false)
         setType('')
         setSelectBreeds([])
         setBreed([])
@@ -47,16 +63,8 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
         }
         
         for (let i = 0; i < animalsDb.length; i++) {
-            console.log(animalsDb[i])
             if (animalsDb[i].animal_id == id) {
                 setIdAnimal(animalsDb[i])
-                setType(animalsDb[i].type)
-                setBreed(animalsDb[i].breed)
-                setDisposition(animalsDb[i].disposition)
-                setPicture(animalsDb[i])
-                setAvailability(animalsDb[i].availability)
-                setNewsItem(animalsDb[i].news_item)
-                setDescription(animalsDb[i].description)
             }
         }
     }
@@ -69,6 +77,26 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
         } else {
             setSelectBreeds(animals[type])
             setBreed([])
+        }
+    }
+
+    // Handle breed change
+    const handleChangeBreed = (checked, value) => {
+        // Max 3 breeds
+        if (breed.length == 3) {
+            let element = document.getElementById(value)
+
+            element.checked = false
+            setBreedError(true)
+
+            return
+        }
+        // Add breed
+        if (checked) {
+            setBreed([...breed, value])
+        // Remove breed
+        } else {
+            setBreed(breed.filter((d) => d !== value))
         }
     }
 
@@ -86,8 +114,7 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
     // Convert picture to base64
     const convertToBase64 = (e) => {
         const content = e.target.result;
-        console.log(content)
-        setPicture(content)
+        setPicture(content.split("base64,")[1])
     }
 
     // Handle change file
@@ -100,28 +127,29 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
     // On click submit
     const onSubmit = (e) => {
         e.preventDefault()
-
-        if (!type && !breed && !disposition && 
-                !picture &&!availability && 
-                !newsItem && !description) {
-            return
-        }
-
-        const body = {
-            "type": type,
-            "breed": breed,
-            "disposition": disposition,
-            "picture": picture,
-            "availability": availability,
-            "newsItem": newsItem,
-            "description": description
-        }
+        
+        let body = {}
 
         // Update if id
         if (id) {
-            body["animal_id"] = id
+            if (breed.length === 0) {
+                setError(true)
+                return
+            }
 
-            console.log(body)
+            for (const key in idAnimal) {
+                if (key === 'breeds' || key === 'disposition') {
+                    if (objectMapping[key].length > 0) {
+                        body[key] = objectMapping[key]
+                    }
+                } else if (objectMapping[key]) {
+                    body[key] = objectMapping[key]
+                } else {
+                    body[key] = idAnimal[key]
+                }
+            }
+            
+            // console.log(body)
 
             // onUpdateAnimal(body)
             // .then(() => {
@@ -132,7 +160,25 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
 
         // Add if new animal
         } else {
-            console.log(body)
+            if (!type && 
+                    breed.length === 0 && disposition.length === 0 && 
+                    !picture &&!availability && 
+                    !newsItem && !description) {
+                setError(true)
+                return
+            }
+
+            body = {
+                "type": type,
+                "breeds": breed,
+                "disposition": disposition,
+                "pic": picture,
+                "availability": availability,
+                "news_item": newsItem,
+                "description": description
+            }
+
+            // console.log(body)
 
             // onAddAnimal(body)
             // .then(() => {
@@ -154,7 +200,7 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
     const onDelete = (e) => {
         e.preventDefault()
 
-        console.log(id)
+        // console.log(id)
 
         // onDeleteAnimal(id)
         // .then(() => {
@@ -173,6 +219,10 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
                     </div>
                     <div className='row' id='animalDiv'>
                         <form className='animalForm'>
+                            <p>
+                                To update or delete an existing animal, select the animal's id.
+                            </p>
+                            {error && <p className="animalError">Invalid or missing field(s).</p>}
                             <div className="input-group mb-3">
                                 <select 
                                     className="form-select" 
@@ -194,14 +244,17 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
                                         <p><strong>Id</strong>: {idAnimal.animal_id}</p>
                                         
                                         <p><strong>Type</strong>: {idAnimal.type}</p>
-                                        <p><strong>Breed</strong>: {idAnimal.breed}</p>
+                                        <p>
+                                            <strong>Breed</strong>: 
+                                            {idAnimal.breeds.map((e, key) => {return <li key={key}>{e}</li>})}
+                                        </p>
                                         <p>
                                             <strong>Disposition</strong>:
                                             {idAnimal.disposition.map((e, key) => {return <li key={key}>{e}</li> })}
                                         </p>
                                         <p> 
                                             <strong>Picture</strong>:
-                                            <img className="card-image" src={idAnimal.picture}></img>
+                                            <img className="card-image" src={imageBase64 + idAnimal.pic}></img>
                                         </p>
                                         <p><strong>Availability</strong>: {idAnimal.availability}</p>
                                         <p><strong>News Item</strong>: {idAnimal.news_item}</p>
@@ -222,65 +275,41 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
                                     })}
                                 </select>
                             </div>
+                            {breedError && <p className="breedError">Maximum of 3 breeds allowed. If more than 3 breeds, consider "Mixed Breed" option.</p>}
                             {
                                 selectBreeds.length > 0 &&
-                                <div className="input-group mb-3">
-                                    <select 
-                                        className="form-select" 
-                                        id="breed" 
-                                        value={breed}
-                                        multiple
-                                        onClick={() => {setSelectBreeds(animals[type])}}
-                                        onChange={(e) => {setBreed(e.target[e.target.selectedIndex].value)}}
-                                    >
-                                        <option>Breed</option>
-                                        {selectBreeds.map((e, key) => {
-                                            return <option key={key} value={e}>{e}</option>
-                                        })}
-                                    </select>
-                                </div>
+                                <ul className="list-group mb-3 breed">
+                                    <li className="list-group-item">Breed</li>
+                                    {selectBreeds.map((e, key) => {
+                                        return <li key={key} className="list-group-item">
+                                            <input 
+                                                className="form-check-input me-1" 
+                                                type="checkbox"
+                                                value={e}
+                                                key={key}
+                                                id={e}
+                                                onChange={(e) => {handleChangeBreed(e.target.checked, e.target.value)}}
+                                            />
+                                            {e}
+                                        </li>
+                                    })}
+                                </ul>
                             }
-                            <fieldset>
-                                <legend>Disposition</legend>
-                                <div className="input-group mb-1">
-                                    <div className="input-group-text">
+                            <ul className="list-group mb-3 disposition">
+                                <li className="list-group-item">Disposition</li>
+                                {dispositions.map((e, key) => {
+                                    return <li key={key} className="list-group-item">
                                         <input 
-                                            className="form-check-input mt-0" 
-                                            type="checkbox" 
-                                            value="Good with other animals" 
-                                            aria-label="Checkbox for following text input" 
+                                            className="form-check-input me-1" 
+                                            type="checkbox"
+                                            value={e}
+                                            key={key}
                                             onChange={(e) => {handleChangeDisposition(e.target.checked, e.target.value)}}
                                         />
-                                    </div>
-                                    <input type="text" className="form-control" value="Good with other animals" aria-label="Text input with checkbox" readOnly/>
-                                </div>
-                                <div className="input-group mb-1">
-                                    <div className="input-group-text">
-                                        <input 
-                                            className="form-check-input mt-0" 
-                                            type="checkbox" 
-                                            value="Good with children" 
-                                            aria-label="Checkbox for following text input" 
-                                            onChange={(e) => {handleChangeDisposition(e.target.checked, e.target.value)}}
-                                            // onChange={(e) => {setDisposition([...disposition, e.target.value])}}
-                                        />
-                                    </div>
-                                    <input type="text" className="form-control" value="Good with children" aria-label="Text input with checkbox" readOnly/>
-                                </div>
-                                <div className="input-group mb-3">
-                                    <div className="input-group-text">
-                                        <input 
-                                            className="form-check-input mt-0" 
-                                            type="checkbox" 
-                                            value="Animal must be leashed at all times" 
-                                            aria-label="Checkbox for following text input" 
-                                            onChange={(e) => {handleChangeDisposition(e.target.checked, e.target.value)}}
-                                            // onChange={(e) => {setDisposition([...disposition, e.target.value])}}
-                                        />
-                                    </div>
-                                    <input type="text" className="form-control" value="Animal must be leashed at all times" aria-label="Text input with checkbox" readOnly/>
-                                </div>
-                            </fieldset>
+                                        {e}
+                                    </li>
+                                })}
+                            </ul>
                             <div className="input-group mb-3">
                                 <legend>Picture</legend>
                                 <input 
