@@ -149,7 +149,7 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
                 }
             }
             
-            console.log(body)
+            // console.log(body)
 
             // onUpdateAnimal(body)
             // .then(() => {
@@ -178,7 +178,7 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
                 "description": description
             }
 
-            console.log(body)
+            // console.log(body)
 
             // onAddAnimal(body)
             // .then(() => {
@@ -200,7 +200,7 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
     const onDelete = (e) => {
         e.preventDefault()
 
-        console.log(id)
+        // console.log(id)
 
         // onDeleteAnimal(id)
         // .then(() => {

@@ -12,7 +12,9 @@ const birdPic = birdBuff.toString('base64')
 
 const dog = {
     animal_id: 1, 
-    // pic: dogPic,
+    pic: dogPic,
+    description:
+    "A very good dog. Wonderful with children and other animals. Looking for his forever home.",
     disposition: ['Good with other animals', 'Good with children'],
     type: 'dog',
     breeds: ['Collie'],
@@ -23,7 +25,8 @@ const dog = {
 
 const cat = {
     animal_id: 2, 
-    // pic: catPic,
+    pic: catPic,
+    description: "A very good cat. Wonderful with other animals. Watch when around children",
     disposition: ['Good with other animals'],
     type: 'cat',
     breeds: ['Calico', 'Tabby'],
@@ -34,7 +37,8 @@ const cat = {
 
 const bird = {
     animal_id: 3, 
-    // pic: birdPic,
+    pic: birdPic,
+    description: "A very good bird. Good around other birds only",
     disposition: [],
     type: 'other',
     breeds: ['Macaw'],
@@ -45,7 +49,9 @@ const bird = {
 
 const dog2 = {
     animal_id: 4, 
-    // pic: dogPic,
+    pic: dogPic,
+    description:
+    "An awesome dog to have around",
     disposition: [],
     type: 'dog',
     breeds: ['Collie', 'Sheltie'],
