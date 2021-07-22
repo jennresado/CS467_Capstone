@@ -83,6 +83,8 @@ describe('availabilityModel', ()=>{
         await db.raw("TRUNCATE TABLE dispositions RESTART IDENTITY CASCADE");
         await db.raw("TRUNCATE TABLE animal_availability RESTART IDENTITY CASCADE");
         await db.raw("TRUNCATE TABLE availability RESTART IDENTITY CASCADE");
+        await db.raw("TRUNCATE TABLE animal_type RESTART IDENTITY CASCADE");
+        await db.raw("TRUNCATE TABLE types RESTART IDENTITY CASCADE");
         });
 
     describe('addAvail(availability)', ()=>{

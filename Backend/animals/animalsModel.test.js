@@ -123,12 +123,14 @@ describe('animalsModel', ()=>{
     await db.raw("TRUNCATE TABLE animals RESTART IDENTITY CASCADE");
     await db.raw("TRUNCATE TABLE users RESTART IDENTITY CASCADE");
     await db.raw("TRUNCATE TABLE user_animals RESTART IDENTITY CASCADE");
-    await db.raw("TRUNCATE TABLE dispositions RESTART IDENTITY CASCADE");
-    await db.raw("TRUNCATE TABLE animal_dispositions RESTART IDENTITY CASCADE");
     await db.raw("TRUNCATE TABLE breeds RESTART IDENTITY CASCADE");
     await db.raw("TRUNCATE TABLE animal_breeds RESTART IDENTITY CASCADE");
+    await db.raw("TRUNCATE TABLE animal_dispositions RESTART IDENTITY CASCADE");
+    await db.raw("TRUNCATE TABLE dispositions RESTART IDENTITY CASCADE");
     await db.raw("TRUNCATE TABLE animal_availability RESTART IDENTITY CASCADE");
     await db.raw("TRUNCATE TABLE availability RESTART IDENTITY CASCADE");
+    await db.raw("TRUNCATE TABLE animal_type RESTART IDENTITY CASCADE");
+    await db.raw("TRUNCATE TABLE types RESTART IDENTITY CASCADE");
 
     let disList = ["Good with children", "Good with other animals", "Animal must be leashed at all times"]
 
