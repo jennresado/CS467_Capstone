@@ -16,11 +16,8 @@ a {
     text-decoration: none!important;
 }
 
-.landingPage {
-    margin-top: 60px;  /*for the Navigation Bar to not overlap the page content*/
-    text-align: center;
-    padding: 1rem;
-    margin-bottom: 60px; /*for the  Bottom Navigation Bar to not cut off the page content*/
+option {
+    text-transform: capitalize;
 }
 
 ol {
@@ -33,18 +30,7 @@ legend {
     text-align: left!important;
 }
 
-option {
-    text-transform: capitalize;
-}
-
-.generalFormat {
-    margin-top: 60px;  /*for the Navigation Bar to not overlap the page content*/
-    text-align: center;
-    padding: 1rem;
-    margin-bottom: 60px; /*for the  Bottom Navigation Bar to not cut off the page content*/
-}
-
-.aboutPage {
+.generalFormat, .landingPage, .aboutPage, .contactPage, .userProfilePage, .signUpPage {
     margin-top: 60px;  /*for the Navigation Bar to not overlap the page content*/
     text-align: center;
     padding: 1rem;
@@ -67,8 +53,55 @@ option {
     border-radius: 5px;
 }
 
+.loadingIcon {
+    margin-top: 5rem!important;
+    width: 5rem;
+    height: 5rem;
+}
+
+.card-img-top {
+    object-fit: none;
+    object-position: center;
+    width: 100%;
+    max-height: 15rem;
+    margin-bottom: 3rem;
+}
+
+.cardDetail {
+    max-height: 10rem;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
 .animalForm {
     margin-top: 1.5rem;
+}
+
+.list-group {
+    text-align: left!important;
+    border: 1px solid lightgrey;
+}
+
+.breed {
+    max-height: 10rem;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    text-align: left!important;
+    border: 1px solid lightgrey;
+}
+
+.list-group-item {
+    border-right: none!important;
+    border-left: none!important;
+    text-transform: capitalize;
+}
+
+.list-group-item:first-of-type{
+    border-top: none!important;
+}
+
+.list-group-item:last-of-type{
+    border-bottom: none!important;
 }
 
 .card-body {
@@ -88,33 +121,14 @@ option {
     margin-bottom: 1rem;
 }
 
-.loginError, .signupError, .userProfileError  {
+.loginError, .signupError, .animalError, .breedError  {
+
     color: red;
 }
 
 .disclaimer {
     margin-top: 1rem;
     margin-bottom: 0!important;
-}
-.contactPage {
-    margin-top: 60px;  /*for the Navigation Bar to not overlap the page content*/
-    text-align: center;
-    padding: 1rem;
-    margin-bottom: 60px; /*for the  Bottom Navigation Bar to not cut off the page content*/
-}
-
-.userProfilePage {
-    margin-top: 60px;  /*for the Navigation Bar to not overlap the page content*/
-    text-align: center;
-    padding: 1rem;
-    margin-bottom: 60px; /*for the  Bottom Navigation Bar to not cut off the page content*/
-}
-
-.signUpPage {
-    margin-top: 60px;  /*for the Navigation Bar to not overlap the page content*/
-    text-align: center;
-    padding: 1rem;
-    margin-bottom: 60px; /*for the  Bottom Navigation Bar to not cut off the page content*/
 }
 
 #animalDiv {

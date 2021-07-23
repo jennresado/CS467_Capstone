@@ -19,53 +19,46 @@ const Footer = ({ cookies }) => {
                 <Navbar.Toggle />
                 <Navbar.Collapse className='justify-content-center'>
 
-                {location.pathname === '/userprofile' && <Nav.Link href="/dashboard">Dashboard</Nav.Link> }
-
-                {location.pathname === '/dashboard' && <Nav.Link href="/dashboard">Dashboard</Nav.Link> }
-                {location.pathname === '/dashboard' && <Nav.Link href="/dashboard">Home</Nav.Link> }
-
-                {location.pathname === '/animal' && <Nav.Link href="/dashboard">Dashboard</Nav.Link> }
-                {location.pathname === '/animal' && <Nav.Link href="/dashboard">Home</Nav.Link> }
-
-                {location.pathname === '/' && <Nav.Link href="/">Home</Nav.Link> }
-
-                {location.pathname === '/login' && <Nav.Link href="/">Home</Nav.Link> }
-                
-                {location.pathname === '/about' && <Nav.Link href="/">Home</Nav.Link> }
-
-                {location.pathname === '/signup' && <Nav.Link href="/">Home</Nav.Link> }
-
-                {location.pathname === '/contact' && <Nav.Link href="/">Home</Nav.Link> }
-
+                <Nav.Link href="/">Home</Nav.Link>
                 <Nav.Link href="/about">About</Nav.Link>
                 <Nav.Link href="/contact">Contact</Nav.Link>
 
-                {location.pathname === '/' && <Nav.Link href="/login">Login</Nav.Link> }
-                {location.pathname === '/' && <Nav.Link href="/signup">Sign Up</Nav.Link> }
+                {location.pathname === '/userprofile' && <Nav.Link href="/dashboard">Dashboard</Nav.Link> }
+                
+                {location.pathname === '/' && loggedIn && <Nav.Link href="/dashboard">Dashboard</Nav.Link> }
+                {location.pathname === '/' && admin && <Nav.Link href="/animal">Animal</Nav.Link> }
+                {location.pathname === '/' && loggedIn && <Nav.Link href="/userprofile">Profile</Nav.Link> }
+                {location.pathname === '/' && !loggedIn && <Nav.Link href="/login">Login</Nav.Link> }
+                {location.pathname === '/' && !loggedIn && <Nav.Link href="/signup">Sign Up</Nav.Link> }
 
+                {location.pathname === '/dashboard' && loggedIn && <Nav.Link href="/dashboard">Dashboard</Nav.Link> }
+                {location.pathname === '/dashboard' && admin && <Nav.Link href="/animal">Animal</Nav.Link> }
+                {location.pathname === '/dashboard' && loggedIn && <Nav.Link href="/userprofile">Profile</Nav.Link> }
+
+                {location.pathname === '/animal' && <Nav.Link href="/dashboard">Dashboard</Nav.Link> }
+                {location.pathname === '/animal' && admin && <Nav.Link href="/animal">Animal</Nav.Link> }
+                {location.pathname === '/animal' && <Nav.Link href="/userprofile">Profile</Nav.Link> }
+    
                 {location.pathname === '/signup' && <Nav.Link href="/login">Login</Nav.Link> }
                 {location.pathname === '/signup' && <Nav.Link href="/signup">Sign Up</Nav.Link> }
 
                 {location.pathname === '/login' && <Nav.Link href="/login">Login</Nav.Link> }
                 {location.pathname === '/login' && <Nav.Link href="/signup">Sign Up</Nav.Link> }
                 
-                {location.pathname === '/about' && <Nav.Link href="/login">Login</Nav.Link> }
-                {location.pathname === '/about' && <Nav.Link href="/signup">Sign Up</Nav.Link> }
+                {location.pathname === '/about' && !loggedIn && <Nav.Link href="/login">Login</Nav.Link> }
+                {location.pathname === '/about' && !loggedIn && <Nav.Link href="/signup">Sign Up</Nav.Link> }
+                {location.pathname === '/about' && admin && <Nav.Link href="/animal">Animal</Nav.Link> }
+                {location.pathname === '/about' && loggedIn && <Nav.Link href="/userprofile">Profile</Nav.Link> }
 
-                {location.pathname === '/contact' && <Nav.Link href="/login">Login</Nav.Link> }
-                {location.pathname === '/contact' && <Nav.Link href="/signup">Sign Up</Nav.Link> }
+                {location.pathname === '/contact' && !loggedIn && <Nav.Link href="/login">Login</Nav.Link> }
+                {location.pathname === '/contact' && !loggedIn && <Nav.Link href="/signup">Sign Up</Nav.Link> }
+                {location.pathname === '/contact' && admin && <Nav.Link href="/animal">Animal</Nav.Link> }
+                {location.pathname === '/contact' && loggedIn && <Nav.Link href="/userprofile">Profile</Nav.Link> }
 
-                {location.pathname === '/userprofile' && <Nav.Link href="/userprofile">Profile</Nav.Link> }
                 {location.pathname === '/userprofile' && admin && <Nav.Link href="/animal">Animal</Nav.Link> }
+                {location.pathname === '/userprofile' && <Nav.Link href="/userprofile">Profile</Nav.Link> }
                 {location.pathname === '/userprofile' && <Nav.Link href="/signup">Sign Up</Nav.Link> }
 
-                {location.pathname === '/dashboard' && <Nav.Link href="/userprofile">Profile</Nav.Link> }
-                {location.pathname === '/dashboard' && admin && <Nav.Link href="/animal">Animal</Nav.Link> }
-
-                {location.pathname === '/animal' && <Nav.Link href="/userprofile">Profile</Nav.Link> }
-                {location.pathname === '/animal' && admin && <Nav.Link href="/animal">Animal</Nav.Link> }
-                
-                
                 </Navbar.Collapse>
             </Navbar>
         </div>

@@ -64,13 +64,18 @@ router.delete("/", (req, res) => {
 
   Users.getUserBy("username", username).then((userArr) => {
     const user = userArr[0];
-    Users.deleteUser(user.user_id)
+    if(user){
+      Users.deleteUser(user.user_id)
       .then((delUser) => {
         res.status(200).json({ message: `${delUser} deleted successfully` });
       })
       .catch((err) => {
         res.status(404).json({ message: "No user with that username exists " });
       });
+    } else {
+      res.status(404).json({ message: "No user with that username exists " });
+    }
+    
   });
 });
 
