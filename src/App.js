@@ -15,6 +15,7 @@ import Dashboard from './components/Dashboard'
 function App() {
     const [cookies, setCookie, removeCookie] = useCookies(['user'])
     const [animals, setAnimals] = useState([])
+    const [users, setUsers] = useState([])
 
     // Warm up backend server to decrease latency
     useEffect(() => {
@@ -61,6 +62,33 @@ function App() {
         }
     }, [])
 
+
+    // Retrieve users from db
+    useEffect(() => {
+        const getUsers = async () => {
+            const res = await fetch(
+                `https://bring-me-home-backend.herokuapp.com/users/`,
+                {
+                    method: 'GET',
+                    headers: {
+                        'Content-type': 'application/json',
+                        'Authorization': cookies.user.token
+                    }
+                }
+            )
+
+            if (res.ok) {
+                const data = await res.json()
+                console.log('Got user')
+                setUsers(data.user)
+            }
+        }
+
+        if (cookies.user) {
+            getUsers()
+        }
+    }, [])
+
     // Login User
     const loginUser = async (loginInfo) => {
         const res = await fetch(
@@ -74,7 +102,6 @@ function App() {
 
         if (res.ok) {
             const data = await res.json()
-        
             // Create cookie
             setCookie(
                 'user', 
@@ -106,9 +133,10 @@ function App() {
             const data = await res.json()
             // Create cookie
             setCookie(
-                    'user',
-                    { 'username': signUpInfo.username, 'token': data.token },
-                    { path: '/' }
+                'user',
+                { 'username': signUpInfo.username, 'token': data.token },
+                { path: '/' }
+                
             )
         } else {
             throw new Error('Invalid Registration')
@@ -186,98 +214,140 @@ function App() {
         }
     }
 
+    // Update existing user
+    const updateUser = async (body) => {
+        const res = await fetch(
+            `https://bring-me-home-backend.herokuapp.com/users/`,
+            {
+                method: 'PUT',
+                headers: { 'Content-type': 'application/json',
+                'Authorization': cookies.user.token },
+                body: JSON.stringify(body)
+            }
+        )
+
+        if (res.ok) {
+            console.log("User updated")
+        } else {
+            throw new Error('Cannot update user')
+        }
+    }
+
+    // Delete existing user
+    const deleteUser = async () => {
+        const res = await fetch(
+            `https://bring-me-home-backend.herokuapp.com/users/`,
+            {
+                method: 'DELETE',
+                headers: { 'Content-type': 'application/json',
+                'Authorization': cookies.user.token
+            }
+                
+            }
+        )
+
+        if (res.ok) {
+            console.log("User deleted")
+        } else {
+            throw new Error('Cannot delete user')
+        }
+    }
+
     return (
         <Router>
-        <div className='container'>
-            {/* Navigation Bar */}
-            <Navigation 
-                onLogout={logoutUser}
-                cookies={cookies}
-            />
-            
-            {/* Landing Page */}
-            <Route 
-                path='/' exact render={(props) => (
-                    <Landing />
-                )}
-            />
+            <div className='container'>
+                {/* Navigation Bar */}
+                <Navigation 
+                    onLogout={logoutUser}
+                    cookies={cookies}
+                />
 
-            {/* Sign Up Page */}
-            <Route 
-                path= '/signup' 
-                render={(props) => (
-                    <SignUp 
-                    onSignup={signUpUser}
-                    />
-                )
-            }/>
+                {/* Landing Page */}
+                <Route
+                    path='/' exact render={(props) => (
+                        <Landing />
+                    )}
+                />
 
-            {/* Login Page */}
-            <Route 
-                path='/login' 
-                render={(props) => (
-                    <Login 
-                        onLogin={loginUser} 
-                    />
-                )}
-            />
+                {/* Sign Up Page */}
+                <Route
+                    path='/signup'
+                    render={(props) => (
+                        <SignUp
+                            onSignup={signUpUser}
+                        />
+                    )
+                    } />
 
-            {/* Dashboard Page */}
-            <Route 
-                path= '/dashboard' 
-                render={(props) => (
-                    requireAuth() ? 
-                    <Dashboard 
-                        animalsDb={animals}
-                    /> :
-                    <Redirect to='/' />
-                )
-            }/>
+                {/* Login Page */}
+                <Route
+                    path='/login'
+                    render={(props) => (
+                        <Login
+                            onLogin={loginUser}
+                        />
+                    )}
+                />
 
-            {/* Profile Settings Page */}
-            <Route 
-                path= '/userprofile' 
-                render={(props) => (
-                    <UserProfile />
-                )
-            }/>
+                {/* Dashboard Page */}
+                <Route
+                    path='/dashboard'
+                    render={(props) => (
+                        requireAuth() ?
+                            <Dashboard
+                                animalsDb={animals}
+                            /> :
+                            <Redirect to='/' />
+                    )
+                    } />
 
-            {/* Animal Page */}
-            <Route 
-                path= '/Animal' 
-                render={(props) => (
-                    requireAuthAdmin() ?
-                    <Animal 
-                        animalsDb={animals}
-                        onAddAnimal={addAnimal}
-                        onUpdateAnimal={updateAnimal}
-                        onDeleteAnimal={deleteAnimal}
-                    /> :
-                    <Redirect to='/' />
-                )
-            }/>
+                {/* Profile Settings Page */}
+                <Route
+                    path='/userprofile'
+                    render={(props) => (
+                        <UserProfile
+                            usersDb={users}
+                            onUpdateUser={updateUser}
+                            onDeleteUser={deleteUser} />
+                    )
+                    } />
 
-            {/* About Page */}
-            <Route 
-                path= '/about' 
-                render={(props) => (
-                    <About />
-                )
-            }/>
+                {/* Animal Page */}
+                <Route
+                    path='/Animal'
+                    render={(props) => (
+                        requireAuthAdmin() ?
+                            <Animal
+                                animalsDb={animals}
+                                onAddAnimal={addAnimal}
+                                onUpdateAnimal={updateAnimal}
+                                onDeleteAnimal={deleteAnimal}
+                            /> :
+                            <Redirect to='/' />
+                    )
+                    } />
 
-            {/* Contact Us Page */}
-            <Route 
-                path= '/contact' 
-                render={(props) => (
-                    <Contact />
-                )
-            }/>
+                {/* About Page */}
+                <Route
+                    path='/about'
+                    render={(props) => (
+                        <About />
+                    )
+                    } />
 
-            {/* Footer */}
-            <Footer 
-                cookies={cookies}
-            />
-        </div>
+                {/* Contact Us Page */}
+                <Route
+                    path='/contact'
+                    render={(props) => (
+                        <Contact />
+                    )
+                    } />
+
+                {/* Footer */}
+                <Footer 
+                    cookies={cookies}
+                />
+            </div>
         </Router>
     );
 }
