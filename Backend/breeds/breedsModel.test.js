@@ -43,7 +43,7 @@ async function getTestAnimals() {
   }
 
 //sample breeds to be used in tests
-// length of list is 47
+// length of list is 48
 async function getBreeds(){
     return ["australian shepherd", 
     "beagle", 
@@ -90,7 +90,8 @@ async function getBreeds(){
     "siamese cat", 
     "snowshoe cat", 
     "sphynx cat", 
-    "turkish angora"]
+    "turkish angora",
+    'other']
 }
 
 //insert the animals needed
@@ -168,17 +169,17 @@ describe('breedsModel', ()=>{
     })
 
     describe('editBreed(breed_id, breed)', ()=>{
-        it('edits a breed by the breed_id', async()=>{
+        it.only('edits a breed by the breed_id', async()=>{
             await insertBreeds();
             let breeds = await db('breeds')
-            expect(breeds.length).toBe(47)
+            expect(breeds.length).toBe(48)
             expect(breeds[0].breed).toEqual('australian shepherd')
 
             const edit_count = await Breeds.editBreed(1, 'aussie')
             expect(edit_count).toBe(1);
 
             breeds = await db('breeds')
-            expect(breeds.length).toBe(47)
+            expect(breeds.length).toBe(48)
 
             breeds = await db('breeds').where({breed_id: 1})
             expect(breeds[0].breed).toEqual('aussie')
@@ -198,7 +199,7 @@ describe('breedsModel', ()=>{
 
             await insertBreeds()
             const breeds = await db('breeds')
-            expect(breeds.length).toBe(47);
+            expect(breeds.length).toBe(48);
 
             await insertAnimalBreed(1, 1);
             let animal_breed = await db('animal_breeds')
@@ -228,7 +229,7 @@ describe('breedsModel', ()=>{
 
             await insertBreeds()
             const breeds = await db('breeds')
-            expect(breeds.length).toBe(47);
+            expect(breeds.length).toBe(48);
 
             await insertAnimalBreed(1, 1);
             await insertAnimalBreed(1, 2);
@@ -260,7 +261,7 @@ describe('breedsModel', ()=>{
             const animals = await db("animals")
             expect(animals.length).toBe(4)
             const breeds = await db('breeds')
-            expect(breeds.length).toBe(47);
+            expect(breeds.length).toBe(48);
             const animal_breed = await db('animal_breeds')
             expect(animal_breed.length).toBe(4)
 
@@ -280,7 +281,7 @@ describe('breedsModel', ()=>{
         it('returns the id of a particular breed string', async ()=>{
             await insertBreeds();
             const breeds = await db('breeds')
-            expect(breeds.length).toBe(47);
+            expect(breeds.length).toBe(48);
 
             const breed_list = await getBreeds();
 
@@ -296,13 +297,13 @@ describe('breedsModel', ()=>{
         it('deletes a breed from the database', async()=>{
             await insertBreeds();
             let breeds = await db('breeds')
-            expect(breeds.length).toBe(47);
+            expect(breeds.length).toBe(48);
 
             let count = await Breeds.deleteBreed(1)
             expect(count).toBe(1);
 
             breeds = await db('breeds')
-            expect(breeds.length).toBe(46);
+            expect(breeds.length).toBe(47);
 
             const breed_list = await getBreeds()
 
@@ -329,7 +330,7 @@ describe('breedsModel', ()=>{
 
             await insertBreeds()
             const breeds = await db('breeds')
-            expect(breeds.length).toBe(47);
+            expect(breeds.length).toBe(48);
 
             await insertAnimalBreed(1, 1);
             await insertAnimalBreed(1, 2);
