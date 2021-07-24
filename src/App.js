@@ -79,7 +79,7 @@ function App() {
 
             if (res.ok) {
                 const data = await res.json()
-                console.log('Got user')
+                //console.log('Got user')
                 setUsers(data.user)
             }
         }
