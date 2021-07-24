@@ -103,7 +103,6 @@ const UserProfile = ({ usersDb, onUpdateUser, onDeleteUser }) => {
             .then(() => {
                 history.push('/')
             }).catch((err) => {
-                console.log(err)
             })
     }
 
