@@ -26,7 +26,7 @@ const UserProfile = ({ usersDb, onUpdateUser, onDeleteUser }) => {
 
     const buttonEdit = showEditButton
     const show = showEditFields
-    const passsWordField  = showEditPassword
+    const passwordField  = showEditPassword
     const editPassButton = showEditPasswordButton
 
     const onEdit = (e) => {
@@ -150,7 +150,7 @@ const UserProfile = ({ usersDb, onUpdateUser, onDeleteUser }) => {
                             </div>
                             <div>
                                 {
-                                    passsWordField &&
+                                    passwordField &&
                                     <input
                                     type='text'
                                     placeholder='password'
