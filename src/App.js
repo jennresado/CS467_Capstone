@@ -79,7 +79,7 @@ function App() {
 
             if (res.ok) {
                 const data = await res.json()
-                console.log('Got user')
+                //console.log('Got user')
                 setUsers(data.user)
             }
         }
@@ -208,7 +208,6 @@ function App() {
         )
 
         if (res.ok) {
-            console.log("Animal deleted")
         } else {
             throw new Error('Cannot delete animal')
         }
@@ -227,7 +226,7 @@ function App() {
         )
 
         if (res.ok) {
-            console.log("User updated")
+            //console.log("User updated")
         } else {
             throw new Error('Cannot update user')
         }
@@ -247,7 +246,7 @@ function App() {
         )
 
         if (res.ok) {
-            console.log("User deleted")
+            //console.log("User deleted")
         } else {
             throw new Error('Cannot delete user')
         }
