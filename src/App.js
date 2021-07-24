@@ -134,7 +134,7 @@ function App() {
             // Create cookie
             setCookie(
                 'user',
-                { 'username': signUpInfo.username, 'token': data.token },
+                { 'username': signUpInfo.username, 'token': data.token, 'admin': data.admin},
                 { path: '/' }
                 
             )
