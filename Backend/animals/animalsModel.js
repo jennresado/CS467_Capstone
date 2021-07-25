@@ -8,6 +8,7 @@ module.exports = {
   addAnimal,
   editAnimal,
   getAllAnimals,
+  getAnimalAttribute,
   getAnimalBy,
   deleteAnimal,
   deleteAnimalKey
@@ -137,6 +138,22 @@ async function getAllAnimals() {
   return db_a
 }
 
+//returns a list of attributes in the database
+async function getAnimalAttribute(attribute){
+  switch(attribute){
+    case 'breeds':
+      return db('breeds');
+    case 'dispositions':
+      return db('dispositions');
+    case 'types':
+      return db('types')
+    case 'availability':
+      return db('availability')
+    default:
+      return []
+  }
+}
+
 //returns animal object corresponding the the given filter and filter value
 async function getAnimalBy(filterName, filterValue) {
   let db_a = []
@@ -149,17 +166,29 @@ async function getAnimalBy(filterName, filterValue) {
       break;
     case "disposition":
       const dis_id = await Dispositions.getDispositionId(filterValue)
-      return Dispositions.getAnimalByDispositionId(dis_id)
+      if(dis_id){
+        return Dispositions.getAnimalByDispositionId(dis_id)
+      }
+      break;
     case "type":
       const type_id = await Types.getTypeId(filterValue);
-      return Types.getAnimalByTypeId(type_id);
+      if(type_id){
+        return Types.getAnimalByTypeId(type_id);
+      }
+      break;
     case "breed":
       const breed_id = await Breeds.getBreedId(filterValue);
-      return Breeds.getAnimalByBreedId(breed_id)
+      if(breed_id){
+        return Breeds.getAnimalByBreedId(breed_id)
+      }
+      break;
     case "availability":
       filterValue = capitalize(filterValue)
       const avail_id = await Avail.getAvailId(filterValue);
-      return Avail.getAnimalAvailByAvailId(avail_id)
+      if(avail_id){
+        return Avail.getAnimalAvailByAvailId(avail_id)
+      }
+      break;
   }
 
   await asyncForEach(db_a, async (animal) => {
@@ -168,6 +197,18 @@ async function getAnimalBy(filterName, filterValue) {
     a_dis.forEach(dis => {
       animal.disposition.push(dis.disposition)
     })
+
+    let a_breed = await Breeds.getAnimalBreeds(animal.animal_id);
+    animal.breeds = []
+    a_breed.forEach(breed => {
+      animal.breeds.push(breed.breed);
+    })
+
+    let a_type = await Types.getAnimalType(animal.animal_id);
+    animal.type = a_type.type
+
+    let a_avail = await Avail.getAnimalAvail(animal.animal_id);
+    animal.availability = a_avail;
   })
 
   return db_a

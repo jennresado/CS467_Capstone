@@ -512,6 +512,284 @@ describe("server", () => {
       })
     })
 
+    describe('GET /:filter_name/:filter_value', () => {
+      it('gets animal by animal_id', async () => {
+        const res = await supertest(server).post("/auth/register").send({
+          username: "sam",
+          password: "pass",
+          first_name: "Sam",
+          last_name: "Gamgee",
+          email: "baggins@gmail.com",
+          admin: false,
+        });
+        const token = res.body.token;
+
+        await insertAnimals();
+        await insertAnimalAvail();
+        await insertAnimalBreed();
+        await insertAnimalDispositions();
+        await insertAnimalType()
+
+        const expectedAnimals = await getExpectedTestAnimals();
+
+        const res2 = await supertest(server).get("/animals/animal_id/1").set('authorization', token)
+
+        expect((res2.body.animalArr).length).toBe(1);
+
+        let animal = res2.body.animalArr[0]
+
+        expect(animal.pic).toEqual(expectedAnimals[0].pic)
+        expect(animal.description).toEqual(expectedAnimals[0].description)
+        expect(animal.disposition).toEqual(expectedAnimals[0].disposition)
+
+      })
+
+      it('gets animal by date_created', async () => {
+        const res = await supertest(server).post("/auth/register").send({
+          username: "sam",
+          password: "pass",
+          first_name: "Sam",
+          last_name: "Gamgee",
+          email: "baggins@gmail.com",
+          admin: false,
+        });
+        const token = res.body.token;
+
+        await insertAnimals();
+        await insertAnimalAvail();
+        await insertAnimalBreed();
+        await insertAnimalDispositions();
+        await insertAnimalType()
+
+        const expectedAnimals = await getExpectedTestAnimals();
+
+        const res2 = await supertest(server).get("/animals/date/06-20-2021").set('authorization', token)
+
+        expect((res2.body.animalArr).length).toBe(1);
+
+        let animal = res2.body.animalArr[0]
+
+        expect(animal.pic).toEqual(expectedAnimals[0].pic)
+        expect(animal.description).toEqual(expectedAnimals[0].description)
+        expect(animal.disposition).toEqual(expectedAnimals[0].disposition)
+
+      })
+
+      it('gets a list of animal_ids in a populated database by their disposition', async () => {
+        const res = await supertest(server).post("/auth/register").send({
+          username: "sam",
+          password: "pass",
+          first_name: "Sam",
+          last_name: "Gamgee",
+          email: "baggins@gmail.com",
+          admin: false,
+        });
+        const token = res.body.token;
+
+        await insertAnimals();
+        await insertAnimalAvail();
+        await insertAnimalBreed();
+        await insertAnimalDispositions();
+        await insertAnimalType()
+
+        const expectedAnimals = await getExpectedTestAnimals();
+
+        const res2 = await supertest(server).get("/animals/disposition/Good_with_other_animals").set('authorization', token)
+
+        expect((res2.body.animalArr).length).toBe(3);
+
+        let animal = res2.body.animalArr
+        expect(animal).toEqual([{ animal_id: 1 }, { animal_id: 2 }, { animal_id: 4 }])
+      })
+
+      it('gets a list of animal_ids in a populated database by their type', async () => {
+        const res = await supertest(server).post("/auth/register").send({
+          username: "sam",
+          password: "pass",
+          first_name: "Sam",
+          last_name: "Gamgee",
+          email: "baggins@gmail.com",
+          admin: false,
+        });
+        const token = res.body.token;
+
+        await insertAnimals();
+        await insertAnimalAvail();
+        await insertAnimalBreed();
+        await insertAnimalDispositions();
+        await insertAnimalType()
+
+        const expectedAnimals = await getExpectedTestAnimals();
+
+        const res2 = await supertest(server).get("/animals/type/dog").set('authorization', token)
+
+        expect((res2.body.animalArr).length).toBe(2);
+
+        let animal = res2.body.animalArr
+        expect(animal).toEqual([{ animal_id: 1 }, { animal_id: 4 }])
+      })
+
+      it('gets a list of animal_ids in a populated database by their breed', async () => {
+        const res = await supertest(server).post("/auth/register").send({
+          username: "sam",
+          password: "pass",
+          first_name: "Sam",
+          last_name: "Gamgee",
+          email: "baggins@gmail.com",
+          admin: false,
+        });
+        const token = res.body.token;
+
+        await insertAnimals();
+        await insertAnimalAvail();
+        await insertAnimalBreed();
+        await insertAnimalDispositions();
+        await insertAnimalType()
+
+        const expectedAnimals = await getExpectedTestAnimals();
+
+        const res2 = await supertest(server).get("/animals/breed/other").set('authorization', token)
+
+        expect((res2.body.animalArr).length).toBe(2);
+
+        let animal = res2.body.animalArr
+        expect(animal).toEqual([{ animal_id: 2 }, { animal_id: 3 }])
+      })
+
+      it('gets a list of animal_ids in a populated database by their availability', async () => {
+        const res = await supertest(server).post("/auth/register").send({
+          username: "sam",
+          password: "pass",
+          first_name: "Sam",
+          last_name: "Gamgee",
+          email: "baggins@gmail.com",
+          admin: false,
+        });
+        const token = res.body.token;
+
+        await insertAnimals();
+        await insertAnimalAvail();
+        await insertAnimalBreed();
+        await insertAnimalDispositions();
+        await insertAnimalType()
+
+        const expectedAnimals = await getExpectedTestAnimals();
+
+        const res2 = await supertest(server).get("/animals/availability/not_available").set('authorization', token)
+
+        expect((res2.body.animalArr).length).toBe(1);
+
+        let animal = res2.body.animalArr
+        expect(animal).toEqual([{ animal_id: 3 }])
+      })
+
+      it('returns empty array when given filter_name it does not recognize', async () => {
+        const res = await supertest(server).post("/auth/register").send({
+          username: "sam",
+          password: "pass",
+          first_name: "Sam",
+          last_name: "Gamgee",
+          email: "baggins@gmail.com",
+          admin: false,
+        });
+        const token = res.body.token;
+
+        await insertAnimals();
+        await insertAnimalAvail();
+        await insertAnimalBreed();
+        await insertAnimalDispositions();
+        await insertAnimalType()
+
+        const res2 = await supertest(server).get("/animals/something/else").set('authorization', token)
+
+        expect((res2.body.animalArr).length).toBe(0);
+        expect(res2.body.animalArr).toEqual([]);
+      })
+    })
+
+    describe('GET /:key', ()=>{
+      it('gets a list of the particular key in the database', async ()=>{
+        let res = await supertest(server).post("/auth/register").send({
+          username: "sam",
+          password: "pass",
+          first_name: "Sam",
+          last_name: "Gamgee",
+          email: "baggins@gmail.com",
+          admin: false,
+        });
+        const token = res.body.token;
+
+        await insertAnimals();
+        await insertAnimalAvail();
+        await insertAnimalBreed();
+        await insertAnimalDispositions();
+        await insertAnimalType()
+
+        res = await supertest(server).get("/animals/types").set('authorization', token)
+        expect((res.body.attributeArr).length).toBe(3)
+
+        res = await supertest(server).get("/animals/breeds").set('authorization', token)
+        expect((res.body.attributeArr).length).toBe(48)
+
+        res = await supertest(server).get("/animals/availability").set('authorization', token)
+        expect((res.body.attributeArr).length).toBe(4)
+
+        res = await supertest(server).get("/animals/dispositions").set('authorization', token)
+        expect((res.body.attributeArr).length).toBe(3)
+      })
+
+      it('sends 200 OK', async ()=>{
+        let res = await supertest(server).post("/auth/register").send({
+          username: "sam",
+          password: "pass",
+          first_name: "Sam",
+          last_name: "Gamgee",
+          email: "baggins@gmail.com",
+          admin: false,
+        });
+        const token = res.body.token;
+
+        await insertAnimals();
+        await insertAnimalAvail();
+        await insertAnimalBreed();
+        await insertAnimalDispositions();
+        await insertAnimalType()
+
+        res = await supertest(server).get("/animals/types").set('authorization', token)
+        expect(res.status).toBe(200)
+
+        res = await supertest(server).get("/animals/breeds").set('authorization', token)
+        expect(res.status).toBe(200)
+
+        res = await supertest(server).get("/animals/availability").set('authorization', token)
+        expect(res.status).toBe(200)
+
+        res = await supertest(server).get("/animals/dispositions").set('authorization', token)
+        expect(res.status).toBe(200)
+      })
+
+      it('returns empty array when non-valid key is used', async ()=>{
+        let res = await supertest(server).post("/auth/register").send({
+          username: "sam",
+          password: "pass",
+          first_name: "Sam",
+          last_name: "Gamgee",
+          email: "baggins@gmail.com",
+          admin: false,
+        });
+        const token = res.body.token;
+
+        await insertAnimals();
+        await insertAnimalAvail();
+        await insertAnimalBreed();
+        await insertAnimalDispositions();
+        await insertAnimalType()
+
+        res = await supertest(server).get("/animals/none").set('authorization', token)
+        expect((res.body.attributeArr).length).toBe(0)
+      })
+    })
+
     describe('PUT /:animal_id', () => {
       it('edits the information of an animals based on the animal_id passed in the url', async () => {
         const res = await supertest(server).post("/auth/register").send({
@@ -1020,201 +1298,6 @@ describe("server", () => {
 
         const dbAnimalDis = await db('animal_dispositions')
         expect(dbAnimalDis.length).toBe(2)
-      })
-    })
-
-    describe('GET /:filter_name/:filter_value', () => {
-      it('gets animal by animal_id', async () => {
-        const res = await supertest(server).post("/auth/register").send({
-          username: "sam",
-          password: "pass",
-          first_name: "Sam",
-          last_name: "Gamgee",
-          email: "baggins@gmail.com",
-          admin: false,
-        });
-        const token = res.body.token;
-
-        await insertAnimals();
-        await insertAnimalAvail();
-        await insertAnimalBreed();
-        await insertAnimalDispositions();
-        await insertAnimalType()
-
-        const expectedAnimals = await getExpectedTestAnimals();
-
-        const res2 = await supertest(server).get("/animals/animal_id/1").set('authorization', token)
-
-        expect((res2.body.animalArr).length).toBe(1);
-
-        let animal = res2.body.animalArr[0]
-
-        expect(animal.pic).toEqual(expectedAnimals[0].pic)
-        expect(animal.description).toEqual(expectedAnimals[0].description)
-        expect(animal.disposition).toEqual(expectedAnimals[0].disposition)
-
-      })
-
-      it('gets animal by date_created', async () => {
-        const res = await supertest(server).post("/auth/register").send({
-          username: "sam",
-          password: "pass",
-          first_name: "Sam",
-          last_name: "Gamgee",
-          email: "baggins@gmail.com",
-          admin: false,
-        });
-        const token = res.body.token;
-
-        await insertAnimals();
-        await insertAnimalAvail();
-        await insertAnimalBreed();
-        await insertAnimalDispositions();
-        await insertAnimalType()
-
-        const expectedAnimals = await getExpectedTestAnimals();
-
-        const res2 = await supertest(server).get("/animals/date/06-20-2021").set('authorization', token)
-
-        expect((res2.body.animalArr).length).toBe(1);
-
-        let animal = res2.body.animalArr[0]
-
-        expect(animal.pic).toEqual(expectedAnimals[0].pic)
-        expect(animal.description).toEqual(expectedAnimals[0].description)
-        expect(animal.disposition).toEqual(expectedAnimals[0].disposition)
-
-      })
-
-      it('gets a list of animal_ids in a populated database by their disposition', async () => {
-        const res = await supertest(server).post("/auth/register").send({
-          username: "sam",
-          password: "pass",
-          first_name: "Sam",
-          last_name: "Gamgee",
-          email: "baggins@gmail.com",
-          admin: false,
-        });
-        const token = res.body.token;
-
-        await insertAnimals();
-        await insertAnimalAvail();
-        await insertAnimalBreed();
-        await insertAnimalDispositions();
-        await insertAnimalType()
-
-        const expectedAnimals = await getExpectedTestAnimals();
-
-        const res2 = await supertest(server).get("/animals/disposition/Good_with_other_animals").set('authorization', token)
-
-        expect((res2.body.animalArr).length).toBe(3);
-
-        let animal = res2.body.animalArr
-        expect(animal).toEqual([{ animal_id: 1 }, { animal_id: 2 }, { animal_id: 4 }])
-      })
-
-      it('gets a list of animal_ids in a populated database by their type', async () => {
-        const res = await supertest(server).post("/auth/register").send({
-          username: "sam",
-          password: "pass",
-          first_name: "Sam",
-          last_name: "Gamgee",
-          email: "baggins@gmail.com",
-          admin: false,
-        });
-        const token = res.body.token;
-
-        await insertAnimals();
-        await insertAnimalAvail();
-        await insertAnimalBreed();
-        await insertAnimalDispositions();
-        await insertAnimalType()
-
-        const expectedAnimals = await getExpectedTestAnimals();
-
-        const res2 = await supertest(server).get("/animals/type/dog").set('authorization', token)
-
-        expect((res2.body.animalArr).length).toBe(2);
-
-        let animal = res2.body.animalArr
-        expect(animal).toEqual([{ animal_id: 1 }, { animal_id: 4 }])
-      })
-
-      it('gets a list of animal_ids in a populated database by their breed', async () => {
-        const res = await supertest(server).post("/auth/register").send({
-          username: "sam",
-          password: "pass",
-          first_name: "Sam",
-          last_name: "Gamgee",
-          email: "baggins@gmail.com",
-          admin: false,
-        });
-        const token = res.body.token;
-
-        await insertAnimals();
-        await insertAnimalAvail();
-        await insertAnimalBreed();
-        await insertAnimalDispositions();
-        await insertAnimalType()
-
-        const expectedAnimals = await getExpectedTestAnimals();
-
-        const res2 = await supertest(server).get("/animals/breed/other").set('authorization', token)
-
-        expect((res2.body.animalArr).length).toBe(2);
-
-        let animal = res2.body.animalArr
-        expect(animal).toEqual([{ animal_id: 2 }, { animal_id: 3 }])
-      })
-
-      it('gets a list of animal_ids in a populated database by their availability', async () => {
-        const res = await supertest(server).post("/auth/register").send({
-          username: "sam",
-          password: "pass",
-          first_name: "Sam",
-          last_name: "Gamgee",
-          email: "baggins@gmail.com",
-          admin: false,
-        });
-        const token = res.body.token;
-
-        await insertAnimals();
-        await insertAnimalAvail();
-        await insertAnimalBreed();
-        await insertAnimalDispositions();
-        await insertAnimalType()
-
-        const expectedAnimals = await getExpectedTestAnimals();
-
-        const res2 = await supertest(server).get("/animals/availability/not_available").set('authorization', token)
-
-        expect((res2.body.animalArr).length).toBe(1);
-
-        let animal = res2.body.animalArr
-        expect(animal).toEqual([{ animal_id: 3 }])
-      })
-
-      it('returns empty array when given filter_name it does not recognize', async () => {
-        const res = await supertest(server).post("/auth/register").send({
-          username: "sam",
-          password: "pass",
-          first_name: "Sam",
-          last_name: "Gamgee",
-          email: "baggins@gmail.com",
-          admin: false,
-        });
-        const token = res.body.token;
-
-        await insertAnimals();
-        await insertAnimalAvail();
-        await insertAnimalBreed();
-        await insertAnimalDispositions();
-        await insertAnimalType()
-
-        const res2 = await supertest(server).get("/animals/something/else").set('authorization', token)
-
-        expect((res2.body.animalArr).length).toBe(0);
-        expect(res2.body.animalArr).toEqual([]);
       })
     })
 
