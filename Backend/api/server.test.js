@@ -57,6 +57,7 @@ async function insertAnimalType() {
 }
 
 
+
 describe("server", () => {
   //wipes all tables in database clean so each test starts with empty tables
   beforeEach(async () => {
@@ -707,8 +708,8 @@ describe("server", () => {
       })
     })
 
-    describe('GET /:key', ()=>{
-      it('gets a list of the particular key in the database', async ()=>{
+    describe('GET /:key', () => {
+      it('gets a list of the particular key in the database', async () => {
         let res = await supertest(server).post("/auth/register").send({
           username: "sam",
           password: "pass",
@@ -738,7 +739,7 @@ describe("server", () => {
         expect((res.body.attributeArr).length).toBe(3)
       })
 
-      it('sends 200 OK', async ()=>{
+      it('sends 200 OK', async () => {
         let res = await supertest(server).post("/auth/register").send({
           username: "sam",
           password: "pass",
@@ -768,7 +769,7 @@ describe("server", () => {
         expect(res.status).toBe(200)
       })
 
-      it('returns empty array when non-valid key is used', async ()=>{
+      it('returns empty array when non-valid key is used', async () => {
         let res = await supertest(server).post("/auth/register").send({
           username: "sam",
           password: "pass",
@@ -1430,8 +1431,8 @@ describe("server", () => {
       })
     })
 
-    describe('DELETE /:animal_id/key/key_id', ()=>{
-      it('deletes one particular item from an animals array attributes', async ()=>{
+    describe('DELETE /:animal_id/key/key_id', () => {
+      it('deletes one particular item from an animals array attributes', async () => {
         const res = await supertest(server).post("/auth/register").send({
           username: "sam",
           password: "pass",
@@ -1452,15 +1453,15 @@ describe("server", () => {
 
         let dbDis = await db('animal_dispositions').where('animal_id', 1);
         expect(dbDis.length).toBe(1);
-        expect(dbDis).toEqual([{animal_dis_id: 1, animal_id: 1, disposition_id: 1}]);
+        expect(dbDis).toEqual([{ animal_dis_id: 1, animal_id: 1, disposition_id: 1 }]);
 
         res2 = await supertest(server).del("/animals/2/breeds/48").set('authorization', token)
         dbBreeds = await db('animal_breeds').where('animal_id', 2);
         expect(dbBreeds.length).toBe(1);
-        expect(dbBreeds).toEqual([{animal_breeds_id: 3, animal_id: 2, breed_id: 37}]);
+        expect(dbBreeds).toEqual([{ animal_breeds_id: 3, animal_id: 2, breed_id: 37 }]);
       })
 
-      it('sends 200 when successfully deletes animal from database', async ()=>{
+      it('sends 200 when successfully deletes animal from database', async () => {
         const res = await supertest(server).post("/auth/register").send({
           username: "sam",
           password: "pass",
@@ -1485,7 +1486,7 @@ describe("server", () => {
         expect(res2.status).toBe(200)
       })
 
-      it('sends success message after successfully deletes animal from database', async ()=>{
+      it('sends success message after successfully deletes animal from database', async () => {
         const res = await supertest(server).post("/auth/register").send({
           username: "sam",
           password: "pass",
@@ -1510,7 +1511,7 @@ describe("server", () => {
         expect(res2.body.message).toEqual('1 key(s) deleted successfully')
       })
 
-      it('sends 404 when trying to delete animal with an animal_id not in the database', async ()=>{
+      it('sends 404 when trying to delete animal with an animal_id not in the database', async () => {
         const res = await supertest(server).post("/auth/register").send({
           username: "sam",
           password: "pass",
@@ -1527,7 +1528,7 @@ describe("server", () => {
 
       })
 
-      it('sends error message when trying to delete animal with an animal_id not in the database', async ()=>{
+      it('sends error message when trying to delete animal with an animal_id not in the database', async () => {
         const res = await supertest(server).post("/auth/register").send({
           username: "sam",
           password: "pass",
@@ -1542,7 +1543,473 @@ describe("server", () => {
 
         expect(res2.body.message).toEqual('No animal with that id was found')
 
-      })      
+      })
+    })
+  })
+
+  describe('UsersRouter /users', () => {
+    describe('GET /', () => {
+      it('gets user based on jwt token passed in header', async () => {
+        let res = await supertest(server).post("/auth/register").send({
+          username: "sam",
+          password: "pass",
+          first_name: "Sam",
+          last_name: "Gamgee",
+          email: "baggins@gmail.com",
+          admin: false,
+        });
+        const token = res.body.token;
+
+        res = await supertest(server).get('/users').set('authorization', token);
+        expect((res.body.user).length).toBe(1);
+        const user = res.body.user[0]
+        expect(user.user_id).toBe(1);
+        expect(user.username).toEqual('sam')
+        expect(user.first_name).toEqual('Sam')
+        expect(user.last_name).toEqual('Gamgee')
+        expect(user.email).toEqual('baggins@gmail.com')
+        expect(user.admin).toBe(false)
+        expect(user.password).not.toEqual('pass')
+      })
+
+      it('sends 200 status when getting user', async () => {
+        let res = await supertest(server).post("/auth/register").send({
+          username: "sam",
+          password: "pass",
+          first_name: "Sam",
+          last_name: "Gamgee",
+          email: "baggins@gmail.com",
+          admin: false,
+        });
+        const token = res.body.token;
+
+        res = await supertest(server).get('/users').set('authorization', token);
+        expect(res.status).toBe(200)
+      })
+
+      it('sends error message with no jwt token provided', async () => {
+        let res = await supertest(server).post("/auth/register").send({
+          username: "sam",
+          password: "pass",
+          first_name: "Sam",
+          last_name: "Gamgee",
+          email: "baggins@gmail.com",
+          admin: false,
+        });
+        const token = res.body.token;
+
+        res = await supertest(server).get('/users').set('authorization', '');
+        expect(res.body.message).toEqual('Invalid token')
+      })
+
+      it('sends 401 status with no token sent', async () => {
+        let res = await supertest(server).post("/auth/register").send({
+          username: "sam",
+          password: "pass",
+          first_name: "Sam",
+          last_name: "Gamgee",
+          email: "baggins@gmail.com",
+          admin: false,
+        });
+        const token = res.body.token;
+
+        res = await supertest(server).get('/users').set('authorization', '');
+        expect(res.status).toBe(401)
+      })
+    })
+
+    describe('PUT /', () => {
+      it('edits a user', async () => {
+        let res = await supertest(server).post("/auth/register").send({
+          username: "sam",
+          password: "pass",
+          first_name: "Sam",
+          last_name: "Gamgee",
+          email: "baggins@gmail.com",
+          admin: false,
+        });
+        const token = res.body.token;
+
+        const changeUsername = 'samG'
+        const changePassword = 'frodo'
+        const changeFirstName = 'Samual'
+        const changeLastName = 'GamGee'
+        const changeEmail = 'gamgee@gmail.com'
+
+        res = await supertest(server).put("/users").send({
+          first_name: changeFirstName,
+        }).set('Authorization', token);
+        let users = await db('users').where({ user_id: 1 })
+        expect(users[0].first_name).toEqual(changeFirstName)
+
+        res = await supertest(server).put("/users").send({
+          last_name: changeLastName,
+        }).set('Authorization', token);
+        users = await db('users').where({ user_id: 1 })
+        expect(users[0].last_name).toEqual(changeLastName)
+
+        res = await supertest(server).put("/users").send({
+          email: changeEmail,
+        }).set('Authorization', token);
+        users = await db('users').where({ user_id: 1 })
+        expect(users[0].email).toEqual(changeEmail)
+
+        res = await supertest(server).put("/users").send({
+          username: changeUsername,
+        }).set('Authorization', token);
+        users = await db('users').where({ user_id: 1 })
+        expect(users[0].username).toEqual(changeUsername)
+
+        res = await supertest(server).put("/users").send({
+          password: changePassword,
+        }).set('Authorization', token);
+        users = await db('users').where({ user_id: 1 })
+        expect(users[0].password).not.toEqual(changePassword)
+      })
+
+      it('sends 200 status code', async () => {
+        let res = await supertest(server).post("/auth/register").send({
+          username: "sam",
+          password: "pass",
+          first_name: "Sam",
+          last_name: "Gamgee",
+          email: "baggins@gmail.com",
+          admin: false,
+        });
+        let token = res.body.token;
+
+        const changeUsername = 'samG'
+        const changePassword = 'frodo'
+        const changeFirstName = 'Samual'
+        const changeLastName = 'GamGee'
+        const changeEmail = 'gamgee@gmail.com'
+
+        res = await supertest(server).put("/users").send({
+          first_name: changeFirstName,
+        }).set('Authorization', token);
+        expect(res.status).toBe(200)
+
+        res = await supertest(server).put("/users").send({
+          last_name: changeLastName,
+        }).set('Authorization', token);
+        expect(res.status).toBe(200)
+
+        res = await supertest(server).put("/users").send({
+          email: changeEmail,
+        }).set('Authorization', token);
+        expect(res.status).toBe(200)
+
+        res = await supertest(server).put("/users").send({
+          username: changeUsername,
+        }).set('Authorization', token);
+        token = res.body.new_token
+        expect(res.status).toBe(200)
+
+        res = await supertest(server).put("/users").send({
+          password: changePassword,
+        }).set('Authorization', token);
+        expect(res.status).toBe(200)
+      })
+
+      it('sends 200 success message', async () => {
+        let res = await supertest(server).post("/auth/register").send({
+          username: "sam",
+          password: "pass",
+          first_name: "Sam",
+          last_name: "Gamgee",
+          email: "baggins@gmail.com",
+          admin: false,
+        });
+        let token = res.body.token;
+
+        const changeUsername = 'samG'
+        const changePassword = 'frodo'
+        const changeFirstName = 'Samual'
+        const changeLastName = 'GamGee'
+        const changeEmail = 'gamgee@gmail.com'
+
+        res = await supertest(server).put("/users").send({
+          first_name: changeFirstName,
+        }).set('Authorization', token);
+        expect(res.body.message).toEqual('Edited 1 user(s) successfully')
+
+        res = await supertest(server).put("/users").send({
+          last_name: changeLastName,
+        }).set('Authorization', token);
+        expect(res.body.message).toEqual('Edited 1 user(s) successfully')
+
+        res = await supertest(server).put("/users").send({
+          email: changeEmail,
+        }).set('Authorization', token);
+        expect(res.body.message).toEqual('Edited 1 user(s) successfully')
+
+        res = await supertest(server).put("/users").send({
+          username: changeUsername,
+        }).set('Authorization', token);
+        token = res.body.new_token
+        expect(res.body.message).toEqual('Edited 1 user(s) successfully')
+
+        res = await supertest(server).put("/users").send({
+          password: changePassword,
+        }).set('Authorization', token);
+        expect(res.body.message).toEqual('Edited 1 user(s) successfully')
+      })
+
+      it('sends 400 status code when sending with wrong datatype', async () => {
+        let res = await supertest(server).post("/auth/register").send({
+          username: "sam",
+          password: "pass",
+          first_name: "Sam",
+          last_name: "Gamgee",
+          email: "baggins@gmail.com",
+          admin: false,
+        });
+        let token = res.body.token;
+
+        const changeUsername = 123
+        const changePassword = 123
+        const changeFirstName = 123
+        const changeLastName = 123
+        const changeEmail = 123
+
+        res = await supertest(server).put("/users").send({
+          first_name: changeFirstName,
+        }).set('Authorization', token);
+        expect(res.status).toBe(400)
+
+        res = await supertest(server).put("/users").send({
+          last_name: changeLastName,
+        }).set('Authorization', token);
+        expect(res.status).toBe(400)
+
+        res = await supertest(server).put("/users").send({
+          email: changeEmail,
+        }).set('Authorization', token);
+        expect(res.status).toBe(400)
+
+        res = await supertest(server).put("/users").send({
+          username: changeUsername,
+        }).set('Authorization', token);
+        expect(res.status).toBe(400)
+
+        res = await supertest(server).put("/users").send({
+          password: changePassword,
+        }).set('Authorization', token);
+        expect(res.status).toBe(400)
+      })
+
+      it('sends 400 error message when sending with wrong datatype', async () => {
+        let res = await supertest(server).post("/auth/register").send({
+          username: "sam",
+          password: "pass",
+          first_name: "Sam",
+          last_name: "Gamgee",
+          email: "baggins@gmail.com",
+          admin: false,
+        });
+        let token = res.body.token;
+
+        const changeUsername = 123
+        const changePassword = 123
+        const changeFirstName = 123
+        const changeLastName = 123
+        const changeEmail = 123
+
+        res = await supertest(server).put("/users").send({
+          first_name: changeFirstName,
+        }).set('Authorization', token);
+        expect(res.body.error).toEqual('The request object attributes have one or more of the wrong type')
+
+        res = await supertest(server).put("/users").send({
+          last_name: changeLastName,
+        }).set('Authorization', token);
+        expect(res.body.error).toEqual('The request object attributes have one or more of the wrong type')
+
+        res = await supertest(server).put("/users").send({
+          email: changeEmail,
+        }).set('Authorization', token);
+        expect(res.body.error).toEqual('The request object attributes have one or more of the wrong type')
+
+        res = await supertest(server).put("/users").send({
+          username: changeUsername,
+        }).set('Authorization', token);
+        expect(res.body.error).toEqual('The request object attributes have one or more of the wrong type')
+
+        res = await supertest(server).put("/users").send({
+          password: changePassword,
+        }).set('Authorization', token);
+        expect(res.body.error).toEqual('The request object attributes have one or more of the wrong type')
+      })
+
+      it('sends 400 status code when sending with no body', async () => {
+        let res = await supertest(server).post("/auth/register").send({
+          username: "sam",
+          password: "pass",
+          first_name: "Sam",
+          last_name: "Gamgee",
+          email: "baggins@gmail.com",
+          admin: false,
+        });
+        let token = res.body.token;
+
+        res = await supertest(server).put("/users").send({}).set('Authorization', token);
+        expect(res.status).toBe(400)
+      })
+
+      it('sends 400 error message when sending with no body', async () => {
+        let res = await supertest(server).post("/auth/register").send({
+          username: "sam",
+          password: "pass",
+          first_name: "Sam",
+          last_name: "Gamgee",
+          email: "baggins@gmail.com",
+          admin: false,
+        });
+        let token = res.body.token;
+
+        res = await supertest(server).put("/users").send({}).set('Authorization', token);
+        expect(res.body.error).toEqual('The request object is missing one or more required attributes')
+      })
+
+      it('can login a user after changing the username', async () => {
+        let res = await supertest(server).post("/auth/register").send({
+          username: "sam",
+          password: "pass",
+          first_name: "Sam",
+          last_name: "Gamgee",
+          email: "baggins@gmail.com",
+          admin: false,
+        });
+        let token = res.body.token;
+
+        const changeUsername = 'samG'
+
+        res = await supertest(server).put("/users").send({
+          username: changeUsername,
+        }).set('Authorization', token);
+
+        res = await supertest(server).post('/auth/login').send({
+          username: changeUsername,
+          password: 'pass'
+        })
+        expect(res.status).toBe(200)
+        expect(res.body.token).not.toBeNull();
+        expect(res.body.admin).toBe(false)
+      })
+
+      it('can login a user after changing the password', async () => {
+        let res = await supertest(server).post("/auth/register").send({
+          username: "sam",
+          password: "pass",
+          first_name: "Sam",
+          last_name: "Gamgee",
+          email: "baggins@gmail.com",
+          admin: false,
+        });
+        let token = res.body.token;
+
+        const changePassword = 'frodo'
+
+        res = await supertest(server).put("/users").send({
+          password: changePassword,
+        }).set('Authorization', token);
+        expect(res.body.message).toEqual('Edited 1 user(s) successfully')
+
+        res = await supertest(server).post('/auth/login').send({
+          username: 'sam',
+          password: changePassword
+        })
+        expect(res.status).toBe(200)
+        expect(res.body.token).not.toBeNull();
+        expect(res.body.admin).toBe(false)
+      })
+    })
+
+    describe('DELETE /', () => {
+      it('deletes a user', async () => {
+        let res = await supertest(server).post("/auth/register").send({
+          username: "sam",
+          password: "pass",
+          first_name: "Sam",
+          last_name: "Gamgee",
+          email: "baggins@gmail.com",
+          admin: false,
+        });
+        const token = res.body.token;
+
+
+        res = await supertest(server).delete("/users").set('Authorization', token);
+        let users = await db('users').where({ user_id: 1 })
+        expect(users.length).toBe(0)
+      })
+
+      it('sends 200 OK when deleting a user', async () => {
+        let res = await supertest(server).post("/auth/register").send({
+          username: "sam",
+          password: "pass",
+          first_name: "Sam",
+          last_name: "Gamgee",
+          email: "baggins@gmail.com",
+          admin: false,
+        });
+        const token = res.body.token;
+
+
+        res = await supertest(server).delete("/users").set('Authorization', token);
+        expect(res.status).toBe(200);
+      })
+
+      it('sends successful status message', async () => {
+        let res = await supertest(server).post("/auth/register").send({
+          username: "sam",
+          password: "pass",
+          first_name: "Sam",
+          last_name: "Gamgee",
+          email: "baggins@gmail.com",
+          admin: false,
+        });
+        const token = res.body.token;
+
+        res = await supertest(server).delete("/users").set('Authorization', token);
+        expect(res.body.message).toEqual('1 user deleted successfully');
+      })
+
+      it('sends 404 when deleting a user not in database', async () => {
+        let res = await supertest(server).post("/auth/register").send({
+          username: "sam",
+          password: "pass",
+          first_name: "Sam",
+          last_name: "Gamgee",
+          email: "baggins@gmail.com",
+          admin: false,
+        });
+        const token = res.body.token;
+
+
+        res = await supertest(server).delete("/users").set('Authorization', token);
+        expect(res.status).toBe(200);
+
+        res = await supertest(server).delete("/users").set('Authorization', token);
+        expect(res.status).toBe(404);
+      })
+
+      it('sends 404 error message when deleting a user not in database', async () => {
+        let res = await supertest(server).post("/auth/register").send({
+          username: "sam",
+          password: "pass",
+          first_name: "Sam",
+          last_name: "Gamgee",
+          email: "baggins@gmail.com",
+          admin: false,
+        });
+        const token = res.body.token;
+
+
+        res = await supertest(server).delete("/users").set('Authorization', token);
+        
+        res = await supertest(server).delete("/users").set('Authorization', token);
+        expect(res.body.message).toEqual('No user with that username exists ');
+      })
     })
   })
 });
