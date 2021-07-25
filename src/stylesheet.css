@@ -117,7 +117,7 @@ legend {
     margin-bottom: 1rem;
 }
 
-.loginForm > div, .signupForm > div {
+.loginForm > div, .signupForm > div, .userProfileForm > div {
     margin-bottom: 1rem;
 }
 
