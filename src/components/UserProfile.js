@@ -24,11 +24,6 @@ const UserProfile = ({ usersDb, onUpdateUser, onDeleteUser }) => {
         var displayEmail = usersDb[i].email
     }
 
-    const buttonEdit = showEditButton
-    const show = showEditFields
-    const passwordField  = showEditPassword
-    const editPassButton = showEditPasswordButton
-
     const onEdit = (e) => {
         e.preventDefault()
         // fill the fields with existing user info
@@ -126,10 +121,10 @@ const UserProfile = ({ usersDb, onUpdateUser, onDeleteUser }) => {
                             {errorInputBlank && <p className='userProfileError'>Fields cannot be blank.</p>}
                                 <div className="col d-grid gap-2 mx-auto"> 
                                 {
-                                    show && <p><strong>DO NOT EDIT USERNAME WHEN TESTING</strong></p> 
+                                    showEditFields && <p><strong>DO NOT EDIT USERNAME WHEN TESTING</strong></p> 
                                 }
                                 {
-                                    show &&
+                                    showEditFields &&
                                     <input
                                     type='text'
                                     placeholder='username'
@@ -141,7 +136,7 @@ const UserProfile = ({ usersDb, onUpdateUser, onDeleteUser }) => {
                             </div>
                             <div>
                                 {
-                                    show && editPassButton &&
+                                    showEditFields && showEditPasswordButton &&
                                     <div className="col d-grid gap-2 mx-auto">
                                     <button className='btn btn-warning' type='submit' onClick={onChangePassword}>Change Password</button>
                                     </div>
@@ -149,7 +144,7 @@ const UserProfile = ({ usersDb, onUpdateUser, onDeleteUser }) => {
                             </div>
                             <div>
                                 {
-                                    passwordField &&
+                                    showEditPassword &&
                                     <input
                                     type='text'
                                     placeholder='password'
@@ -162,7 +157,7 @@ const UserProfile = ({ usersDb, onUpdateUser, onDeleteUser }) => {
                             </div>
                             <div>
                                 {
-                                    show &&
+                                    showEditFields &&
                                     <input
                                     type='text'
                                     placeholder='first name'
@@ -175,7 +170,7 @@ const UserProfile = ({ usersDb, onUpdateUser, onDeleteUser }) => {
                             </div>
                             <div>
                                 {
-                                    show &&
+                                    showEditFields &&
                                     <input
                                     type='text'
                                     placeholder='last name'
@@ -189,7 +184,7 @@ const UserProfile = ({ usersDb, onUpdateUser, onDeleteUser }) => {
                             </div>
                             <div>
                                 {
-                                    show &&
+                                    showEditFields &&
                                     <input
                                     type='text'
                                     placeholder='email'
@@ -203,11 +198,11 @@ const UserProfile = ({ usersDb, onUpdateUser, onDeleteUser }) => {
                             <div className="row">
                                 <div className="col d-grid gap-2 mx-auto">
                                     {
-                                        show &&
+                                        showEditFields &&
                                         <button className='btn btn-primary' type='submit' onClick={onSubmit}>Save</button>
                                     }
                                     {
-                                        buttonEdit &&
+                                        showEditButton &&
                                         <button className='btn btn-primary' type='submit' onClick={onEdit}>Edit</button>
                                     }
 
