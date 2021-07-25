@@ -10,6 +10,7 @@ module.exports = {
   getAllAnimals,
   getAnimalBy,
   deleteAnimal,
+  deleteAnimalKey
 };
 
 async function asyncForEach(array, cb) {
@@ -37,7 +38,7 @@ async function addAnimal(animal) {
     await Dispositions.addAnimalDisposition(id[0], dis_id)
   })
 
-  await asyncForEach(breeds, async(breed) =>{
+  await asyncForEach(breeds, async (breed) => {
     const breed_id = await Breeds.getBreedId(breed);
     await Breeds.addAnimalBreed(id[0], breed_id)
   })
@@ -51,15 +52,69 @@ async function addAnimal(animal) {
 }
 
 //edits animal with the given id
-function editAnimal(animal_id, animalEdits) {
-  return db("animals")
-    .where({ animal_id })
-    .update(animalEdits)
-    .then((count) => count);
+async function editAnimal(animal_id, animalEdits) {
+  let sum = 0
+
+  for (const key in animalEdits) {
+    switch (key) {
+      case 'active':
+        await db('animals').where({ animal_id }).update({ active: animalEdits[key] })
+        sum++;
+        break;
+      case 'availability':
+        await Avail.editAnimalAvail({ animal_id: animal_id, availability: animalEdits[key] })
+        sum++;
+        break;
+      case 'breeds':
+        await editAnimalBreeds(animal_id, animalEdits[key])
+        sum++;
+        break;
+      case 'date':
+        await db('animals').where({ animal_id }).update({ date_created: animalEdits[key] })
+        sum++;
+        break;
+      case 'description':
+        await db('animals').where({ animal_id }).update({ description: animalEdits[key] })
+        sum++;
+        break;
+      case 'disposition':
+        await editDisp(animal_id, animalEdits['disposition']);
+        sum++;
+        break;
+      case 'news_item':
+        await db('animals').where({ animal_id }).update({ news_item: animalEdits[key] })
+        sum++;
+        break;
+      case 'type':
+        await Types.editAnimalType({ animal_id, type: animalEdits[key] })
+        sum++;
+        break;
+    }
+  }
+  return sum;
+}
+
+//process the information before sending it to the appropiate function to edit the animal attribtue
+async function editDisp(animal_id, editObj) {
+  let obj = { animal_id }
+  for (const key in editObj) {
+    obj.disposition_id = editObj[key]
+    obj.disposition = key
+    await Dispositions.editAnimalDispositions(obj)
+  }
+}
+
+async function editAnimalBreeds(animal_id, editObj) {
+  let obj = { animal_id }
+  for (const key in editObj) {
+    obj.breed_id = editObj[key]
+    obj.breed = key;
+    await Breeds.editAnimalBreed(obj)
+  }
 }
 
 //returns an array of all the animal objects in the database
-async function getAllAnimals(){
+async function getAllAnimals() {
   const db_a = await db('animals');
   await asyncForEach(db_a, async (animal) => {
     let a_dis = await Dispositions.getAnimalDispositions(animal.animal_id)
@@ -102,10 +157,11 @@ async function getAnimalBy(filterName, filterValue) {
       const breed_id = await Breeds.getBreedId(filterValue);
       return Breeds.getAnimalByBreedId(breed_id)
     case "availability":
+      filterValue = capitalize(filterValue)
       const avail_id = await Avail.getAvailId(filterValue);
       return Avail.getAnimalAvailByAvailId(avail_id)
   }
-  
+
   await asyncForEach(db_a, async (animal) => {
     let a_dis = await Dispositions.getAnimalDispositions(animal.animal_id)
     animal.disposition = []
@@ -119,6 +175,26 @@ async function getAnimalBy(filterName, filterValue) {
 
 //removes aniaml with given id from database
 async function deleteAnimal(animal_id) {
-  await Dispositions.deleteAnimalDipositions(animal_id)
   return db("animals").del().where({ animal_id });
+}
+
+//removes a particular key on an animal object
+async function deleteAnimalKey(animal_id, key, key_id){
+  animal_id = parseInt(animal_id);
+  key_id = parseInt(key_id)
+  
+  switch(key){
+    case 'disposition':
+      return db('animal_dispositions').del().where({ animal_id, disposition_id: key_id})
+    case 'breeds':
+      return db('animal_breeds').del().where({ animal_id, breed_id: key_id})
+  }
+}
+
+function capitalize(sentence) {
+  let sep_word = sentence.toLowerCase().split(' ');
+  for (let i = 0; i < sep_word.length; i++) {
+    sep_word[i] = sep_word[i].charAt(0).toUpperCase() + sep_word[i].substring(1)
+  }
+  return sep_word.join(' ')
 }

@@ -29,11 +29,10 @@ function editType(type_id, type){
 
 //edits an animal's type
 async function editAnimalType(editObj){
-    let {animal_id, type_id, type} = editObj;
+    let {animal_id, type} = editObj;
     animal_id = parseInt(animal_id)
-    type_id = parseInt(type_id)
 
-    await db('animal_type').del().where({animal_id, type_id});
+    await db('animal_type').del().where({animal_id});
 
     const new_type_id = await getTypeId(type);
 
