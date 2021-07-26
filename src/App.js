@@ -40,7 +40,7 @@ function App() {
     useEffect(() => {
         const getAnimals = async () => {
             const res = await fetch(
-                `https://bring-me-home-backend.herokuapp.com/dummy/animals`,
+                `https://bring-me-home-backend.herokuapp.com/animals`,
                 {
                     method: 'GET',
                     headers: {
@@ -52,7 +52,7 @@ function App() {
 
             if (res.ok) {
                 const data = await res.json()
-                
+                console.log(data)
                 setAnimals(data.animals)
             }
         }
@@ -164,10 +164,13 @@ function App() {
     // Add new animal
     const addAnimal = async (body) => {
         const res = await fetch(
-            `https://bring-me-home-backend.herokuapp.com//dummy/animals/`,
+            `https://bring-me-home-backend.herokuapp.com/animals/`,
             {
                 method: 'POST',
-                headers: { 'Content-type': 'application/json' },
+                headers: { 
+                    'Content-type': 'application/json',
+                    'Authorization': cookies.user.token 
+                },
                 body: JSON.stringify(body)
             }
         )
@@ -182,10 +185,13 @@ function App() {
     // Update existing animal
     const updateAnimal = async (body) => {
         const res = await fetch(
-            `https://bring-me-home-backend.herokuapp.com//dummy/animals/` + body.animal_id,
+            `https://bring-me-home-backend.herokuapp.com/animals/` + body.animal_id,
             {
                 method: 'PUT',
-                headers: { 'Content-type': 'application/json' },
+                headers: { 
+                    'Content-type': 'application/json',
+                    'Authorization': cookies.user.token 
+                },
                 body: JSON.stringify(body)
             }
         )
@@ -200,10 +206,13 @@ function App() {
     // Delete existing animal
     const deleteAnimal = async (animal_id) => {
         const res = await fetch (
-            `https://bring-me-home-backend.herokuapp.com//dummy/animals/` + animal_id,
+            `https://bring-me-home-backend.herokuapp.com/animals/` + animal_id,
             {
                 method: 'DELETE',
-                headers: { 'Content-type': 'application/json' }
+                headers: { 
+                    'Content-type': 'application/json',
+                    'Authorization': cookies.user.token
+                }
             }
         )
 
