@@ -1,6 +1,8 @@
 const router = require("express").Router();
 const Users = require("./usersModel");
 const helpers = require("./userHelpers");
+const bcryptjs = require("bcryptjs");
+const { signToken, validLogin } = require("../auth/authHelpers");
 
 router.get("/", (req, res) => {
   const username = req.jwt.username;
@@ -35,9 +37,28 @@ router.put("/", helpers.validateUserEdit, (req, res) => {
         }
         Users.editUser(user.user_id, changes)
           .then((count) => {
-            res
-              .status(200)
-              .json({ message: `Edited ${count} user(s) successfully` });
+            let new_token = "n/a"
+            if (changes.username) {
+              Users.getUserBy("username", changes.username).then(userArr => {
+                const user = userArr[0]
+                new_token = signToken(user)
+                res
+                  .status(200)
+                  .json({ message: `Edited ${count} user(s) successfully`, new_token });
+              })
+            } else if (changes.password) {
+              Users.getUserBy("username", username).then(userArr => {
+                const user = userArr[0]
+                new_token = signToken(user)
+                res
+                  .status(200)
+                  .json({ message: `Edited ${count} user(s) successfully`, new_token });
+              })
+            } else {
+              res
+                .status(200)
+                .json({ message: `Edited ${count} user(s) successfully` });
+            }
           })
           .catch((err) => {
             res.status(500).json({
@@ -64,18 +85,18 @@ router.delete("/", (req, res) => {
 
   Users.getUserBy("username", username).then((userArr) => {
     const user = userArr[0];
-    if(user){
+    if (user) {
       Users.deleteUser(user.user_id)
-      .then((delUser) => {
-        res.status(200).json({ message: `${delUser} deleted successfully` });
-      })
-      .catch((err) => {
-        res.status(404).json({ message: "No user with that username exists " });
-      });
+        .then((delUser) => {
+          res.status(200).json({ message: `${delUser} user deleted successfully` });
+        })
+        .catch((err) => {
+          res.status(404).json({ message: "No user with that username exists " });
+        });
     } else {
       res.status(404).json({ message: "No user with that username exists " });
     }
-    
+
   });
 });
 

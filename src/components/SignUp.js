@@ -33,7 +33,6 @@ const SignUp = ({ onSignup }) => {
                 setErrorUsername(true)
                 setTimeout(() => setErrorUsername(false), 1000)
                 setTimeout(() => setUsername(''), 1000)
-                setTimeout(() => setUsername(''), 1000)
                 setTimeout(() => setPassword(''), 1000)
                 setTimeout(() => setFirstName(''), 1000)
                 setTimeout(() => setLastName(''), 1000)
