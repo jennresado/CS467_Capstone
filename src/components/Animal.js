@@ -155,15 +155,11 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
                     body[key] = idAnimal[key]
                 }
             }
-            
-            console.log(body)
 
             onUpdateAnimal(body)
             .then(() => {
                 history.push('/dashboard')
             }).catch((err) => {
-                console.log(err)
-                // TODO: on error, reset form and display error message
                 clearForm()
                 setError(true)
             })
@@ -187,14 +183,10 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
                 "description": description
             }
 
-            console.log(body)
-
             onAddAnimal(body)
             .then(() => {
                 history.push('/dashboard')
             }).catch((err) => {
-                console.log(err)
-                // TODO: on error, reset form and display error message
                 clearForm()
                 setError(true)
             })
@@ -212,14 +204,10 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
     const onDelete = (e) => {
         e.preventDefault()
 
-        console.log(id)
-
         onDeleteAnimal(id)
         .then(() => {
             history.push('/dashboard')
         }).catch((err) => {
-            console.log(err)
-            // TODO: on error, reset form and display error message
             clearForm()
             setError(true)
         })
