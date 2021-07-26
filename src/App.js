@@ -39,7 +39,6 @@ function App() {
     // Retrieve animals from db
     useEffect(() => {
         if (cookies.user) {
-            console.log("retrieving animals")
             getAnimals(cookies.user.token)
         }
     }, [])
