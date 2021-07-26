@@ -38,27 +38,9 @@ function App() {
 
     // Retrieve animals from db
     useEffect(() => {
-        const getAnimals = async () => {
-            const res = await fetch(
-                `https://bring-me-home-backend.herokuapp.com/animals`,
-                {
-                    method: 'GET',
-                    headers: {
-                        'Content-type': 'application/json',
-                        'Authorization': cookies.user.token
-                    }
-                }
-            )
-
-            if (res.ok) {
-                const data = await res.json()
-                console.log(data)
-                setAnimals(data.animals)
-            }
-        }
-
         if (cookies.user) {
-            getAnimals()
+            console.log("retrieving animals")
+            getAnimals(cookies.user.token)
         }
     }, [])
 
@@ -108,6 +90,8 @@ function App() {
                 {'username': loginInfo.username, 'token': data.token, 'admin': data.admin}, 
                 {path: '/'}
             )
+            // Retrieve animals from db
+            getAnimals(data.token)
         } else {
             throw new Error('Invalid login')
         }  
@@ -136,8 +120,9 @@ function App() {
                 'user',
                 { 'username': signUpInfo.username, 'token': data.token, 'admin': data.admin},
                 { path: '/' }
-                
             )
+            // Retrieve animals from db
+            getAnimals(data.token)
         } else {
             throw new Error('Invalid Registration')
         }
@@ -176,7 +161,7 @@ function App() {
         )
 
         if (res.ok) {
-            console.log("Animal added")
+            getAnimals(cookies.user.token)
         } else {
             throw new Error('Cannot add animal')
         }
@@ -197,7 +182,7 @@ function App() {
         )
 
         if (res.ok) {
-            console.log("Animal updated")
+            getAnimals(cookies.user.token)
         } else {
             throw new Error('Cannot update animal')
         }
@@ -217,8 +202,29 @@ function App() {
         )
 
         if (res.ok) {
+            getAnimals(cookies.user.token)
         } else {
             throw new Error('Cannot delete animal')
+        }
+    }
+
+    // Retrieve animals from db
+    const getAnimals = async (token) => {
+        const res = await fetch(
+            `https://bring-me-home-backend.herokuapp.com/animals`,
+            {
+                method: 'GET',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Authorization': token
+                }
+            }
+        )
+
+        if (res.ok) {
+            const data = await res.json()
+
+            setAnimals(data.animals)
         }
     }
 
