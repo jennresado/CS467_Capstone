@@ -1,6 +1,9 @@
+const Users = require("../users/usersModel");
+
 module.exports = {
     validateAnimal,
-    validateAnimalEdit
+    validateAnimalEdit,
+    validateAdmin
 }
 
 function validateAnimal(req, res, next) {
@@ -74,4 +77,26 @@ function validateAnimalEdit(req, res, next) {
             stack: "Animal helpers line 74"
         })
     }
+}
+
+async function validateAdmin(req, res, next) {
+    const username = req.jwt.username;
+
+    Users.getUserBy("username", username)
+        .then((userArr) => {
+            const user = userArr[0];
+            if (user) {
+                if (user.admin) {
+                    next();
+                }
+            } else {
+                res.status(404).json({ message: "No user with that username exists" });
+            }
+        }).catch(err => {
+            res.status(500).json({
+                error: err.message,
+                errorMessage: "Could get that user",
+                stack: "Animal helpers line 88",
+            });
+        })
 }

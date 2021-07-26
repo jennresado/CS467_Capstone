@@ -166,7 +166,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true,
         });
 
         const newUsers = await db("users");
@@ -301,7 +301,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true,
         });
 
         const res = await supertest(server).post("/auth/login").send({
@@ -319,7 +319,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true,
         });
 
         const res = await supertest(server).post("/auth/login").send({
@@ -337,7 +337,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true,
         });
 
         const res = await supertest(server).post("/auth/login").send({
@@ -355,7 +355,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true,
         });
 
         const res = await supertest(server).post("/auth/login").send({
@@ -372,7 +372,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true,
         });
 
         const res = await supertest(server).post("/auth/login").send({
@@ -391,7 +391,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true,
         });
 
         const res = await supertest(server).post("/auth/login").send({
@@ -408,7 +408,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true,
         });
 
         const res = await supertest(server).post("/auth/login").send({
@@ -427,7 +427,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true,
         });
 
         const res = await supertest(server).post("/auth/login").send({});
@@ -442,7 +442,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true,
         });
 
         const res = await supertest(server).post("/auth/login").send({});
@@ -463,7 +463,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true
         });
         const token = res.body.token;
 
@@ -480,7 +480,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true
         });
         const token = res.body.token;
 
@@ -521,7 +521,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true
         });
         const token = res.body.token;
 
@@ -552,7 +552,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true
         });
         const token = res.body.token;
 
@@ -583,7 +583,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true
         });
         const token = res.body.token;
 
@@ -610,7 +610,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true
         });
         const token = res.body.token;
 
@@ -637,7 +637,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true
         });
         const token = res.body.token;
 
@@ -664,7 +664,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true
         });
         const token = res.body.token;
 
@@ -691,7 +691,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true
         });
         const token = res.body.token;
 
@@ -716,7 +716,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true
         });
         const token = res.body.token;
 
@@ -746,7 +746,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true
         });
         const token = res.body.token;
 
@@ -776,7 +776,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true
         });
         const token = res.body.token;
 
@@ -799,7 +799,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true
         });
         const token = res.body.token;
 
@@ -867,7 +867,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true
         });
         const token = res.body.token;
 
@@ -893,7 +893,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true
         });
         const token = res.body.token;
 
@@ -919,7 +919,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true
         });
         const token = res.body.token;
 
@@ -957,7 +957,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true
         });
         const token = res.body.token;
 
@@ -979,7 +979,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true
         });
         const token = res.body.token;
 
@@ -1045,7 +1045,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true
         });
         const token = res.body.token;
 
@@ -1114,7 +1114,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true
         });
         const token = res.body.token;
 
@@ -1156,7 +1156,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true
         });
         const token = res.body.token;
 
@@ -1194,7 +1194,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true
         });
         const token = res.body.token;
 
@@ -1210,7 +1210,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true
         });
         const token = res.body.token;
 
@@ -1226,7 +1226,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true
         });
         const token = res.body.token;
 
@@ -1310,7 +1310,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true
         });
         const token = res.body.token;
 
@@ -1361,7 +1361,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true
         });
         const token = res.body.token;
 
@@ -1383,7 +1383,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true
         });
         const token = res.body.token;
 
@@ -1405,7 +1405,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true
         });
         const token = res.body.token;
 
@@ -1421,7 +1421,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true
         });
         const token = res.body.token;
 
@@ -1439,7 +1439,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true
         });
         const token = res.body.token;
 
@@ -1468,7 +1468,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true
         });
         const token = res.body.token;
 
@@ -1493,7 +1493,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true
         });
         const token = res.body.token;
 
@@ -1518,7 +1518,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true
         });
         const token = res.body.token;
 
@@ -1535,7 +1535,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true
         });
         const token = res.body.token;
 
@@ -1556,7 +1556,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true
         });
         const token = res.body.token;
 
@@ -1568,7 +1568,7 @@ describe("server", () => {
         expect(user.first_name).toEqual('Sam')
         expect(user.last_name).toEqual('Gamgee')
         expect(user.email).toEqual('baggins@gmail.com')
-        expect(user.admin).toBe(false)
+        expect(user.admin).toBe(true)
         expect(user.password).not.toEqual('pass')
       })
 
@@ -1579,7 +1579,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true
         });
         const token = res.body.token;
 
@@ -1594,7 +1594,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true
         });
         const token = res.body.token;
 
@@ -1609,7 +1609,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true
         });
         const token = res.body.token;
 
@@ -1626,7 +1626,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true
         });
         const token = res.body.token;
 
@@ -1674,7 +1674,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true
         });
         let token = res.body.token;
 
@@ -1718,7 +1718,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true
         });
         let token = res.body.token;
 
@@ -1762,7 +1762,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true
         });
         let token = res.body.token;
 
@@ -1805,7 +1805,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true
         });
         let token = res.body.token;
 
@@ -1848,7 +1848,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true
         });
         let token = res.body.token;
 
@@ -1863,7 +1863,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true
         });
         let token = res.body.token;
 
@@ -1878,7 +1878,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true
         });
         let token = res.body.token;
 
@@ -1894,7 +1894,7 @@ describe("server", () => {
         })
         expect(res.status).toBe(200)
         expect(res.body.token).not.toBeNull();
-        expect(res.body.admin).toBe(false)
+        expect(res.body.admin).toBe(true)
       })
 
       it('can login a user after changing the password', async () => {
@@ -1904,7 +1904,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true
         });
         let token = res.body.token;
 
@@ -1921,7 +1921,7 @@ describe("server", () => {
         })
         expect(res.status).toBe(200)
         expect(res.body.token).not.toBeNull();
-        expect(res.body.admin).toBe(false)
+        expect(res.body.admin).toBe(true)
       })
     })
 
@@ -1933,7 +1933,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true
         });
         const token = res.body.token;
 
@@ -1950,7 +1950,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true
         });
         const token = res.body.token;
 
@@ -1966,7 +1966,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true
         });
         const token = res.body.token;
 
@@ -1981,7 +1981,7 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true
         });
         const token = res.body.token;
 
@@ -2000,13 +2000,13 @@ describe("server", () => {
           first_name: "Sam",
           last_name: "Gamgee",
           email: "baggins@gmail.com",
-          admin: false,
+          admin: true
         });
         const token = res.body.token;
 
 
         res = await supertest(server).delete("/users").set('Authorization', token);
-        
+
         res = await supertest(server).delete("/users").set('Authorization', token);
         expect(res.body.message).toEqual('No user with that username exists ');
       })
