@@ -35,10 +35,15 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
     // Clear form 
     const clearForm = () => {
         let checkboxes = document.getElementsByClassName("form-check-input")
+        let newsItemInput = document.querySelector("#newsItem")
+        let descriptionInput = document.querySelector("#description")
 
         for (let i = 0; i < checkboxes.length; i++) {
             checkboxes[i].checked = false;
         }
+
+        newsItemInput.value = ""
+        descriptionInput.value = ""
 
         setError(false)
         setType('')
@@ -341,8 +346,8 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
                                     })}
                                 </select>
                             </div>
-                            <input type='text' placeholder="News Item" className='form-control input-group mb-3' onChange={(e) => {setNewsItem(e.target.value)}}/>
-                            <input type='text' placeholder="Description" className='form-control input-group mb-3' onChange={(e) => {setDescription(e.target.value)}}/>
+                            <input type='text' placeholder="News Item" className='form-control input-group mb-3' id="newsItem" onChange={(e) => {setNewsItem(e.target.value)}}/>
+                            <input type='text' placeholder="Description" className='form-control input-group mb-3' id="description" onChange={(e) => {setDescription(e.target.value)}}/>
                             <div className="row">
                                 <div className="col d-grid gap-2 mx-auto">
                                     <button className='btn btn-primary' type='submit' onClick={onSubmit}>{id ? "Update" : "Add"}</button>
