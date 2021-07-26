@@ -34,7 +34,11 @@ const Dashboard = ({ animalsDb }) => {
                                         {/* <p><strong>News Item</strong>: {e.news_item}</p> */}
                                         <p><strong>Description</strong>: {e.description}</p>
                                     </div>
-                                    <Link to="/contact" className="btn btn-primary d-grid">Adopt</Link>
+                                    {
+                                        e.availability === "Adopted" ? 
+                                        <Link to="/contact" className="btn btn-secondary d-grid disabledLink">Adopted</Link> :
+                                        <Link to="/contact" className="btn btn-primary d-grid">Adopt</Link>
+                                    }
                                 </div>
                             </div>
                         </div>
