@@ -29,13 +29,20 @@ function editAvail(availability_id, availability){
 
 //edits an animal's availability
 async function editAnimalAvail(editObj){
-    const {animal_id, availability_id, availability} = editObj
+    let {animal_id, availability_id, availability} = editObj
+    animal_id = parseInt(animal_id)
+    availability_id = parseInt(availability_id)
 
-    await db('animal_availability').del().where({animal_id: parseInt(animal_id), availability_id: parseInt(availability_id)})
+    if(availability_id){
+        await db('animal_availability').del().where({animal_id: animal_id, availability_id: availability_id})
+    } else {
+        await db('animal_availability').del().where({animal_id: animal_id})
 
+    }
     const new_avail_id = await getAvailId(availability);
 
-    return db('animal_availability').insert({animal_id: parseInt(animal_id), availability_id: new_avail_id}, 'animal_availability_id')
+    return db('animal_availability').insert({animal_id: animal_id, availability_id: new_avail_id}, 'animal_availability_id')
+    
 }
 
 // returns the availability of a particular animal

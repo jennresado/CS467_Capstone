@@ -29,13 +29,15 @@ function editBreed(breed_id, breed){
 
 //edits an animal's breed
 async function editAnimalBreed(editObj){
-    const {animal_id, breed_id, breed} = editObj;
+    let {animal_id, breed_id, breed} = editObj;
+    animal_id = parseInt(animal_id)
+    breed_id = parseInt(breed_id)
 
-    await db('animal_breeds').del().where({animal_id: parseInt(animal_id), breed_id: parseInt(breed_id)})
+    await db('animal_breeds').del().where({animal_id: animal_id, breed_id: breed_id})
 
     const new_breed_id = await getBreedId(breed);
 
-    return db('animal_breeds').insert({animal_id: parseInt(animal_id), breed_id: new_breed_id }, 'animal_breeds_id')
+    return db('animal_breeds').insert({animal_id: animal_id, breed_id: new_breed_id }, 'animal_breeds_id')
 }
 
 //gets all the breeds for a particular animal
