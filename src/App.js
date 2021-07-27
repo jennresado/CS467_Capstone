@@ -214,19 +214,24 @@ function App() {
     }
 
     // Update existing user
-    const updateUser = async (body) => {
+    const updateUser = async (updateUserInfo) => {
         const res = await fetch(
             `https://bring-me-home-backend.herokuapp.com/users/`,
             {
                 method: 'PUT',
                 headers: { 'Content-type': 'application/json',
                 'Authorization': cookies.user.token },
-                body: JSON.stringify(body)
+                body: JSON.stringify(updateUserInfo)
             }
         )
 
-        if (res.ok) {
-            //console.log("User updated")
+        if (res.ok) {   
+            const data = await res.json()
+            removeCookie('user')
+            setCookie(
+                    'user', 
+                    {'username': updateUserInfo.username, 'token': data.new_token, 'admin': data.admin}, 
+                )
         } else {
             throw new Error('Cannot update user')
         }
