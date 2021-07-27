@@ -19,6 +19,7 @@ const animals = {
         "miniature schnauzer", 
         "mixed breed",
         "pembroke welsh corgi", 
+        "pitbull",
         "pomeranian", 
         "poodle", 
         "pug", 
@@ -51,19 +52,7 @@ const animals = {
         "turkish angora"
     ],
     "other": [
-        "chinchilla", 
-        "ferret", 
-        "fish", 
-        "frog", 
-        "guinea pig", 
-        "hamster", 
-        "hermit crab", 
-        "lizard", 
-        "mouse", 
-        "parrot", 
-        "rabbit", 
-        "rat", 
-        "snake"
+        "other"
     ]
 }
 

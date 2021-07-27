@@ -35,10 +35,15 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
     // Clear form 
     const clearForm = () => {
         let checkboxes = document.getElementsByClassName("form-check-input")
+        let newsItemInput = document.querySelector("#newsItem")
+        let descriptionInput = document.querySelector("#description")
 
         for (let i = 0; i < checkboxes.length; i++) {
             checkboxes[i].checked = false;
         }
+
+        newsItemInput.value = ""
+        descriptionInput.value = ""
 
         setError(false)
         setType('')
@@ -83,7 +88,14 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
     // Handle breed change
     const handleChangeBreed = (checked, value) => {
         // Max 3 breeds
-        if (breed.length == 3) {
+        if (type !== "other" && breed.length == 3) {
+            let element = document.getElementById(value)
+
+            element.checked = false
+            setBreedError(true)
+
+            return
+        } else if (type === "other" && breed.length == 1) {
             let element = document.getElementById(value)
 
             element.checked = false
@@ -132,7 +144,7 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
 
         // Update if id
         if (id) {
-            if (breed.length === 0) {
+            if (type && breed.length === 0) {
                 setError(true)
                 return
             }
@@ -148,22 +160,20 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
                     body[key] = idAnimal[key]
                 }
             }
-            
-            // console.log(body)
 
-            // onUpdateAnimal(body)
-            // .then(() => {
-            //     history.push('/dashboard')
-            // }).catch((err) => {
-            //     console.log(err)
-            // })
-
+            onUpdateAnimal(body)
+            .then(() => {
+                history.push('/dashboard')
+            }).catch((err) => {
+                clearForm()
+                setError(true)
+            })
         // Add if new animal
         } else {
-            if (!type && 
-                    breed.length === 0 && disposition.length === 0 && 
-                    !picture &&!availability && 
-                    !newsItem && !description) {
+            if (!type || 
+                    breed.length === 0 || disposition.length === 0 || 
+                    !picture || !availability || 
+                    !newsItem || !description) {
                 setError(true)
                 return
             }
@@ -178,14 +188,13 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
                 "description": description
             }
 
-            // console.log(body)
-
-            // onAddAnimal(body)
-            // .then(() => {
-            //     history.push('/dashboard')
-            // }).catch((err) => {
-            //     console.log(err)
-            // })
+            onAddAnimal(body)
+            .then(() => {
+                history.push('/dashboard')
+            }).catch((err) => {
+                clearForm()
+                setError(true)
+            })
         }  
     }
 
@@ -200,14 +209,13 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
     const onDelete = (e) => {
         e.preventDefault()
 
-        // console.log(id)
-
-        // onDeleteAnimal(id)
-        // .then(() => {
-        //     history.push('/dashboard')
-        // }).catch((err) => {
-        //     console.log(err)
-        // })
+        onDeleteAnimal(id)
+        .then(() => {
+            history.push('/dashboard')
+        }).catch((err) => {
+            clearForm()
+            setError(true)
+        })
     }
     
     return (
@@ -275,7 +283,7 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
                                     })}
                                 </select>
                             </div>
-                            {breedError && <p className="breedError">Maximum of 3 breeds allowed. If more than 3 breeds, consider "Mixed Breed" option.</p>}
+                            {breedError && <p className="breedError">Maximum of 3 breeds allowed for cats and dogs. Maximum of 1 breed allowed for other animal types. If more than 3 breeds, consider "Mixed Breed" option.</p>}
                             {
                                 selectBreeds.length > 0 &&
                                 <ul className="list-group mb-3 breed">
@@ -321,6 +329,10 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
                                 />
                                 <label className="input-group-text" htmlFor="inputGroupFile02">Upload</label>
                             </div>
+                            {
+                                picture && 
+                                <img className="card-img-top mb-3" src={imageBase64 + picture}></img>
+                            }
                             <div className="input-group mb-3">
                                 <select 
                                     className="form-select" 
@@ -334,8 +346,8 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
                                     })}
                                 </select>
                             </div>
-                            <input type='text' placeholder="News Item" className='form-control input-group mb-3' onChange={(e) => {setNewsItem(e.target.value)}}/>
-                            <input type='text' placeholder="Description" className='form-control input-group mb-3' onChange={(e) => {setDescription(e.target.value)}}/>
+                            <input type='text' placeholder="News Item" className='form-control input-group mb-3' id="newsItem" onChange={(e) => {setNewsItem(e.target.value)}}/>
+                            <input type='text' placeholder="Description" className='form-control input-group mb-3' id="description" onChange={(e) => {setDescription(e.target.value)}}/>
                             <div className="row">
                                 <div className="col d-grid gap-2 mx-auto">
                                     <button className='btn btn-primary' type='submit' onClick={onSubmit}>{id ? "Update" : "Add"}</button>

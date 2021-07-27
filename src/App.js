@@ -38,27 +38,8 @@ function App() {
 
     // Retrieve animals from db
     useEffect(() => {
-        const getAnimals = async () => {
-            const res = await fetch(
-                `https://bring-me-home-backend.herokuapp.com/dummy/animals`,
-                {
-                    method: 'GET',
-                    headers: {
-                        'Content-type': 'application/json',
-                        'Authorization': cookies.user.token
-                    }
-                }
-            )
-
-            if (res.ok) {
-                const data = await res.json()
-                
-                setAnimals(data.animals)
-            }
-        }
-
         if (cookies.user) {
-            getAnimals()
+            getAnimals(cookies.user.token)
         }
     }, [])
 
@@ -108,6 +89,8 @@ function App() {
                 {'username': loginInfo.username, 'token': data.token, 'admin': data.admin}, 
                 {path: '/'}
             )
+            // Retrieve animals from db
+            getAnimals(data.token)
         } else {
             throw new Error('Invalid login')
         }  
@@ -136,8 +119,9 @@ function App() {
                 'user',
                 { 'username': signUpInfo.username, 'token': data.token, 'admin': data.admin},
                 { path: '/' }
-                
             )
+            // Retrieve animals from db
+            getAnimals(data.token)
         } else {
             throw new Error('Invalid Registration')
         }
@@ -164,16 +148,19 @@ function App() {
     // Add new animal
     const addAnimal = async (body) => {
         const res = await fetch(
-            `https://bring-me-home-backend.herokuapp.com//dummy/animals/`,
+            `https://bring-me-home-backend.herokuapp.com/animals/`,
             {
                 method: 'POST',
-                headers: { 'Content-type': 'application/json' },
+                headers: { 
+                    'Content-type': 'application/json',
+                    'Authorization': cookies.user.token 
+                },
                 body: JSON.stringify(body)
             }
         )
 
         if (res.ok) {
-            console.log("Animal added")
+            getAnimals(cookies.user.token)
         } else {
             throw new Error('Cannot add animal')
         }
@@ -182,16 +169,19 @@ function App() {
     // Update existing animal
     const updateAnimal = async (body) => {
         const res = await fetch(
-            `https://bring-me-home-backend.herokuapp.com//dummy/animals/` + body.animal_id,
+            `https://bring-me-home-backend.herokuapp.com/animals/` + body.animal_id,
             {
                 method: 'PUT',
-                headers: { 'Content-type': 'application/json' },
+                headers: { 
+                    'Content-type': 'application/json',
+                    'Authorization': cookies.user.token 
+                },
                 body: JSON.stringify(body)
             }
         )
 
         if (res.ok) {
-            console.log("Animal updated")
+            getAnimals(cookies.user.token)
         } else {
             throw new Error('Cannot update animal')
         }
@@ -200,16 +190,40 @@ function App() {
     // Delete existing animal
     const deleteAnimal = async (animal_id) => {
         const res = await fetch (
-            `https://bring-me-home-backend.herokuapp.com//dummy/animals/` + animal_id,
+            `https://bring-me-home-backend.herokuapp.com/animals/` + animal_id,
             {
                 method: 'DELETE',
-                headers: { 'Content-type': 'application/json' }
+                headers: { 
+                    'Content-type': 'application/json',
+                    'Authorization': cookies.user.token
+                }
             }
         )
 
         if (res.ok) {
+            getAnimals(cookies.user.token)
         } else {
             throw new Error('Cannot delete animal')
+        }
+    }
+
+    // Retrieve animals from db
+    const getAnimals = async (token) => {
+        const res = await fetch(
+            `https://bring-me-home-backend.herokuapp.com/animals`,
+            {
+                method: 'GET',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Authorization': token
+                }
+            }
+        )
+
+        if (res.ok) {
+            const data = await res.json()
+
+            setAnimals(data.animals)
         }
     }
 
