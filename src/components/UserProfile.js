@@ -126,9 +126,6 @@ const UserProfile = ({ usersDb, onUpdateUser, onDeleteUser }) => {
                             {errorInputBlank && <p className='userProfileError'>Fields cannot be blank.</p>}
                                 <div className="col d-grid gap-2 mx-auto"> 
                                 {
-                                    show && <p><strong>DO NOT EDIT USERNAME WHEN TESTING</strong></p> 
-                                }
-                                {
                                     show &&
                                     <input
                                     type='text'
