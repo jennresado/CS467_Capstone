@@ -227,7 +227,7 @@ function App() {
 
         if (res.ok) {   
             const data = await res.json()
-            removeCookie('user')
+            removeCookie('user, {'path': '/'})
             setCookie(
                     'user', 
                     {'username': updateUserInfo.username, 'token': data.new_token, 'admin': data.admin}, 
