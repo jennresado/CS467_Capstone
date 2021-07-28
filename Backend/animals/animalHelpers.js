@@ -85,9 +85,12 @@ async function validateAdmin(req, res, next) {
     Users.getUserBy("username", username)
         .then((userArr) => {
             const user = userArr[0];
+            console.log(user)
             if (user) {
                 if (user.admin) {
                     next();
+                } else {
+                    res.status(401).json({message: 'You are not authorized to make this request. Please contact an admin.'})
                 }
             } else {
                 res.status(404).json({ message: "No user with that username exists" });
