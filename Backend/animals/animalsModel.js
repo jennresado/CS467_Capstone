@@ -149,6 +149,20 @@ async function getAnimalAttribute(attribute){
       return db('types')
     case 'availability':
       return db('availability')
+    case 'date':
+      const dateDb= await db('animals').select('date_created')
+      let newArr = []
+      dateDb.forEach(date => {
+         let obj = {'date_created': ''}
+         let date_str = date['date_created']
+         let day = date_str.getDate()
+         let month = date_str.getMonth() + 1;
+         let year = date_str.getFullYear();
+         date = `${month}-${day}-${year}`
+         obj.date_created = date;
+         newArr.push(obj)
+      })
+      return newArr
     default:
       return []
   }

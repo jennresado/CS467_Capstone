@@ -439,6 +439,82 @@ describe('animalsModel', () => {
     })
   })
 
+  describe('getAnimalAttribute(attribute)', ()=>{
+    it('gets a list of breeds', async ()=>{
+      let animals = await getTestAnimals();
+      let expectedAnimals = await getExpectedTestAnimals();
+
+      await insertAnimals()
+      await insertAnimalDispositions()
+      await insertAnimalBreed();
+      await insertAnimalAvail();
+      await insertAnimalType()
+
+      let animalsArr = await Animals.getAnimalAttribute('breeds');
+      expect(animalsArr.length).toBe(48)
+      expect(animalsArr[0].breed).toEqual('australian shepherd')
+    })
+
+    it('gets a list of dispostions', async ()=>{
+      let animals = await getTestAnimals();
+      let expectedAnimals = await getExpectedTestAnimals();
+
+      await insertAnimals()
+      await insertAnimalDispositions()
+      await insertAnimalBreed();
+      await insertAnimalAvail();
+      await insertAnimalType()
+
+      let animalsArr = await Animals.getAnimalAttribute('dispositions');
+      expect(animalsArr.length).toBe(3)
+      expect(animalsArr[0].disposition).toEqual('Good with children')
+    })
+
+    it('gets a list of types', async ()=>{
+      let animals = await getTestAnimals();
+      let expectedAnimals = await getExpectedTestAnimals();
+
+      await insertAnimals()
+      await insertAnimalDispositions()
+      await insertAnimalBreed();
+      await insertAnimalAvail();
+      await insertAnimalType()
+
+      let animalsArr = await Animals.getAnimalAttribute('types');
+      expect(animalsArr.length).toBe(3)
+      expect(animalsArr[0].type).toEqual('dog')
+    })
+
+    it('gets a list of dates', async ()=>{
+      let animals = await getTestAnimals();
+      let expectedAnimals = await getExpectedTestAnimals();
+
+      await insertAnimals()
+      await insertAnimalDispositions()
+      await insertAnimalBreed();
+      await insertAnimalAvail();
+      await insertAnimalType()
+
+      let animalsArr = await Animals.getAnimalAttribute('date');
+      expect(animalsArr.length).toBe(4)
+      expect(animalsArr[0].date_created).toEqual('6-20-2021')
+    })
+
+    it('gets returns an empty array when it does not recognize the key', async ()=>{
+      let animals = await getTestAnimals();
+      let expectedAnimals = await getExpectedTestAnimals();
+
+      await insertAnimals()
+      await insertAnimalDispositions()
+      await insertAnimalBreed();
+      await insertAnimalAvail();
+      await insertAnimalType()
+
+      let animalsArr = await Animals.getAnimalAttribute('other');
+      expect(animalsArr.length).toBe(0)
+    })
+  })
+
   describe('getAnimalBy(filterName, filterValue)', () => {
     it('gets a list of animals in a populated database by their animal_id', async () => {
       let animals = await getTestAnimals();

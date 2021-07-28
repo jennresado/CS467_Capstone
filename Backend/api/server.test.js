@@ -737,6 +737,9 @@ describe("server", () => {
 
         res = await supertest(server).get("/animals/dispositions").set('authorization', token)
         expect((res.body.attributeArr).length).toBe(3)
+
+        res = await supertest(server).get("/animals/date").set('authorization', token)
+        expect((res.body.attributeArr).length).toBe(4)
       })
 
       it('sends 200 OK', async () => {
