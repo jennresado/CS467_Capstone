@@ -45,7 +45,7 @@ legend {
     font-size: .75rem;
 }
 
-.loginForm, .animalForm, .signupForm, .userProfileForm {
+.loginForm, .animalForm, .signupForm, .userProfileForm, .dashboardSearch {
     padding: 3rem 3rem 2rem 3rem;
     margin-top: 1.5rem;
     margin-bottom: 1.5rem;
@@ -128,7 +128,7 @@ legend {
     margin-bottom: 1rem;
 }
 
-.loginError, .signupError, .animalError, .breedError  {
+.loginError, .signupError, .animalError, .breedError, .userProfileError  {
 
     color: red;
 }
