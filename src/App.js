@@ -16,6 +16,10 @@ function App() {
     const [cookies, setCookie, removeCookie] = useCookies(['user'])
     const [animals, setAnimals] = useState([])
     const [users, setUsers] = useState([])
+    const [types, setTypes] = useState([])
+    const [breeds, setBreeds] = useState([])
+    const [dispositions, setDispositions] = useState([])
+    const [datesCreated, setDatesCreated] = useState([])
 
     // Warm up backend server to decrease latency
     useEffect(() => {
@@ -43,6 +47,38 @@ function App() {
         }
     }, [])
 
+    // Retrieve animal types from db
+    // to populate the search filter options 
+    useEffect(() => {
+        if (cookies.user) {
+            getTypes(cookies.user.token)
+            //console.log('retrieve types')
+        }
+    }, [])
+
+    // Retrieve animal breeds from db
+    // to populate the search filter options 
+    useEffect(() => {
+        if (cookies.user) {
+            getBreeds(cookies.user.token)
+        }
+    }, [])
+
+    // Retrieve animal dispositions from db
+    // to populate the search filter options 
+    useEffect(() => {
+        if (cookies.user) {
+            getDispositions(cookies.user.token)
+        }
+    }, [])
+
+    // Retrieve animal dates created from db
+    // to populate the search filter options 
+    useEffect(() => {
+        if (cookies.user) {
+            getDatesCreated(cookies.user.token)
+        }
+    }, [])
 
     // Retrieve users from db
     useEffect(() => {
@@ -60,7 +96,7 @@ function App() {
 
             if (res.ok) {
                 const data = await res.json()
-                //console.log('Got user')
+
                 setUsers(data.user)
             }
         }
@@ -227,6 +263,86 @@ function App() {
         }
     }
 
+    // Retrieve animal types from db
+    const getTypes = async (token) => {
+        const res = await fetch(
+            `https://bring-me-home-backend.herokuapp.com/animals/types`,
+            {
+                method: 'GET',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Authorization': token
+                }
+            }
+        )
+
+        if (res.ok) {
+            const data = await res.json()
+
+            setTypes(data.attributeArr)
+        }
+    }
+
+    // Retrieve animal breeds from db
+    const getBreeds = async (token) => {
+        const res = await fetch(
+            `https://bring-me-home-backend.herokuapp.com/animals/breeds`,
+            {
+                method: 'GET',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Authorization': token
+                }
+            }
+        )
+
+        if (res.ok) {
+            const data = await res.json()
+            
+            setBreeds(data.attributeArr)
+        }
+    }
+
+    // Retrieve animal dispositions from db
+    const getDispositions = async (token) => {
+        const res = await fetch(
+            `https://bring-me-home-backend.herokuapp.com/animals/dispositions`,
+            {
+                method: 'GET',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Authorization': token
+                }
+            }
+        )
+
+        if (res.ok) {
+            const data = await res.json()
+
+            setDispositions(data.attributeArr)
+        }
+    }
+
+    // Retrieve animal dates created from db
+    const getDatesCreated = async (token) => {
+        const res = await fetch(
+            `https://bring-me-home-backend.herokuapp.com/animals/date`,
+            {
+                method: 'GET',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Authorization': token
+                }
+            }
+        )
+
+        if (res.ok) {
+            const data = await res.json()
+
+            setDatesCreated(data.attributeArr)
+        }
+    }
+
     // Update existing user
     const updateUser = async (updateUserInfo) => {
         const res = await fetch(
@@ -265,7 +381,7 @@ function App() {
         )
 
         if (res.ok) {
-            //console.log("User deleted")
+            
         } else {
             throw new Error('Cannot delete user')
         }
@@ -314,6 +430,10 @@ function App() {
                         requireAuth() ?
                             <Dashboard
                                 animalsDb={animals}
+                                types={types}
+                                breeds={breeds}
+                                dispositions={dispositions}
+                                datesCreated={datesCreated}
                             /> :
                             <Redirect to='/' />
                     )
