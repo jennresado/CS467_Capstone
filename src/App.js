@@ -52,7 +52,6 @@ function App() {
     useEffect(() => {
         if (cookies.user) {
             getTypes(cookies.user.token)
-            //console.log('retrieve types')
         }
     }, [])
 

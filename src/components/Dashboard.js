@@ -10,18 +10,13 @@ const Dashboard = ({ animalsDb, types, breeds, dispositions, datesCreated }) => 
     const [results, setResults] = useState([]) // array of animals that match applied filter
     const [dates, setDates] = useState([]) // array of non-duplicated dates that are used to populate the select
 
-    //console.log("Page load animalsDB", animalsDb)
-
     const helperRemoveDuplicateDate = (date) => {
-
-        //console.log("PARAM PASSED TO HELPER", date)
 
         for (let i = 0; i < datesCreated.length; i++) {
             if (dates.includes(date)) {
                 return
             }
             dates.push(date) // create list of dates without duplicates
-            //console.log("Dates List: ", dates )
         }
     }
 
@@ -45,7 +40,6 @@ const Dashboard = ({ animalsDb, types, breeds, dispositions, datesCreated }) => 
             return
 
         } else {
-            //console.log("START FUNC EMPTY RESULTS", results)
 
             setFilter(true) // display only animals that match filter
 
@@ -53,22 +47,10 @@ const Dashboard = ({ animalsDb, types, breeds, dispositions, datesCreated }) => 
                 // animals can be multiple breeds and these are in one array
                 for (let j = 0; j < animalsDb[i].breeds.length; j++)
                     if (animalsDb[i].breeds[j] == breed) {
-
-                        //console.log("This ", breed)
-                        //console.log(animalsDb[i].breeds[j])
-
                         results.push(animalsDb[i]) // store animals that match filter in results array 
-
-                        //console.log("BREED MATCHING: ", results)
                     }
-                // For Testing confirm logic working
-                //if (animalsDb[i].type != breed) {
-                //console.log("NO ANIMAL MATCHES FILTER")
-                //}
             }
         }
-        //console.log("END FUNC RESULTS ARE:", results)
-
         if (results.length === 0) {
             setNoResults(true) // display no results message
         }
@@ -83,20 +65,13 @@ const Dashboard = ({ animalsDb, types, breeds, dispositions, datesCreated }) => 
             return
 
         } else {
-            //console.log("START FUNC RESULTS", results)
-
             setFilter(true) // display only animals that match filter
-
             for (let i = 0; i < animalsDb.length; i++) {
                 if (animalsDb[i].type == type) {
-                    //console.log("This ", type)
                     results.push(animalsDb[i])
-                    //console.log("TYPE MATCHING RESULTS: ", results)
                 }
             }
         }
-        //console.log("END FUNC RESULTS:", results)
-
         if (results.length === 0) {
             setNoResults(true) // display no results message
         }
@@ -111,8 +86,6 @@ const Dashboard = ({ animalsDb, types, breeds, dispositions, datesCreated }) => 
             return
 
         } else {
-            //console.log("START FUNC RESULTS", results)
-
             setFilter(true)
 
             for (let i = 0; i < animalsDb.length; i++) {
@@ -120,17 +93,10 @@ const Dashboard = ({ animalsDb, types, breeds, dispositions, datesCreated }) => 
                 for (let j = 0; j < animalsDb[i].disposition.length; j++)
                     if (animalsDb[i].disposition[j] == disposition) {
 
-                        //console.log("This ", disposition)
-                        //console.log(animalsDb[i].disposition[j])
-
                         results.push(animalsDb[i])
-
-                        //console.log("DISP MATCHING: ", results)
                     }
             }
         }
-        //console.log("END FUNC RESULTS:", results)
-
         if (results.length === 0) {
             setNoResults(true) // display no results message
         }
@@ -154,14 +120,10 @@ const Dashboard = ({ animalsDb, types, breeds, dispositions, datesCreated }) => 
 
             for (let i = 0; i < animalsDb.length; i++) {
                 if (animalsDb[i].date_created == formattedDate) {
-                    //console.log("This ", date_created)
                     results.push(animalsDb[i])
-                    //console.log("DATE MATCHING: ", results)
                 }
             }
         }
-        //console.log("END FUNC RESULTS:", results)
-
         if (results.length === 0) {
             setNoResults(true) // display no results message
         }
