@@ -32,19 +32,30 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
         "description": description
     }
 
-    // Clear form 
-    const clearForm = () => {
-        let checkboxes = document.getElementsByClassName("form-check-input")
-        let newsItemInput = document.querySelector("#newsItem")
-        let descriptionInput = document.querySelector("#description")
+    // Clear checkboxes
+    const clearCheckboxes = (category) => {
+        let checkboxes;
+
+        if (category === "all") {
+            checkboxes = document.getElementsByClassName("form-check-input")
+        } else if (category === "breed") {
+            checkboxes = document.getElementsByClassName("breedCheckbox")
+        }
 
         for (let i = 0; i < checkboxes.length; i++) {
             checkboxes[i].checked = false;
         }
+    }
+
+    // Clear form 
+    const clearForm = () => {
+        let newsItemInput = document.querySelector("#newsItem")
+        let descriptionInput = document.querySelector("#description")
 
         newsItemInput.value = ""
         descriptionInput.value = ""
 
+        clearCheckboxes("all")
         setError(false)
         setType('')
         setSelectBreeds([])
@@ -77,6 +88,8 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
     // Handle type change 
     const handleChangeType = (type) => {
         setType(type)
+        clearCheckboxes("breed")
+
         if (type === 'Type') {
             setSelectBreeds([])
         } else {
@@ -291,7 +304,7 @@ const Animal = ({ animalsDb, onAddAnimal, onUpdateAnimal, onDeleteAnimal }) => {
                                     {selectBreeds.map((e, key) => {
                                         return <li key={key} className="list-group-item">
                                             <input 
-                                                className="form-check-input me-1" 
+                                                className="form-check-input me-1 breedCheckbox" 
                                                 type="checkbox"
                                                 value={e}
                                                 key={key}
