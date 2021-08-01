@@ -244,6 +244,8 @@ function App() {
 
     // Retrieve animals from db
     const getAnimals = async (token) => {
+        setAnimals([])
+        
         const res = await fetch(
             `https://bring-me-home-backend.herokuapp.com/animals`,
             {
