@@ -226,7 +226,7 @@ const Dashboard = ({ animalsDb, types, breeds, dispositions, datesCreated }) => 
                                 <div className="card mb-3">
                                     <div className="card-body">
                                         <img className="card-img-top rounded mb-3" src={imageBase64 + e.pic}></img>
-                                        <h5 className="card-title">{e.animal_id}</h5>
+                                        <h5 className="card-title"><strong>ID</strong> #{e.animal_id}</h5>
                                         <div className="cardDetail mb-3">
                                             <p><strong>Type</strong>: {e.type}</p>
                                             <p>
