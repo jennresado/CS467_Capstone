@@ -382,7 +382,7 @@ function App() {
         )
 
         if (res.ok) {
-            
+            removeCookie('user', {'path': '/'})
         } else {
             throw new Error('Cannot delete user')
         }
